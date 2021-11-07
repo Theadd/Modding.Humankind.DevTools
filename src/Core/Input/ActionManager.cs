@@ -1,6 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Diagnostics;
+﻿using System.Collections.Generic;
 using System.Reflection;
 using Amplitude.Framework;
 using Amplitude.Framework.Input;
@@ -16,11 +14,13 @@ namespace Modding.Humankind.DevTools.Core
         private static int _runsToEnable = 20;
         private static bool _active;
         private static IInputService _service;
-        private static Dictionary<KeyCode, string> _mappedActions;
+        private static Dictionary<KeyboardShortcut, string> _mappedActions;
         private static Dictionary<string, MethodInfo> _mappedMethods;
         private static string _currentActionType = "";
-        private static KeyCode _currentKeyCode = KeyCode.None;
+        private static KeyboardShortcut _currentKeyboardShortcut = KeyboardShortcut.Empty;
         private static bool _hasActiveAction;
+        private static bool _isListening;
+        private static bool _iLSA;  // Short name for _isListeningShortcutActive
 
         private static int _counter;
 
@@ -29,8 +29,6 @@ namespace Modding.Humankind.DevTools.Core
         public static void Unload()
         {
             _enabled = false;
-            // TODO: When reloading this plugin from scripts at runtime (using Script Engine), it should
-            //       enable immediately without having to wait for it.
             _runsToEnable = 20;
             _active = false;
             _counter = 0;
@@ -82,32 +80,47 @@ namespace Modding.Humankind.DevTools.Core
 
             if (!SandboxManager.IsStarted)
                 return;
+            
+            if (_service.GetKey(KeyCode.LeftControl) && _service.GetKey(KeyCode.K))
+            {
+                if (_iLSA) return;
 
-            if (_service.GetKey(KeyCode.LeftControl))
+                _isListening = !_isListening;
+                _iLSA = true;
+                Loggr.Announce("Listening to keyboard shortcut actions is: " + (_isListening ? "Enabled" : "Disabled"));
+                return;
+            }
+            else
+            {
+                if (_iLSA)
+                    _iLSA = false;
+            }
+            if (_isListening)
             {
                 if (_hasActiveAction)
                 {
-                    if (_service.GetKeyDown(_currentKeyCode))
+                    if (_currentKeyboardShortcut.IsDown())
                         return;
 
                     _hasActiveAction = false;
-                    _currentKeyCode = KeyCode.None;
+                    _currentKeyboardShortcut = KeyboardShortcut.Empty;
                     _currentActionType = "";
                 }
 
                 foreach (var action in _mappedActions)
-                    if (_service.GetKeyDown(action.Key))
+                    if (action.Key.IsDown())
                     {
                         _hasActiveAction = true;
-                        _currentKeyCode = action.Key;
+                        _currentKeyboardShortcut = action.Key;
                         _currentActionType = action.Value;
 
                         Execute(_currentActionType);
+                        break;
                     }
             }
         }
 
-        public static void RegisterAction(KeyCode key, string actionName, MethodInfo staticMethodInfo)
+        public static void RegisterAction(KeyboardShortcut key, string actionName, MethodInfo staticMethodInfo)
         {
             if (actionName == "")
                 return;
@@ -118,13 +131,13 @@ namespace Modding.Humankind.DevTools.Core
             _mappedActions.Add(key, actionName);
             _mappedMethods.Add(actionName, staticMethodInfo);
 
-            Loggr.Debug("Successfully registered action " + actionName + " to [LeftCtrl] + [" + key + "]");
+            Loggr.Announce("\t[" + key + "] => " + actionName);
         }
 
         private static void Initialize()
         {
             Loggr.Debug("Initializing ActionManager...");
-            _mappedActions = new Dictionary<KeyCode, string>();
+            _mappedActions = new Dictionary<KeyboardShortcut, string>();
             _mappedMethods = new Dictionary<string, MethodInfo>();
         }
 

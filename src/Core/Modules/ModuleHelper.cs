@@ -72,13 +72,14 @@ namespace Modding.Humankind.DevTools.Core
             // Map keyboard shortcuts declared with InGameKeyboardShortcut attribute
             var keyboardShortcutMethods =
                 from method in aiStrategyModule.GetMethods()
-                where method.IsDefined(typeof(InGameLeftControlShortcutAttribute), true)
+                where method.IsDefined(typeof(InGameKeyboardShortcutAttribute), true)
                 select method;
 
+            Loggr.Announce("The following actions will be available while listening to keyboard shortcut actions is enabled, use [LeftControl + K] to toggle listening these actions.");
             foreach (var method in keyboardShortcutMethods)
             {
-                var attr = (InGameLeftControlShortcutAttribute) Attribute.GetCustomAttribute(method,
-                    typeof(InGameLeftControlShortcutAttribute));
+                var attr = (InGameKeyboardShortcutAttribute) Attribute.GetCustomAttribute(method,
+                    typeof(InGameKeyboardShortcutAttribute));
                 ActionManager.RegisterAction(attr.Key, attr.ActionName, method);
             }
         }

@@ -1,5 +1,6 @@
 ﻿using System;
 using Amplitude.Mercury.Data.Simulation;
+using BepInEx.Configuration;
 using UnityEngine;
 
 namespace Modding.Humankind.DevTools.Core
@@ -18,13 +19,13 @@ namespace Modding.Humankind.DevTools.Core
             SetTargetEmpire(0);
         }
 
-        [InGameLeftControlShortcut(KeyCode.P, "PrintGameStatistics")]
+        [InGameKeyboardShortcut("PrintGameStatistics", KeyCode.P, KeyCode.LeftControl)]
         public static void PrintGameStatistics()
         {
             Loggr.Log(HumankindGame.ToString(), ConsoleColor.Cyan);
         }
 
-        [InGameLeftControlShortcut(KeyCode.I, "Add300InfluenceToSelectedEmpire")]
+        [InGameKeyboardShortcut("Add300InfluenceToSelectedEmpire", KeyCode.R, KeyCode.LeftControl)]
         public static void Add300InfluenceToSelectedEmpire()
         {
             HumankindGame.Empires[_targetEmpireIndex].InfluenceStock += 300;
@@ -32,7 +33,7 @@ namespace Modding.Humankind.DevTools.Core
                         "'s InfluenceStock by 300.");
         }
 
-        [InGameLeftControlShortcut(KeyCode.R, "Add2kResearchToSelectedEmpire")]
+        [InGameKeyboardShortcut("Add2kResearchToSelectedEmpire", KeyCode.R, KeyCode.LeftControl)]
         public static void Add2kResearchToSelectedEmpire()
         {
             HumankindGame.Empires[_targetEmpireIndex].ResearchStock += 2000;
@@ -40,13 +41,13 @@ namespace Modding.Humankind.DevTools.Core
                         "'s ResearchStock by 2000.");
         }
 
-        [InGameLeftControlShortcut(KeyCode.K, "SwitchTargetEmpire")]
+        [InGameKeyboardShortcut("SwitchTargetEmpire", KeyCode.T, KeyCode.LeftControl)]
         public static void SwitchTargetEmpire()
         {
             SetTargetEmpire((_targetEmpireIndex + 1) % HumankindGame.Empires.Length);
         }
         
-        [InGameLeftControlShortcut(KeyCode.A, "AllOtherEmpiresProposeAllianceToSelectedEmpire")]
+        [InGameKeyboardShortcut("AllOtherEmpiresProposeAllianceToSelectedEmpire", KeyCode.A, KeyCode.LeftControl)]
         public static void AllOtherEmpiresProposeAllianceToSelectedEmpire()
         {
             var action = DiplomaticAction.ProposeAllianceTreaty;
@@ -67,7 +68,7 @@ namespace Modding.Humankind.DevTools.Core
             }
         }
         
-        [InGameLeftControlShortcut(KeyCode.F, "AllOtherEmpiresForceAllianceToSelectedEmpire")]
+        [InGameKeyboardShortcut("AllOtherEmpiresForceAllianceToSelectedEmpire", KeyCode.F, KeyCode.LeftControl)]
         public static void AllOtherEmpiresForceAllianceToSelectedEmpire()
         {
             var action = DiplomaticAction.ForceSignAlliance;
@@ -88,13 +89,13 @@ namespace Modding.Humankind.DevTools.Core
             }
         }
 
-        [InGameLeftControlShortcut(KeyCode.Y, "EnableFogOfWarOfSelectedEmpire")]
+        [InGameKeyboardShortcut("EnableFogOfWarOfSelectedEmpire", KeyCode.Y, KeyCode.LeftControl)]
         public static void EnableFogOfWarOfSelectedEmpire()
         {
             HumankindGame.Empires[_targetEmpireIndex].EnableFogOfWar(true);
         }
         
-        [InGameLeftControlShortcut(KeyCode.U, "DisableFogOfWarOfSelectedEmpire")]
+        [InGameKeyboardShortcut("DisableFogOfWarOfSelectedEmpire", KeyCode.U, KeyCode.LeftControl)]
         public static void DisableFogOfWarOfSelectedEmpire()
         {
             HumankindGame.Empires[_targetEmpireIndex].EnableFogOfWar(false);
