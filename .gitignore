@@ -1,0 +1,14 @@
+# Visual Studio, VSCode, Rider
+/.vs/
+/.idea/
+/.vscode/
+
+# auto-generated
+/obj/
+
+# CUSTOM
+TEMP/
+/*.DotSettings.user
+/gen-docs/
+/Modding.Humankind.DevTools.xml
+/docgen.sh
