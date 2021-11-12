@@ -6,9 +6,10 @@ namespace Modding.Humankind.DevTools.Core
 {
     internal static class GameEmpireHelper
     {
-        public const int HeaderCellSize = 24;
+        public const int HeaderCellSize = 30;
         public const int CellSize = 16;
         public const string IconTurn = "\u0489";
+        public static readonly string[] SEPARATOR = new[] {" ", " "};
         
         public static Archetype[] ArchetypesToArray(Archetype archetypes)
         {
@@ -66,10 +67,25 @@ namespace Modding.Humankind.DevTools.Core
                 new[] {$"TURN {HumankindGame.Turn} #", empire.EmpireIndex + ": " + empire.PersonaName},
                 new[] {new string('=', HeaderCellSize), new string('=', CellSize)},
                 new[] {"Territories (Cities)", $"{empire.TerritoryCount} ({empire.CityCount}/{empire.CityCap})"},
+                new[] {"Stability", $"{empire.Stability}"},
+                new[] {"EraLevel (SumOfEraStars)", $"{empire.EraLevel} ({empire.SumOfEraStars})"},
+                new[] {"Population in cities (total)", $"{empire.SettlementsPopulation} ({empire.EmpirePopulation})"},
+                SEPARATOR,
+                new[] {"[MILITARY STATS]", ""},
+                new[] {"CombatStrength", $"{empire.CombatStrength}"},
                 new[] {"Armies (Units)", $"{empire.ArmyCount} ({empire.UnitCount})"},
+                new[] {"Military Upkeep", $"{empire.MilitaryUpkeep}"},
+                SEPARATOR,
+                new[] {"[TECHNOLOGY STATS]", ""},
+                new[] {"Nº Techs (Science)", $"{empire.CompletedTechnologiesCount} (+{empire.ResearchNet}/{IconTurn})"},
+                new[] {"Technological Era Offset", $"{empire.TechnologicalEraOffset}"},
+                new[] {"Available/Unlocked Techs.", $"{empire.AvailableTechnologiesCount} / {empire.UnlockedTechnologiesCount}"},
+                SEPARATOR,
+                new[] {"[ECONOMY STATS]", ""},
                 new[] {"Money", $"{empire.MoneyStock} ({moneyNet}/{IconTurn})"},
                 new[] {"Influence", $"{empire.InfluenceStock} (+{empire.InfluenceNet}/{IconTurn})"},
-                new[] {"Nº Techs (Science)", $"{empire.CompletedTechnologiesCount} (+{empire.ResearchNet}/{IconTurn})"}
+                new[] {"Accesses to Luxury/Strategic", $"{empire.LuxuryResourcesAccessCount} / {empire.StrategicResourcesAccessCount}"},
+                new[] {"Trade Nodes Count", $"{empire.TradeNodesCount}"}
             };
         }
     }

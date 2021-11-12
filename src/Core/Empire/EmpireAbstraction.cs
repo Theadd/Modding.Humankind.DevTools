@@ -1,4 +1,5 @@
 ﻿using Amplitude;
+using Amplitude.Framework.Simulation;
 using Amplitude.Mercury.Data.AI;
 using Amplitude.Mercury.Data.Simulation;
 using Amplitude.Mercury.Interop;
@@ -79,7 +80,7 @@ namespace Modding.Humankind.DevTools.Core
         protected void EnableFogOfWar(bool enable) =>
             R.Methods.ProcessOrderEnableFogOfWarMethod.Invoke(DepartmentOfTheInterior,
                 new object[] {new OrderEnableFogOfWar {Enable = enable}});
-        
+
         # endregion Protected method calls
 
         
@@ -112,6 +113,9 @@ namespace Modding.Humankind.DevTools.Core
         protected int PersonaQuality => (int) R.Fields.PersonaQualityField.GetValue(MajorEmpireSimulation);
 
         protected Archetype Archetypes => (Archetype) R.Fields.ArchetypesField.GetValue(MajorEmpireSimulation);
+
+        protected int TradeNodesCount =>
+            ((ReferenceCollection<TradeNode>) R.Fields.TradeNodesField.GetValue(MajorEmpireSimulation)).Count;
 
         # endregion Protected fields
     }

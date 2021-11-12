@@ -1,0 +1,11 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="47" height="20" role="img"
+    aria-label="EVENT">
+    <title>EVENT</title>
+    <g shape-rendering="crispEdges">
+        <rect x="0" width="47" height="20" fill="gold" />
+    </g>
+    <g fill="#fff" text-anchor="middle" font-family="Verdana,Geneva,DejaVu Sans,sans-serif"
+        text-rendering="geometricPrecision" font-size="100">
+        <text x="235" y="140" transform="scale(.1)" fill="#333" textLength="370">EVENT</text>
+        </g>
+</svg>

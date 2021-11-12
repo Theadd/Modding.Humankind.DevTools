@@ -1,0 +1,12 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="59" height="20" role="img"
+    aria-label="METHOD">
+    <title>METHOD</title>
+    <g shape-rendering="crispEdges">
+        <rect width="0" height="20" fill="blueviolet" />
+        <rect x="0" width="59" height="20" fill="blueviolet" />
+    </g>
+    <g fill="#fff" text-anchor="middle" font-family="Verdana,Geneva,DejaVu Sans,sans-serif"
+        text-rendering="geometricPrecision" font-size="100">
+        <text x="295" y="140" transform="scale(.1)" fill="#eee" textLength="490">METHOD</text>
+        </g>
+</svg>

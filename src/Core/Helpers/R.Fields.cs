@@ -54,6 +54,8 @@ namespace Modding.Humankind.DevTools.Core
                 GetField<MajorEmpire>("DiplomaticRelationByOtherEmpireIndex", NonPublicInstance);
             
             public static readonly FieldInfo CurrentStateField = GetField<DiplomaticRelation>("CurrentState", NonPublicInstance);
+
+            public static readonly FieldInfo TradeNodesField = GetField<MajorEmpire>("TradeNodes", NonPublicInstance);
         }
     }
 }

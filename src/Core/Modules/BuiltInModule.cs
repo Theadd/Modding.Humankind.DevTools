@@ -100,7 +100,7 @@ namespace Modding.Humankind.DevTools.Core
         {
             HumankindGame.Empires[_targetEmpireIndex].EnableFogOfWar(false);
         }
-
+        
         public static void SetTargetEmpire(int empireIndex)
         {
             Loggr.Log("SELECTED EMPIRE = [" + empireIndex + "] " + HumankindGame.Empires[empireIndex].PersonaName,

@@ -30,6 +30,15 @@ namespace Modding.Humankind.DevTools
         public int CompletedTechnologiesCount => MajorEmpire.CompletedTechnologyCount;
 
         /// <summary>
+        ///     Number of technological eras available ahead.
+        /// </summary>
+        public int TechnologicalEraOffset => (int) MajorEmpireSimulation.TechnologicalEraOffset.Value;
+
+        public int UnlockedTechnologiesCount => (int) MajorEmpireSimulation.NumberOfUnlockedTechnologies.Value;
+
+        public int AvailableTechnologiesCount => (int) MajorEmpireSimulation.NumberOfAvailableTechnologies.Value;
+        
+        /// <summary>
         ///     This empire's AI persona.
         /// </summary>
         public new string PersonaName => base.PersonaName;
@@ -68,6 +77,11 @@ namespace Modding.Humankind.DevTools
         ///     Number of units among all empire's armies.
         /// </summary>
         public int UnitCount => (int) MajorEmpireSimulation.SumOfUnits.Value;
+
+        /// <summary>
+        ///     Sum of armies upkeep amount of money.
+        /// </summary>
+        public int MilitaryUpkeep => (int) MajorEmpireSimulation.UnitCollectionUpkeep.Value;
 
         /// <summary>
         ///     Number of armies controlled by this empire.
@@ -112,9 +126,34 @@ namespace Modding.Humankind.DevTools
         public int CombatStrength => (int) MajorEmpire.CombatStrength;
 
         /// <summary>
-        ///     This empire's current Era as a number, where 0 is Neolithic.
+        ///     Sum of trade nodes.
+        /// </summary>
+        public new int TradeNodesCount => base.TradeNodesCount;
+
+        /// <summary>
+        ///     Equals to the sum of public order of cities controlled by this empire divided by the number of cities controlled by this empire.
+        /// </summary>
+        public int Stability => (int) MajorEmpireSimulation.Stability.Value;
+
+        /// <summary>
+        ///     This empire's current Era as a number, where 1 is Neolithic.
         /// </summary>
         public int EraLevel => (int) MajorEmpireSimulation.EraLevel.Value;
+
+        /// <summary>
+        ///     Equals to the sum of stars obtained by this empire in all eras.
+        /// </summary>
+        public int SumOfEraStars => (int) MajorEmpireSimulation.SumOfEraStars.Value;
+
+        /// <summary>
+        ///     Number of accesses to Luxury Resources.
+        /// </summary>
+        public int LuxuryResourcesAccessCount => (int) MajorEmpireSimulation.SumOfLuxuryResourceAccessCount.Value;
+        
+        /// <summary>
+        ///     Number of accesses to Strategic Resources.
+        /// </summary>
+        public int StrategicResourcesAccessCount => (int) MajorEmpireSimulation.SumOfStrategicResourceAccessCount.Value;
 
         /// <summary>
         ///     Money net income per turn which is added to MoneyStock at the end of turn phase.

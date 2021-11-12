@@ -1,0 +1,12 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="53" height="20" role="img"
+    aria-label="SETTER">
+    <title>SETTER</title>
+    <g shape-rendering="crispEdges">
+        <rect width="0" height="20" fill="#97ca00" />
+        <rect x="0" width="53" height="20" fill="#97ca00" />
+    </g>
+    <g fill="#fff" text-anchor="middle" font-family="Verdana,Geneva,DejaVu Sans,sans-serif"
+        text-rendering="geometricPrecision" font-size="100">
+        <text x="265" y="140" transform="scale(.1)" fill="#000" textLength="430">SETTER</text>
+    </g>
+</svg>
