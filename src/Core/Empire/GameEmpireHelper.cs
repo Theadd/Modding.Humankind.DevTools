@@ -76,7 +76,7 @@ namespace Modding.Humankind.DevTools.Core
                 new[] {"Armies (Units)", $"{empire.ArmyCount} ({empire.UnitCount})"},
                 new[] {"Military Upkeep", $"{empire.MilitaryUpkeep}"},
                 SEPARATOR,
-                new[] {"[TECHNOLOGY STATS]", ""},
+                new[] {"[RESEARCH STATS]", ""},
                 new[] {"Nº Techs (Science)", $"{empire.CompletedTechnologiesCount} (+{empire.ResearchNet}/{IconTurn})"},
                 new[] {"Technological Era Offset", $"{empire.TechnologicalEraOffset}"},
                 new[] {"Available/Unlocked Techs.", $"{empire.AvailableTechnologiesCount} / {empire.UnlockedTechnologiesCount}"},

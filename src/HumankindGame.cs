@@ -8,8 +8,8 @@ namespace Modding.Humankind.DevTools
 
     /// <summary>
     ///     Main starting class to work with for anything that deals with in-game state.
-    ///     <remarks>Most members are unreliable when <c>IsGameLoaded</c> is false.</remarks>
     /// </summary>
+    /// <remarks>Most members are unreliable when <c>IsGameLoaded</c> is false.</remarks>
     public static class HumankindGame
     {
         /// <summary>

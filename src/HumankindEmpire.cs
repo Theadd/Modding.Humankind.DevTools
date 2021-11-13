@@ -11,7 +11,7 @@ namespace Modding.Humankind.DevTools
     ///     in a single, simplified and well documented class to access and, where possible, edit most
     ///     significant values related to a game Empire.
     /// </summary>
-    public class HumankindEmpire : EmpireAbstraction
+    public class HumankindEmpire : EmpireAbstraction, Diplomacy, Military, Research, Economy
     {
         
         /// <summary>
@@ -34,8 +34,14 @@ namespace Modding.Humankind.DevTools
         /// </summary>
         public int TechnologicalEraOffset => (int) MajorEmpireSimulation.TechnologicalEraOffset.Value;
 
+        /// <summary>
+        ///     Unlocked technologies.
+        /// </summary>
         public int UnlockedTechnologiesCount => (int) MajorEmpireSimulation.NumberOfUnlockedTechnologies.Value;
 
+        /// <summary>
+        ///     Available technologies.
+        /// </summary>
         public int AvailableTechnologiesCount => (int) MajorEmpireSimulation.NumberOfAvailableTechnologies.Value;
         
         /// <summary>
@@ -94,7 +100,7 @@ namespace Modding.Humankind.DevTools
         public int RentedArmyCount => (int) MajorEmpireSimulation.RentedArmyCount.Value;
 
         /// <summary>
-        ///     EmpirePopulation equals to the sum of SettlementsPopulation with UnitCount.
+        ///     <c>EmpirePopulation</c> equals to the sum of <c>SettlementsPopulation</c> with <c>UnitCount</c>.
         /// </summary>
         public int EmpirePopulation => (int) MajorEmpireSimulation.SumOfPopulationAndUnits.Value;
 
@@ -110,14 +116,14 @@ namespace Modding.Humankind.DevTools
 
         /// <summary>
         ///     Whether this empire is being controlled by the AI or by a human player.
-        ///     <seealso cref="IsControlledByHuman" />
         /// </summary>
+        /// <seealso cref="IsControlledByHuman" />
         public bool IsAIActivated => !MajorEmpireSimulation.IsControlledByHuman;
 
         /// <summary>
         ///     Whether this empire is being controlled by a human player or by the AI.
-        ///     <seealso cref="IsAIActivated" />
         /// </summary>
+        /// <seealso cref="IsAIActivated" />
         public bool IsControlledByHuman => MajorEmpireSimulation.IsControlledByHuman;
 
         /// <summary>
@@ -136,7 +142,7 @@ namespace Modding.Humankind.DevTools
         public int Stability => (int) MajorEmpireSimulation.Stability.Value;
 
         /// <summary>
-        ///     This empire's current Era as a number, where 1 is Neolithic.
+        ///     This empire's current Era as number, where 1 is Neolithic.
         /// </summary>
         public int EraLevel => (int) MajorEmpireSimulation.EraLevel.Value;
 
@@ -156,7 +162,7 @@ namespace Modding.Humankind.DevTools
         public int StrategicResourcesAccessCount => (int) MajorEmpireSimulation.SumOfStrategicResourceAccessCount.Value;
 
         /// <summary>
-        ///     Money net income per turn which is added to MoneyStock at the end of turn phase.
+        ///     Money net income per turn which is added to <c>MoneyStock</c> at the end of turn phase.
         /// </summary>
         public int MoneyNet => (int) MajorEmpireSimulation.MoneyNet.Value;
 
@@ -173,10 +179,10 @@ namespace Modding.Humankind.DevTools
         /// <summary>
         ///     Gets or sets the amount of money for this empire.
         /// </summary>
-        /// <remark>
+        /// <remarks>
         ///     If you set this to another value, remember that it is the absolute value to be expected for
         ///     this empire after this action takes effect. Tip: Use `+=` operator to avoid loosing money.
-        /// </remark>
+        /// </remarks>
         public int MoneyStock
         {
             get => (int) MajorEmpireSimulation.MoneyStock.Value;
@@ -185,9 +191,11 @@ namespace Modding.Humankind.DevTools
 
         /// <summary>
         ///     Gets or sets the *accumulated* research of this empire.
-        ///     Note: This will always return 0 since science doesn't get accumulated anywhere, it is automatically
-        ///     consumed by the technology research queue.
         /// </summary>
+        /// <remarks>
+        ///     This will always return 0 since science doesn't get accumulated anywhere, it is automatically
+        ///     consumed by the technology research queue.
+        /// </remarks>
         public int ResearchStock
         {
             get => 0;
@@ -196,9 +204,11 @@ namespace Modding.Humankind.DevTools
 
         /// <summary>
         ///     Gets or sets the accumulated influence of this empire.
-        ///     Warning: If you set this to another value, remember that it is the absolute value to be expected for
-        ///     this empire after this action takes effect. Tip: Use `+=` operator.
         /// </summary>
+        /// <remarks>
+        ///     If you set this to another value, remember that it is the absolute value to be expected for
+        ///     this empire after this action takes effect. Tip: Use `+=` operator.
+        /// </remarks>
         public int InfluenceStock
         {
             get => (int) MajorEmpireSimulation.InfluenceStock.Value;
@@ -206,29 +216,29 @@ namespace Modding.Humankind.DevTools
         }
 
         /// <summary>
-        ///     Gets this empire's Archetype bitmask.
+        ///     Gets this empire's <c>Archetype</c> bitmask.
         /// </summary>
         public new Archetype Archetypes => base.Archetypes;
 
         /// <summary>
-        ///     Whether this empire's Archetype bitmask contains the given Archetype.
+        ///     Whether this empire's <c>Archetype</c> bitmask contains the given <c>Archetype</c>.
         /// </summary>
-        /// <param name="target">The Archetype to look for</param>
-        /// <returns>Boolean that indicates if given Archetype was found</returns>
+        /// <param name="target">The <c>Archetype</c> to look for</param>
+        /// <returns>Boolean that indicates if given <c>Archetype</c> was found</returns>
         public bool HasArchetype(Archetype target) => (uint) (base.Archetypes & target) == (uint) target;
 
         /// <summary>
-        ///     Add or remove given Archetype from this empire's Archetype bitmask.
+        ///     Add or remove given <c>Archetype</c> from this empire's <c>Archetype</c> bitmask.
         /// </summary>
-        /// <param name="target">The Archetype to add or remove from the Archetype bitmask</param>
+        /// <param name="target">The <c>Archetype</c> to add or remove from the <c>Archetype</c> bitmask</param>
         /// <param name="remove">Whether to add or remove it from the bitmask</param>
         public void SetArchetype(Archetype target, bool remove = false) =>
             ProcessOrderChangeArchetypes(remove ? Archetypes & ~target : Archetypes | target);
 
         /// <summary>
-        ///     From this empire's Archetype bitmask, extracts each assigned Archetype as an element of the returned Archetype array.
+        ///     From this empire's <c>Archetype</c> bitmask, extracts each assigned <c>Archetype</c> as an element of the returned <c>Archetype</c> array.
         /// </summary>
-        /// <returns>Archetype[]</returns>
+        /// <returns><c>Archetype[]</c></returns>
         public Archetype[] ArchetypesArray => GameEmpireHelper.ArchetypesToArray(Archetypes);
 
         /// <summary>
@@ -258,8 +268,8 @@ namespace Modding.Humankind.DevTools
         ///     Validates if given <c>DiplomaticAction</c> can be executed against given empire's <c>EmpireIndex</c>.
         /// </summary>
         /// <see cref="DiplomaticAction"/>
-        /// <param name="action">DiplomaticAction to validate.</param>
-        /// <param name="otherEmpireIndex">Target empire's EmpireIndex.</param>
+        /// <param name="action"><c>DiplomaticAction</c> to validate.</param>
+        /// <param name="otherEmpireIndex">Target empire's <c>EmpireIndex</c>.</param>
         /// <returns>Whether the action can be executed or not.</returns>
         public new bool CanExecuteDiplomaticAction(DiplomaticAction action, int otherEmpireIndex) =>
             base.CanExecuteDiplomaticAction(action, otherEmpireIndex);
@@ -268,8 +278,8 @@ namespace Modding.Humankind.DevTools
         ///     Executes given <c>DiplomaticAction</c> against another empire.
         /// </summary>
         /// <see cref="DiplomaticAction"/>
-        /// <param name="action">DiplomaticAction to execute.</param>
-        /// <param name="otherEmpireIndex">Target empire's EmpireIndex.</param>
+        /// <param name="action"><c>DiplomaticAction</c> to execute.</param>
+        /// <param name="otherEmpireIndex">Target empire's <c>EmpireIndex</c>.</param>
         public new void ExecuteDiplomaticAction(DiplomaticAction action, int otherEmpireIndex) =>
             base.ExecuteDiplomaticAction(action, otherEmpireIndex);
         
