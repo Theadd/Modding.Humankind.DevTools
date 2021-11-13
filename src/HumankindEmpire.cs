@@ -11,7 +11,7 @@ namespace Modding.Humankind.DevTools
     ///     in a single, simplified and well documented class to access and, where possible, edit most
     ///     significant values related to a game Empire.
     /// </summary>
-    public class HumankindEmpire : EmpireAbstraction, Diplomacy, Military, Research, Economy
+    public class HumankindEmpire : EmpireAbstraction, IEmpireDiplomacy, IMilitary, IResearch, IEmpireEconomy, IAIPersona, IEmpireExpansion
     {
         
         /// <summary>
@@ -162,7 +162,7 @@ namespace Modding.Humankind.DevTools
         public int StrategicResourcesAccessCount => (int) MajorEmpireSimulation.SumOfStrategicResourceAccessCount.Value;
 
         /// <summary>
-        ///     Money net income per turn which is added to <c>MoneyStock</c> at the end of turn phase.
+        ///     Money net income per turn which is added to <see cref="MoneyStock">MoneyStock</see> at the end of turn phase.
         /// </summary>
         public int MoneyNet => (int) MajorEmpireSimulation.MoneyNet.Value;
 
@@ -193,8 +193,7 @@ namespace Modding.Humankind.DevTools
         ///     Gets or sets the *accumulated* research of this empire.
         /// </summary>
         /// <remarks>
-        ///     This will always return 0 since science doesn't get accumulated anywhere, it is automatically
-        ///     consumed by the technology research queue.
+        ///     This will always return 0 since science doesn't get accumulated anywhere, it is automatically consumed by the technology research queue.
         /// </remarks>
         public int ResearchStock
         {
@@ -206,8 +205,7 @@ namespace Modding.Humankind.DevTools
         ///     Gets or sets the accumulated influence of this empire.
         /// </summary>
         /// <remarks>
-        ///     If you set this to another value, remember that it is the absolute value to be expected for
-        ///     this empire after this action takes effect. Tip: Use `+=` operator.
+        ///     If you set this to another value, remember that it is the absolute value to be expected for this empire after this action takes effect. Tip: Use `+=` operator.
         /// </remarks>
         public int InfluenceStock
         {
@@ -256,9 +254,26 @@ namespace Modding.Humankind.DevTools
         public new bool CanDeclareWarTo(int otherEmpireIndex) => base.CanDeclareWarTo(otherEmpireIndex);
 
         /// <summary>
-        ///     Empire's current <c>DiplomaticStateType</c> with the given empire. Amplitude's <c>DiplomaticStateType</c> source code:
-        ///     `public enum DiplomaticStateType { Unknown, PartialyKnown, Peace, Alliance, VassalToLiege, VassalToFellowVassal, VassalToExternal, War, PartialyEliminated, BothEliminated }`
+        ///     Empire's current <c>DiplomaticStateType</c> with the given empire. See included example for Amplitude's <c>DiplomaticStateType</c> implementation.
         /// </summary>
+        /// <example>
+        ///     Implementation code of <c>Amplitude.Mercury.Data.Simulation.DiplomaticStateType</c>.
+        /// <code>
+        /// public enum DiplomaticStateType
+        /// {
+        ///     Unknown,
+        ///     PartialyKnown,
+        ///     Peace,
+        ///     Alliance,
+        ///     VassalToLiege,
+        ///     VassalToFellowVassal,
+        ///     VassalToExternal,
+        ///     War,
+        ///     PartialyEliminated,
+        ///     BothEliminated
+        /// }
+        /// </code>
+        /// </example>
         /// <param name="otherEmpireIndex">Other empire's <c>EmpireIndex</c>.</param>
         /// <returns><c>DiplomaticStateType</c></returns>
         public new DiplomaticStateType DiplomaticStateTypeTo(int otherEmpireIndex) =>
@@ -267,7 +282,64 @@ namespace Modding.Humankind.DevTools
         /// <summary>
         ///     Validates if given <c>DiplomaticAction</c> can be executed against given empire's <c>EmpireIndex</c>.
         /// </summary>
-        /// <see cref="DiplomaticAction"/>
+        /// <example>
+        ///     List of available <c>DiplomaticAction</c>s.
+        /// <code>
+        /// namespace Amplitude.Mercury.Data.Simulation
+        /// {
+        ///     public enum DiplomaticAction
+        ///     {
+        ///         DeclareSurpriseWar,
+        ///         DeclareFormalWar,
+        ///         DeclareEndOfAlliance,
+        ///         DeclareSurrender,
+        ///         RefuseDemands,
+        ///         WithdrawDemands,
+        ///         AcceptDemands,
+        ///         IntroduceYourself,
+        ///         FreeVassal,
+        ///         StallForTime,
+        ///         ProposeAllianceTreaty,
+        ///         ProposeEndWarTreaty,
+        ///         ProposeEndCrisisTreaty,
+        ///         ProposeEndRebellionTreaty,
+        ///         SignTreaty,
+        ///         CounterTreaty,
+        ///         IgnoreTreaty,
+        ///         InsultTreaty,
+        ///         ProposeEconomicalAgreement,
+        ///         ProposeInformationAgreement,
+        ///         ProposeCulturalAgreement,
+        ///         ProposeMilitaryAgreement,
+        ///         SignAgreement,
+        ///         CounterAgreement,
+        ///         IgnoreAgreement,
+        ///         InsultAgreement,
+        ///         BreakEconomicalAgreement,
+        ///         BreakInformationAgreement,
+        ///         BreakCulturalAgreement,
+        ///         BreakMilitaryAgreement,
+        ///         StartToFillSurrenderProposition,
+        ///         CancelSurrenderProposition,
+        ///         ProposeToSurrender,
+        ///         RefuseSurrender,
+        ///         AcceptSurrender,
+        ///         FirstMeet,
+        ///         ForceWhitePeace,
+        ///         AllowToForceOtherToSurrender,
+        ///         AllowToForceOtherToSurrenderToAlly,
+        ///         DeclareForcedWar,
+        ///         ForceSignAlliance,
+        ///         ForceSignEndWar,
+        ///         ForceSignEndCrisis,
+        ///         ForceSignCulturalAgreement,
+        ///         ForceSignInformationAgreement,
+        ///         ForceSignEconomicalAgreement,
+        ///         ForceSignMilitaryAgreement
+        ///     }
+        /// }
+        /// </code>
+        /// </example>
         /// <param name="action"><c>DiplomaticAction</c> to validate.</param>
         /// <param name="otherEmpireIndex">Target empire's <c>EmpireIndex</c>.</param>
         /// <returns>Whether the action can be executed or not.</returns>
@@ -277,7 +349,64 @@ namespace Modding.Humankind.DevTools
         /// <summary>
         ///     Executes given <c>DiplomaticAction</c> against another empire.
         /// </summary>
-        /// <see cref="DiplomaticAction"/>
+        /// <example>
+        ///     List of available <c>DiplomaticAction</c>s.
+        /// <code>
+        /// namespace Amplitude.Mercury.Data.Simulation
+        /// {
+        ///     public enum DiplomaticAction
+        ///     {
+        ///         DeclareSurpriseWar,
+        ///         DeclareFormalWar,
+        ///         DeclareEndOfAlliance,
+        ///         DeclareSurrender,
+        ///         RefuseDemands,
+        ///         WithdrawDemands,
+        ///         AcceptDemands,
+        ///         IntroduceYourself,
+        ///         FreeVassal,
+        ///         StallForTime,
+        ///         ProposeAllianceTreaty,
+        ///         ProposeEndWarTreaty,
+        ///         ProposeEndCrisisTreaty,
+        ///         ProposeEndRebellionTreaty,
+        ///         SignTreaty,
+        ///         CounterTreaty,
+        ///         IgnoreTreaty,
+        ///         InsultTreaty,
+        ///         ProposeEconomicalAgreement,
+        ///         ProposeInformationAgreement,
+        ///         ProposeCulturalAgreement,
+        ///         ProposeMilitaryAgreement,
+        ///         SignAgreement,
+        ///         CounterAgreement,
+        ///         IgnoreAgreement,
+        ///         InsultAgreement,
+        ///         BreakEconomicalAgreement,
+        ///         BreakInformationAgreement,
+        ///         BreakCulturalAgreement,
+        ///         BreakMilitaryAgreement,
+        ///         StartToFillSurrenderProposition,
+        ///         CancelSurrenderProposition,
+        ///         ProposeToSurrender,
+        ///         RefuseSurrender,
+        ///         AcceptSurrender,
+        ///         FirstMeet,
+        ///         ForceWhitePeace,
+        ///         AllowToForceOtherToSurrender,
+        ///         AllowToForceOtherToSurrenderToAlly,
+        ///         DeclareForcedWar,
+        ///         ForceSignAlliance,
+        ///         ForceSignEndWar,
+        ///         ForceSignEndCrisis,
+        ///         ForceSignCulturalAgreement,
+        ///         ForceSignInformationAgreement,
+        ///         ForceSignEconomicalAgreement,
+        ///         ForceSignMilitaryAgreement
+        ///     }
+        /// }
+        /// </code>
+        /// </example>
         /// <param name="action"><c>DiplomaticAction</c> to execute.</param>
         /// <param name="otherEmpireIndex">Target empire's <c>EmpireIndex</c>.</param>
         public new void ExecuteDiplomaticAction(DiplomaticAction action, int otherEmpireIndex) =>

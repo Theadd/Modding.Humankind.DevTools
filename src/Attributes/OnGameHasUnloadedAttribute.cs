@@ -3,9 +3,9 @@
 namespace Modding.Humankind.DevTools
 {
     /// <summary>
-    ///     Any static method with the [OnGameHasUnloaded] annotation will be called everytime a running game ends.
+    ///     Any static method with the <c>OnGameHasUnloaded</c> annotation will be called everytime a running game ends.
     /// </summary>
-    /// <remarks>The method's class must be annotated with [DevToolsModule] for this to work.</remarks>
+    /// <remarks>The method's class must be annotated with <c>DevToolsModule</c> for this to work.</remarks>
     [AttributeUsage(AttributeTargets.Method)]
     public class OnGameHasUnloadedAttribute : Attribute
     {

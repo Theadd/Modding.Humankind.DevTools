@@ -2,7 +2,7 @@
 
 namespace Modding.Humankind.DevTools.Core
 {
-    public interface Diplomacy
+    public interface IEmpireDiplomacy
     {
         new bool DeclareWarTo(int otherEmpireIndex);
         new bool CanDeclareWarTo(int otherEmpireIndex);

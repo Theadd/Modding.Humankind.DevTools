@@ -1,6 +1,6 @@
 ﻿namespace Modding.Humankind.DevTools.Core
 {
-    public interface Military
+    public interface IMilitary
     {
         int UnitCount { get; }
         int MilitaryUpkeep { get; }

@@ -1,6 +1,6 @@
 ﻿namespace Modding.Humankind.DevTools.Core
 {
-    public interface Economy
+    public interface IEmpireEconomy
     {
         new int TradeNodesCount { get; }
         int LuxuryResourcesAccessCount { get; }
