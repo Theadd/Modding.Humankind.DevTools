@@ -1,0 +1,175 @@
+{
+  "runtimeTarget": {
+    "name": ".NETCoreApp,Version=v5.0",
+    "signature": ""
+  },
+  "compilationOptions": {},
+  "targets": {
+    ".NETCoreApp,Version=v5.0": {
+      "DefaultDocumentation.Console/0-local20211113130050": {
+        "dependencies": {
+          "CommandLineParser": "2.8.0",
+          "DefaultDocumentation.Common": "0.0.0-local20211113130049",
+          "Microsoft.CodeAnalysis.NetAnalyzers": "5.0.3",
+          "Roslynator.Analyzers": "3.2.2",
+          "Roslynator.CodeAnalysis.Analyzers": "1.1.1"
+        },
+        "runtime": {
+          "DefaultDocumentation.Console.dll": {}
+        }
+      },
+      "CommandLineParser/2.8.0": {
+        "runtime": {
+          "lib/netstandard2.0/CommandLine.dll": {
+            "assemblyVersion": "2.8.0.0",
+            "fileVersion": "2.8.0.0"
+          }
+        }
+      },
+      "ICSharpCode.Decompiler/7.1.0.6543": {
+        "dependencies": {
+          "System.Collections.Immutable": "5.0.0",
+          "System.Reflection.Metadata": "5.0.0"
+        },
+        "runtime": {
+          "lib/netstandard2.0/ICSharpCode.Decompiler.dll": {
+            "assemblyVersion": "7.1.0.6543",
+            "fileVersion": "7.1.0.6543"
+          }
+        }
+      },
+      "Microsoft.CodeAnalysis.NetAnalyzers/5.0.3": {},
+      "Newtonsoft.Json/13.0.1": {
+        "runtime": {
+          "lib/netstandard2.0/Newtonsoft.Json.dll": {
+            "assemblyVersion": "13.0.0.0",
+            "fileVersion": "13.0.1.25517"
+          }
+        }
+      },
+      "NLog/4.7.12": {
+        "runtime": {
+          "lib/netstandard2.0/NLog.dll": {
+            "assemblyVersion": "4.0.0.0",
+            "fileVersion": "4.7.12.301"
+          }
+        }
+      },
+      "Roslynator.Analyzers/3.2.2": {},
+      "Roslynator.CodeAnalysis.Analyzers/1.1.1": {},
+      "System.Collections.Immutable/5.0.0": {},
+      "System.Reflection.Metadata/5.0.0": {},
+      "DefaultDocumentation.Api/0.0.0-local20211113130049": {
+        "dependencies": {
+          "ICSharpCode.Decompiler": "7.1.0.6543",
+          "NLog": "4.7.12",
+          "Newtonsoft.Json": "13.0.1"
+        },
+        "runtime": {
+          "DefaultDocumentation.Api.dll": {}
+        }
+      },
+      "DefaultDocumentation.Common/0.0.0-local20211113130049": {
+        "dependencies": {
+          "DefaultDocumentation.Markdown": "0.0.0-local20211113130049"
+        },
+        "runtime": {
+          "DefaultDocumentation.Common.dll": {}
+        }
+      },
+      "DefaultDocumentation.Markdown/0.0.0-local20211113130049": {
+        "dependencies": {
+          "DefaultDocumentation.Api": "0.0.0-local20211113130049"
+        },
+        "runtime": {
+          "DefaultDocumentation.Markdown.dll": {}
+        }
+      }
+    }
+  },
+  "libraries": {
+    "DefaultDocumentation.Console/0-local20211113130050": {
+      "type": "project",
+      "serviceable": false,
+      "sha512": ""
+    },
+    "CommandLineParser/2.8.0": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-eco2HlKQBY4Joz9odHigzGpVzv6pjsXnY5lziioMveQxr+i2Z7xYcIOMeZTgYiqnMtMAbXMXsVhrNfWO5vJS8Q==",
+      "path": "commandlineparser/2.8.0",
+      "hashPath": "commandlineparser.2.8.0.nupkg.sha512"
+    },
+    "ICSharpCode.Decompiler/7.1.0.6543": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-/x0IZHaMj3b3/7sRJ0u1Y5kKGV/y7K2qkcNGRXcWmD1r99Yn7Od1Us6YSjMTqRzQt7vHcpNoVAmi6hn0K9P7mQ==",
+      "path": "icsharpcode.decompiler/7.1.0.6543",
+      "hashPath": "icsharpcode.decompiler.7.1.0.6543.nupkg.sha512"
+    },
+    "Microsoft.CodeAnalysis.NetAnalyzers/5.0.3": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-7rw0JUPSAVGR0HPekQiQvwGPor44p/Ek21+wZABraG4bVYNrSkx98ZZsxSxG5jJ4oqjACJxea8E62UO0dsKDBw==",
+      "path": "microsoft.codeanalysis.netanalyzers/5.0.3",
+      "hashPath": "microsoft.codeanalysis.netanalyzers.5.0.3.nupkg.sha512"
+    },
+    "Newtonsoft.Json/13.0.1": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-ppPFpBcvxdsfUonNcvITKqLl3bqxWbDCZIzDWHzjpdAHRFfZe0Dw9HmA0+za13IdyrgJwpkDTDA9fHaxOrt20A==",
+      "path": "newtonsoft.json/13.0.1",
+      "hashPath": "newtonsoft.json.13.0.1.nupkg.sha512"
+    },
+    "NLog/4.7.12": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-cFe+YQVxghBt4hoB8IH+XVW/vyS6rWJPfWmm0rmgS/iaI3lzzFsGRzjw3VhByovLugw7Zp3kY7nVUWADCu6n2g==",
+      "path": "nlog/4.7.12",
+      "hashPath": "nlog.4.7.12.nupkg.sha512"
+    },
+    "Roslynator.Analyzers/3.2.2": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-hYHBXdHZCJAht63BfWDy2Hb5HqQb+IN1Xqj7pVkPHS0qQoBcX8bH8az3ntB/HKD//HUOBSLUa4l7riplYTTZTQ==",
+      "path": "roslynator.analyzers/3.2.2",
+      "hashPath": "roslynator.analyzers.3.2.2.nupkg.sha512"
+    },
+    "Roslynator.CodeAnalysis.Analyzers/1.1.1": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-QI28RwGSGpTF3LBXaKRhXmXOOJuQ0WPptsVsfcFzY47rcT9JLg0cB94PZwuIviUeoQocf1eZKQIF7ipFQ3hcag==",
+      "path": "roslynator.codeanalysis.analyzers/1.1.1",
+      "hashPath": "roslynator.codeanalysis.analyzers.1.1.1.nupkg.sha512"
+    },
+    "System.Collections.Immutable/5.0.0": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-FXkLXiK0sVVewcso0imKQoOxjoPAj42R8HtjjbSjVPAzwDfzoyoznWxgA3c38LDbN9SJux1xXoXYAhz98j7r2g==",
+      "path": "system.collections.immutable/5.0.0",
+      "hashPath": "system.collections.immutable.5.0.0.nupkg.sha512"
+    },
+    "System.Reflection.Metadata/5.0.0": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-5NecZgXktdGg34rh1OenY1rFNDCI8xSjFr+Z4OU4cU06AQHUdRnIIEeWENu3Wl4YowbzkymAIMvi3WyK9U53pQ==",
+      "path": "system.reflection.metadata/5.0.0",
+      "hashPath": "system.reflection.metadata.5.0.0.nupkg.sha512"
+    },
+    "DefaultDocumentation.Api/0.0.0-local20211113130049": {
+      "type": "project",
+      "serviceable": false,
+      "sha512": ""
+    },
+    "DefaultDocumentation.Common/0.0.0-local20211113130049": {
+      "type": "project",
+      "serviceable": false,
+      "sha512": ""
+    },
+    "DefaultDocumentation.Markdown/0.0.0-local20211113130049": {
+      "type": "project",
+      "serviceable": false,
+      "sha512": ""
+    }
+  }
+}

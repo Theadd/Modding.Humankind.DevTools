@@ -1,5 +1,5 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<Project InitialTargets="SetupFirst" Sdk="Microsoft.NET.Sdk">
+<Project InitialTargets="SetupFirst" DefaultTargets="Rebuild" Sdk="Microsoft.NET.Sdk" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <Target Name="SetupFirst">
     <Message Text="Configuration is $(Configuration)" />
     <PropertyGroup>
@@ -17,6 +17,33 @@
     <Message Text="Compile item type contains @(Compile, '%0A%0D')" />
     <!--<Exec Command="MSBuildProjectDefaultTargets"-->
   </Target>
+  <Target Name="CustomAfterRebuild" AfterTargets="Rebuild">
+    <Message Text="WOLOLOOOOOOOOOOOOOOOOOOO!!!" />
+    <Message Text="WOLOLOOOOOOOOOOOOOOOOOOO222!!!" />
+    <Message Text="WOLOLOOOOOOOOOOOOOOOOOOO!!! $(DebugSymbols)" />
+    <PropertyGroup>
+      <GenDocsDir>.\gen-docs\</GenDocsDir>
+      <GenDocsResourcesDir>.\gen-docs\resources\</GenDocsResourcesDir>
+      <GeneratedDocsDir>.\gen-docs\generated\</GeneratedDocsDir>
+      <GeneratedAllPagesDocsDir>.\gen-docs\generated-allpages\</GeneratedAllPagesDocsDir>
+      <TargetBinPath>.\bin\Debug\</TargetBinPath>
+      <TargetBinPath Condition=" '$(Configuration)' == 'Release' ">.\bin\Release\</TargetBinPath>
+      <CustomDocumentationTool>.\bin\GenerateDocsTool\DefaultDocumentation.Console.exe</CustomDocumentationTool>
+      <DocsPagesDir>.\docs\pages\</DocsPagesDir>
+    </PropertyGroup>
+    <ItemGroup>
+      <TargetBinFiles Include="$(TargetBinPath)\*.*"/>
+      <GeneratedDocsFiles Include="./gen-docs/generated-allpages/GameSpeedLevel.md;./gen-docs/generated/InGameKeyboardShortcutAttribute.md;./gen-docs/generated/DevToolsModuleAttribute.md;./gen-docs/generated/OnGameHasLoadedAttribute.md;./gen-docs/generated/OnGameHasUnloadedAttribute.md;./gen-docs/generated-allpages/HumankindEmpire.md;./gen-docs/generated-allpages/HumankindGame.md"/>
+    </ItemGroup>
+    <MakeDir Directories="$(GenDocsDir)" />
+    <MakeDir Directories="$(GenDocsResourcesDir)" />
+    <RemoveDir Directories="$(GeneratedDocsDir);$(GeneratedAllPagesDocsDir)" />
+    <MakeDir Directories="$(GeneratedDocsDir);$(GeneratedAllPagesDocsDir)" />
+    <Copy SourceFiles="@(TargetBinFiles)" DestinationFolder="$(GenDocsResourcesDir)" />
+    <Exec Command="$(CustomDocumentationTool) -a ./gen-docs/resources/Modding.Humankind.DevTools.dll --FileNameFactory Name -g Types -n DevTools -o ./gen-docs/generated/ -p ./"/>
+    <Exec Command="$(CustomDocumentationTool) -a ./gen-docs/resources/Modding.Humankind.DevTools.dll --FileNameFactory Name -n DevTools -o ./gen-docs/generated-allpages/ -p ./"/>
+    <Copy SourceFiles="@(GeneratedDocsFiles)" DestinationFolder="$(DocsPagesDir)" />
+  </Target>
   <PropertyGroup>
     <HUMANKIND_GAME_PATH Condition=" '$(HUMANKIND_GAME_PATH)' == '' ">S:\Games\HUMANKIND</HUMANKIND_GAME_PATH>
     <HUMANKIND_REFERENCED_LIBRARIES_PATH Condition=" '$(HUMANKIND_REFERENCED_LIBRARIES_PATH)' == '' ">..\..\References</HUMANKIND_REFERENCED_LIBRARIES_PATH>
@@ -31,396 +58,396 @@
     <PreserveCompilationContext>false</PreserveCompilationContext>
     <AppendTargetFrameworkToOutputPath>false</AppendTargetFrameworkToOutputPath>
     <OutputPath>$(OUTPUT_PATH)</OutputPath>
-    <DebugType>embedded</DebugType>
+    <DebugType>portable</DebugType>
     <DebugSymbols>false</DebugSymbols>
     <DebugSymbols Condition=" '$(Configuration)' == 'Debug' ">true</DebugSymbols>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
-    <DocumentationFile>C:\Users\R. Beltran\Documents\Humankind Mod Tool\Projects\Modding.Humankind.DevTools\Modding.Humankind.DevTools.xml</DocumentationFile>
+    <DocumentationFile>.\Modding.Humankind.DevTools.xml</DocumentationFile>
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="BepInEx">
-      <HintPath>S:\Games\HUMANKIND\BepInEx\core\BepInEx.dll</HintPath>
+      <HintPath>$(HUMANKIND_GAME_PATH)\BepInEx\core\BepInEx.dll</HintPath>
       <Private>false</Private>
     </Reference>
     <Reference Include="0Harmony">
-      <HintPath>S:\Games\HUMANKIND\BepInEx\core\0Harmony.dll</HintPath>
+      <HintPath>$(HUMANKIND_GAME_PATH)\BepInEx\core\0Harmony.dll</HintPath>
       <Private>false</Private>
     </Reference>
     <Reference Include="Amplitude.AI">
-      <HintPath>..\..\References\Amplitude.AI.dll</HintPath>
+      <HintPath>$(HUMANKIND_REFERENCED_LIBRARIES_PATH)\Amplitude.AI.dll</HintPath>
       <Private>false</Private>
     </Reference>
     <Reference Include="Amplitude.Core">
-      <HintPath>..\..\References\Amplitude.Core.dll</HintPath>
+      <HintPath>$(HUMANKIND_REFERENCED_LIBRARIES_PATH)\Amplitude.Core.dll</HintPath>
       <Private>false</Private>
     </Reference>
     <Reference Include="Amplitude">
-      <HintPath>..\..\References\Amplitude.dll</HintPath>
+      <HintPath>$(HUMANKIND_REFERENCED_LIBRARIES_PATH)\Amplitude.dll</HintPath>
       <Private>false</Private>
     </Reference>
     <Reference Include="Amplitude.EGS">
-      <HintPath>..\..\References\Amplitude.EGS.dll</HintPath>
+      <HintPath>$(HUMANKIND_REFERENCED_LIBRARIES_PATH)\Amplitude.EGS.dll</HintPath>
       <Private>false</Private>
     </Reference>
     <Reference Include="Amplitude.Framework">
-      <HintPath>..\..\References\Amplitude.Framework.dll</HintPath>
+      <HintPath>$(HUMANKIND_REFERENCED_LIBRARIES_PATH)\Amplitude.Framework.dll</HintPath>
       <Private>false</Private>
     </Reference>
     <Reference Include="Amplitude.Graphics">
-      <HintPath>..\..\References\Amplitude.Graphics.dll</HintPath>
+      <HintPath>$(HUMANKIND_REFERENCED_LIBRARIES_PATH)\Amplitude.Graphics.dll</HintPath>
       <Private>false</Private>
     </Reference>
     <Reference Include="Amplitude.IO">
-      <HintPath>..\..\References\Amplitude.IO.dll</HintPath>
+      <HintPath>$(HUMANKIND_REFERENCED_LIBRARIES_PATH)\Amplitude.IO.dll</HintPath>
       <Private>false</Private>
     </Reference>
     <Reference Include="Amplitude.Mercury.AI.Brain">
-      <HintPath>..\..\References\Amplitude.Mercury.AI.Brain.dll</HintPath>
+      <HintPath>$(HUMANKIND_REFERENCED_LIBRARIES_PATH)\Amplitude.Mercury.AI.Brain.dll</HintPath>
       <Private>false</Private>
     </Reference>
     <Reference Include="Amplitude.Mercury.Animation">
-      <HintPath>..\..\References\Amplitude.Mercury.Animation.dll</HintPath>
+      <HintPath>$(HUMANKIND_REFERENCED_LIBRARIES_PATH)\Amplitude.Mercury.Animation.dll</HintPath>
       <Private>false</Private>
     </Reference>
     <Reference Include="Amplitude.Mercury.Data">
-      <HintPath>..\..\References\Amplitude.Mercury.Data.dll</HintPath>
+      <HintPath>$(HUMANKIND_REFERENCED_LIBRARIES_PATH)\Amplitude.Mercury.Data.dll</HintPath>
       <Private>false</Private>
     </Reference>
     <Reference Include="Amplitude.Mercury.Firstpass">
-      <HintPath>..\..\References\Amplitude.Mercury.Firstpass.dll</HintPath>
+      <HintPath>$(HUMANKIND_REFERENCED_LIBRARIES_PATH)\Amplitude.Mercury.Firstpass.dll</HintPath>
       <Private>false</Private>
     </Reference>
     <Reference Include="Amplitude.Mercury.Fx">
-      <HintPath>..\..\References\Amplitude.Mercury.Fx.dll</HintPath>
+      <HintPath>$(HUMANKIND_REFERENCED_LIBRARIES_PATH)\Amplitude.Mercury.Fx.dll</HintPath>
       <Private>false</Private>
     </Reference>
     <Reference Include="Amplitude.Mercury.Terrain">
-      <HintPath>..\..\References\Amplitude.Mercury.Terrain.dll</HintPath>
+      <HintPath>$(HUMANKIND_REFERENCED_LIBRARIES_PATH)\Amplitude.Mercury.Terrain.dll</HintPath>
       <Private>false</Private>
     </Reference>
     <Reference Include="Amplitude.Mercury.WorldGenerator">
-      <HintPath>..\..\References\Amplitude.Mercury.WorldGenerator.dll</HintPath>
+      <HintPath>$(HUMANKIND_REFERENCED_LIBRARIES_PATH)\Amplitude.Mercury.WorldGenerator.dll</HintPath>
       <Private>false</Private>
     </Reference>
     <Reference Include="Amplitude.Photon">
-      <HintPath>..\..\References\Amplitude.Photon.dll</HintPath>
+      <HintPath>$(HUMANKIND_REFERENCED_LIBRARIES_PATH)\Amplitude.Photon.dll</HintPath>
       <Private>false</Private>
     </Reference>
     <Reference Include="Amplitude.Platforms.XGP">
-      <HintPath>..\..\References\Amplitude.Platforms.XGP.dll</HintPath>
+      <HintPath>$(HUMANKIND_REFERENCED_LIBRARIES_PATH)\Amplitude.Platforms.XGP.dll</HintPath>
       <Private>false</Private>
     </Reference>
     <Reference Include="Amplitude.Steamworks">
-      <HintPath>..\..\References\Amplitude.Steamworks.dll</HintPath>
+      <HintPath>$(HUMANKIND_REFERENCED_LIBRARIES_PATH)\Amplitude.Steamworks.dll</HintPath>
       <Private>false</Private>
     </Reference>
     <Reference Include="Amplitude.UI">
-      <HintPath>..\..\References\Amplitude.UI.dll</HintPath>
+      <HintPath>$(HUMANKIND_REFERENCED_LIBRARIES_PATH)\Amplitude.UI.dll</HintPath>
       <Private>false</Private>
     </Reference>
     <Reference Include="Assembly-CSharp-firstpass">
-      <HintPath>..\..\References\Assembly-CSharp-firstpass.dll</HintPath>
+      <HintPath>$(HUMANKIND_REFERENCED_LIBRARIES_PATH)\Assembly-CSharp-firstpass.dll</HintPath>
       <Private>false</Private>
     </Reference>
     <Reference Include="Assembly-CSharp">
-      <HintPath>..\..\References\Assembly-CSharp.dll</HintPath>
+      <HintPath>$(HUMANKIND_REFERENCED_LIBRARIES_PATH)\Assembly-CSharp.dll</HintPath>
       <Private>false</Private>
     </Reference>
     <Reference Include="Sirenix.OdinInspector.Attributes">
-      <HintPath>..\..\References\Sirenix.OdinInspector.Attributes.dll</HintPath>
+      <HintPath>$(HUMANKIND_REFERENCED_LIBRARIES_PATH)\Sirenix.OdinInspector.Attributes.dll</HintPath>
       <Private>false</Private>
     </Reference>
     <Reference Include="Sirenix.OdinInspector.CompatibilityLayer">
-      <HintPath>..\..\References\Sirenix.OdinInspector.CompatibilityLayer.dll</HintPath>
+      <HintPath>$(HUMANKIND_REFERENCED_LIBRARIES_PATH)\Sirenix.OdinInspector.CompatibilityLayer.dll</HintPath>
       <Private>false</Private>
     </Reference>
     <Reference Include="Sirenix.Serialization.AOTGenerated">
-      <HintPath>..\..\References\Sirenix.Serialization.AOTGenerated.dll</HintPath>
+      <HintPath>$(HUMANKIND_REFERENCED_LIBRARIES_PATH)\Sirenix.Serialization.AOTGenerated.dll</HintPath>
       <Private>false</Private>
     </Reference>
     <Reference Include="Sirenix.Serialization.Config">
-      <HintPath>..\..\References\Sirenix.Serialization.Config.dll</HintPath>
+      <HintPath>$(HUMANKIND_REFERENCED_LIBRARIES_PATH)\Sirenix.Serialization.Config.dll</HintPath>
       <Private>false</Private>
     </Reference>
     <Reference Include="Sirenix.Serialization">
-      <HintPath>..\..\References\Sirenix.Serialization.dll</HintPath>
+      <HintPath>$(HUMANKIND_REFERENCED_LIBRARIES_PATH)\Sirenix.Serialization.dll</HintPath>
       <Private>false</Private>
     </Reference>
     <Reference Include="Sirenix.Utilities">
-      <HintPath>..\..\References\Sirenix.Utilities.dll</HintPath>
+      <HintPath>$(HUMANKIND_REFERENCED_LIBRARIES_PATH)\Sirenix.Utilities.dll</HintPath>
       <Private>false</Private>
     </Reference>
     <Reference Include="Unity.Cecil">
-      <HintPath>..\..\References\Unity.Cecil.dll</HintPath>
+      <HintPath>$(HUMANKIND_REFERENCED_LIBRARIES_PATH)\Unity.Cecil.dll</HintPath>
       <Private>false</Private>
     </Reference>
     <Reference Include="Unity.TextMeshPro">
-      <HintPath>..\..\References\Unity.TextMeshPro.dll</HintPath>
+      <HintPath>$(HUMANKIND_REFERENCED_LIBRARIES_PATH)\Unity.TextMeshPro.dll</HintPath>
       <Private>false</Private>
     </Reference>
     <Reference Include="UnityEngine.AccessibilityModule">
-      <HintPath>..\..\References\UnityEngine.AccessibilityModule.dll</HintPath>
+      <HintPath>$(HUMANKIND_REFERENCED_LIBRARIES_PATH)\UnityEngine.AccessibilityModule.dll</HintPath>
       <Private>false</Private>
     </Reference>
     <Reference Include="UnityEngine.AIModule">
-      <HintPath>..\..\References\UnityEngine.AIModule.dll</HintPath>
+      <HintPath>$(HUMANKIND_REFERENCED_LIBRARIES_PATH)\UnityEngine.AIModule.dll</HintPath>
       <Private>false</Private>
     </Reference>
     <Reference Include="UnityEngine.AndroidJNIModule">
-      <HintPath>..\..\References\UnityEngine.AndroidJNIModule.dll</HintPath>
+      <HintPath>$(HUMANKIND_REFERENCED_LIBRARIES_PATH)\UnityEngine.AndroidJNIModule.dll</HintPath>
       <Private>false</Private>
     </Reference>
     <Reference Include="UnityEngine.AnimationModule">
-      <HintPath>..\..\References\UnityEngine.AnimationModule.dll</HintPath>
+      <HintPath>$(HUMANKIND_REFERENCED_LIBRARIES_PATH)\UnityEngine.AnimationModule.dll</HintPath>
       <Private>false</Private>
     </Reference>
     <Reference Include="UnityEngine.ARModule">
-      <HintPath>..\..\References\UnityEngine.ARModule.dll</HintPath>
+      <HintPath>$(HUMANKIND_REFERENCED_LIBRARIES_PATH)\UnityEngine.ARModule.dll</HintPath>
       <Private>false</Private>
     </Reference>
     <Reference Include="UnityEngine.AssetBundleModule">
-      <HintPath>..\..\References\UnityEngine.AssetBundleModule.dll</HintPath>
+      <HintPath>$(HUMANKIND_REFERENCED_LIBRARIES_PATH)\UnityEngine.AssetBundleModule.dll</HintPath>
       <Private>false</Private>
     </Reference>
     <Reference Include="UnityEngine.AudioModule">
-      <HintPath>..\..\References\UnityEngine.AudioModule.dll</HintPath>
+      <HintPath>$(HUMANKIND_REFERENCED_LIBRARIES_PATH)\UnityEngine.AudioModule.dll</HintPath>
       <Private>false</Private>
     </Reference>
     <Reference Include="UnityEngine.ClothModule">
-      <HintPath>..\..\References\UnityEngine.ClothModule.dll</HintPath>
+      <HintPath>$(HUMANKIND_REFERENCED_LIBRARIES_PATH)\UnityEngine.ClothModule.dll</HintPath>
       <Private>false</Private>
     </Reference>
     <Reference Include="UnityEngine.ClusterInputModule">
-      <HintPath>..\..\References\UnityEngine.ClusterInputModule.dll</HintPath>
+      <HintPath>$(HUMANKIND_REFERENCED_LIBRARIES_PATH)\UnityEngine.ClusterInputModule.dll</HintPath>
       <Private>false</Private>
     </Reference>
     <Reference Include="UnityEngine.ClusterRendererModule">
-      <HintPath>..\..\References\UnityEngine.ClusterRendererModule.dll</HintPath>
+      <HintPath>$(HUMANKIND_REFERENCED_LIBRARIES_PATH)\UnityEngine.ClusterRendererModule.dll</HintPath>
       <Private>false</Private>
     </Reference>
     <Reference Include="UnityEngine.CoreModule">
-      <HintPath>..\..\References\UnityEngine.CoreModule.dll</HintPath>
+      <HintPath>$(HUMANKIND_REFERENCED_LIBRARIES_PATH)\UnityEngine.CoreModule.dll</HintPath>
       <Private>false</Private>
     </Reference>
     <Reference Include="UnityEngine.CrashReportingModule">
-      <HintPath>..\..\References\UnityEngine.CrashReportingModule.dll</HintPath>
+      <HintPath>$(HUMANKIND_REFERENCED_LIBRARIES_PATH)\UnityEngine.CrashReportingModule.dll</HintPath>
       <Private>false</Private>
     </Reference>
     <Reference Include="UnityEngine.DirectorModule">
-      <HintPath>..\..\References\UnityEngine.DirectorModule.dll</HintPath>
+      <HintPath>$(HUMANKIND_REFERENCED_LIBRARIES_PATH)\UnityEngine.DirectorModule.dll</HintPath>
       <Private>false</Private>
     </Reference>
     <Reference Include="UnityEngine">
-      <HintPath>..\..\References\UnityEngine.dll</HintPath>
+      <HintPath>$(HUMANKIND_REFERENCED_LIBRARIES_PATH)\UnityEngine.dll</HintPath>
       <Private>false</Private>
     </Reference>
     <Reference Include="UnityEngine.DSPGraphModule">
-      <HintPath>..\..\References\UnityEngine.DSPGraphModule.dll</HintPath>
+      <HintPath>$(HUMANKIND_REFERENCED_LIBRARIES_PATH)\UnityEngine.DSPGraphModule.dll</HintPath>
       <Private>false</Private>
     </Reference>
     <Reference Include="UnityEngine.GameCenterModule">
-      <HintPath>..\..\References\UnityEngine.GameCenterModule.dll</HintPath>
+      <HintPath>$(HUMANKIND_REFERENCED_LIBRARIES_PATH)\UnityEngine.GameCenterModule.dll</HintPath>
       <Private>false</Private>
     </Reference>
     <Reference Include="UnityEngine.GIModule">
-      <HintPath>..\..\References\UnityEngine.GIModule.dll</HintPath>
+      <HintPath>$(HUMANKIND_REFERENCED_LIBRARIES_PATH)\UnityEngine.GIModule.dll</HintPath>
       <Private>false</Private>
     </Reference>
     <Reference Include="UnityEngine.GridModule">
-      <HintPath>..\..\References\UnityEngine.GridModule.dll</HintPath>
+      <HintPath>$(HUMANKIND_REFERENCED_LIBRARIES_PATH)\UnityEngine.GridModule.dll</HintPath>
       <Private>false</Private>
     </Reference>
     <Reference Include="UnityEngine.HotReloadModule">
-      <HintPath>..\..\References\UnityEngine.HotReloadModule.dll</HintPath>
+      <HintPath>$(HUMANKIND_REFERENCED_LIBRARIES_PATH)\UnityEngine.HotReloadModule.dll</HintPath>
       <Private>false</Private>
     </Reference>
     <Reference Include="UnityEngine.ImageConversionModule">
-      <HintPath>..\..\References\UnityEngine.ImageConversionModule.dll</HintPath>
+      <HintPath>$(HUMANKIND_REFERENCED_LIBRARIES_PATH)\UnityEngine.ImageConversionModule.dll</HintPath>
       <Private>false</Private>
     </Reference>
     <Reference Include="UnityEngine.IMGUIModule">
-      <HintPath>..\..\References\UnityEngine.IMGUIModule.dll</HintPath>
+      <HintPath>$(HUMANKIND_REFERENCED_LIBRARIES_PATH)\UnityEngine.IMGUIModule.dll</HintPath>
       <Private>false</Private>
     </Reference>
     <Reference Include="UnityEngine.InputLegacyModule">
-      <HintPath>..\..\References\UnityEngine.InputLegacyModule.dll</HintPath>
+      <HintPath>$(HUMANKIND_REFERENCED_LIBRARIES_PATH)\UnityEngine.InputLegacyModule.dll</HintPath>
       <Private>false</Private>
     </Reference>
     <Reference Include="UnityEngine.InputModule">
-      <HintPath>..\..\References\UnityEngine.InputModule.dll</HintPath>
+      <HintPath>$(HUMANKIND_REFERENCED_LIBRARIES_PATH)\UnityEngine.InputModule.dll</HintPath>
       <Private>false</Private>
     </Reference>
     <Reference Include="UnityEngine.JSONSerializeModule">
-      <HintPath>..\..\References\UnityEngine.JSONSerializeModule.dll</HintPath>
+      <HintPath>$(HUMANKIND_REFERENCED_LIBRARIES_PATH)\UnityEngine.JSONSerializeModule.dll</HintPath>
       <Private>false</Private>
     </Reference>
     <Reference Include="UnityEngine.LocalizationModule">
-      <HintPath>..\..\References\UnityEngine.LocalizationModule.dll</HintPath>
+      <HintPath>$(HUMANKIND_REFERENCED_LIBRARIES_PATH)\UnityEngine.LocalizationModule.dll</HintPath>
       <Private>false</Private>
     </Reference>
     <Reference Include="UnityEngine.ParticleSystemModule">
-      <HintPath>..\..\References\UnityEngine.ParticleSystemModule.dll</HintPath>
+      <HintPath>$(HUMANKIND_REFERENCED_LIBRARIES_PATH)\UnityEngine.ParticleSystemModule.dll</HintPath>
       <Private>false</Private>
     </Reference>
     <Reference Include="UnityEngine.PerformanceReportingModule">
-      <HintPath>..\..\References\UnityEngine.PerformanceReportingModule.dll</HintPath>
+      <HintPath>$(HUMANKIND_REFERENCED_LIBRARIES_PATH)\UnityEngine.PerformanceReportingModule.dll</HintPath>
       <Private>false</Private>
     </Reference>
     <Reference Include="UnityEngine.Physics2DModule">
-      <HintPath>..\..\References\UnityEngine.Physics2DModule.dll</HintPath>
+      <HintPath>$(HUMANKIND_REFERENCED_LIBRARIES_PATH)\UnityEngine.Physics2DModule.dll</HintPath>
       <Private>false</Private>
     </Reference>
     <Reference Include="UnityEngine.PhysicsModule">
-      <HintPath>..\..\References\UnityEngine.PhysicsModule.dll</HintPath>
+      <HintPath>$(HUMANKIND_REFERENCED_LIBRARIES_PATH)\UnityEngine.PhysicsModule.dll</HintPath>
       <Private>false</Private>
     </Reference>
     <Reference Include="UnityEngine.ProfilerModule">
-      <HintPath>..\..\References\UnityEngine.ProfilerModule.dll</HintPath>
+      <HintPath>$(HUMANKIND_REFERENCED_LIBRARIES_PATH)\UnityEngine.ProfilerModule.dll</HintPath>
       <Private>false</Private>
     </Reference>
     <Reference Include="UnityEngine.RuntimeInitializeOnLoadManagerInitializerModule">
-      <HintPath>..\..\References\UnityEngine.RuntimeInitializeOnLoadManagerInitializerModule.dll</HintPath>
+      <HintPath>$(HUMANKIND_REFERENCED_LIBRARIES_PATH)\UnityEngine.RuntimeInitializeOnLoadManagerInitializerModule.dll</HintPath>
       <Private>false</Private>
     </Reference>
     <Reference Include="UnityEngine.ScreenCaptureModule">
-      <HintPath>..\..\References\UnityEngine.ScreenCaptureModule.dll</HintPath>
+      <HintPath>$(HUMANKIND_REFERENCED_LIBRARIES_PATH)\UnityEngine.ScreenCaptureModule.dll</HintPath>
       <Private>false</Private>
     </Reference>
     <Reference Include="UnityEngine.SharedInternalsModule">
-      <HintPath>..\..\References\UnityEngine.SharedInternalsModule.dll</HintPath>
+      <HintPath>$(HUMANKIND_REFERENCED_LIBRARIES_PATH)\UnityEngine.SharedInternalsModule.dll</HintPath>
       <Private>false</Private>
     </Reference>
     <Reference Include="UnityEngine.SpriteMaskModule">
-      <HintPath>..\..\References\UnityEngine.SpriteMaskModule.dll</HintPath>
+      <HintPath>$(HUMANKIND_REFERENCED_LIBRARIES_PATH)\UnityEngine.SpriteMaskModule.dll</HintPath>
       <Private>false</Private>
     </Reference>
     <Reference Include="UnityEngine.SpriteShapeModule">
-      <HintPath>..\..\References\UnityEngine.SpriteShapeModule.dll</HintPath>
+      <HintPath>$(HUMANKIND_REFERENCED_LIBRARIES_PATH)\UnityEngine.SpriteShapeModule.dll</HintPath>
       <Private>false</Private>
     </Reference>
     <Reference Include="UnityEngine.StreamingModule">
-      <HintPath>..\..\References\UnityEngine.StreamingModule.dll</HintPath>
+      <HintPath>$(HUMANKIND_REFERENCED_LIBRARIES_PATH)\UnityEngine.StreamingModule.dll</HintPath>
       <Private>false</Private>
     </Reference>
     <Reference Include="UnityEngine.SubstanceModule">
-      <HintPath>..\..\References\UnityEngine.SubstanceModule.dll</HintPath>
+      <HintPath>$(HUMANKIND_REFERENCED_LIBRARIES_PATH)\UnityEngine.SubstanceModule.dll</HintPath>
       <Private>false</Private>
     </Reference>
     <Reference Include="UnityEngine.SubsystemsModule">
-      <HintPath>..\..\References\UnityEngine.SubsystemsModule.dll</HintPath>
+      <HintPath>$(HUMANKIND_REFERENCED_LIBRARIES_PATH)\UnityEngine.SubsystemsModule.dll</HintPath>
       <Private>false</Private>
     </Reference>
     <Reference Include="UnityEngine.TerrainModule">
-      <HintPath>..\..\References\UnityEngine.TerrainModule.dll</HintPath>
+      <HintPath>$(HUMANKIND_REFERENCED_LIBRARIES_PATH)\UnityEngine.TerrainModule.dll</HintPath>
       <Private>false</Private>
     </Reference>
     <Reference Include="UnityEngine.TerrainPhysicsModule">
-      <HintPath>..\..\References\UnityEngine.TerrainPhysicsModule.dll</HintPath>
+      <HintPath>$(HUMANKIND_REFERENCED_LIBRARIES_PATH)\UnityEngine.TerrainPhysicsModule.dll</HintPath>
       <Private>false</Private>
     </Reference>
     <Reference Include="UnityEngine.TextCoreModule">
-      <HintPath>..\..\References\UnityEngine.TextCoreModule.dll</HintPath>
+      <HintPath>$(HUMANKIND_REFERENCED_LIBRARIES_PATH)\UnityEngine.TextCoreModule.dll</HintPath>
       <Private>false</Private>
     </Reference>
     <Reference Include="UnityEngine.TextRenderingModule">
-      <HintPath>..\..\References\UnityEngine.TextRenderingModule.dll</HintPath>
+      <HintPath>$(HUMANKIND_REFERENCED_LIBRARIES_PATH)\UnityEngine.TextRenderingModule.dll</HintPath>
       <Private>false</Private>
     </Reference>
     <Reference Include="UnityEngine.TilemapModule">
-      <HintPath>..\..\References\UnityEngine.TilemapModule.dll</HintPath>
+      <HintPath>$(HUMANKIND_REFERENCED_LIBRARIES_PATH)\UnityEngine.TilemapModule.dll</HintPath>
       <Private>false</Private>
     </Reference>
     <Reference Include="UnityEngine.TLSModule">
-      <HintPath>..\..\References\UnityEngine.TLSModule.dll</HintPath>
+      <HintPath>$(HUMANKIND_REFERENCED_LIBRARIES_PATH)\UnityEngine.TLSModule.dll</HintPath>
       <Private>false</Private>
     </Reference>
     <Reference Include="UnityEngine.UI">
-      <HintPath>..\..\References\UnityEngine.UI.dll</HintPath>
+      <HintPath>$(HUMANKIND_REFERENCED_LIBRARIES_PATH)\UnityEngine.UI.dll</HintPath>
       <Private>false</Private>
     </Reference>
     <Reference Include="UnityEngine.UIElementsModule">
-      <HintPath>..\..\References\UnityEngine.UIElementsModule.dll</HintPath>
+      <HintPath>$(HUMANKIND_REFERENCED_LIBRARIES_PATH)\UnityEngine.UIElementsModule.dll</HintPath>
       <Private>false</Private>
     </Reference>
     <Reference Include="UnityEngine.UIElementsNativeModule">
-      <HintPath>..\..\References\UnityEngine.UIElementsNativeModule.dll</HintPath>
+      <HintPath>$(HUMANKIND_REFERENCED_LIBRARIES_PATH)\UnityEngine.UIElementsNativeModule.dll</HintPath>
       <Private>false</Private>
     </Reference>
     <Reference Include="UnityEngine.UIModule">
-      <HintPath>..\..\References\UnityEngine.UIModule.dll</HintPath>
+      <HintPath>$(HUMANKIND_REFERENCED_LIBRARIES_PATH)\UnityEngine.UIModule.dll</HintPath>
       <Private>false</Private>
     </Reference>
     <Reference Include="UnityEngine.UmbraModule">
-      <HintPath>..\..\References\UnityEngine.UmbraModule.dll</HintPath>
+      <HintPath>$(HUMANKIND_REFERENCED_LIBRARIES_PATH)\UnityEngine.UmbraModule.dll</HintPath>
       <Private>false</Private>
     </Reference>
     <Reference Include="UnityEngine.UNETModule">
-      <HintPath>..\..\References\UnityEngine.UNETModule.dll</HintPath>
+      <HintPath>$(HUMANKIND_REFERENCED_LIBRARIES_PATH)\UnityEngine.UNETModule.dll</HintPath>
       <Private>false</Private>
     </Reference>
     <Reference Include="UnityEngine.UnityAnalyticsModule">
-      <HintPath>..\..\References\UnityEngine.UnityAnalyticsModule.dll</HintPath>
+      <HintPath>$(HUMANKIND_REFERENCED_LIBRARIES_PATH)\UnityEngine.UnityAnalyticsModule.dll</HintPath>
       <Private>false</Private>
     </Reference>
     <Reference Include="UnityEngine.UnityConnectModule">
-      <HintPath>..\..\References\UnityEngine.UnityConnectModule.dll</HintPath>
+      <HintPath>$(HUMANKIND_REFERENCED_LIBRARIES_PATH)\UnityEngine.UnityConnectModule.dll</HintPath>
       <Private>false</Private>
     </Reference>
     <Reference Include="UnityEngine.UnityCurlModule">
-      <HintPath>..\..\References\UnityEngine.UnityCurlModule.dll</HintPath>
+      <HintPath>$(HUMANKIND_REFERENCED_LIBRARIES_PATH)\UnityEngine.UnityCurlModule.dll</HintPath>
       <Private>false</Private>
     </Reference>
     <Reference Include="UnityEngine.UnityTestProtocolModule">
-      <HintPath>..\..\References\UnityEngine.UnityTestProtocolModule.dll</HintPath>
+      <HintPath>$(HUMANKIND_REFERENCED_LIBRARIES_PATH)\UnityEngine.UnityTestProtocolModule.dll</HintPath>
       <Private>false</Private>
     </Reference>
     <Reference Include="UnityEngine.UnityWebRequestAssetBundleModule">
-      <HintPath>..\..\References\UnityEngine.UnityWebRequestAssetBundleModule.dll</HintPath>
+      <HintPath>$(HUMANKIND_REFERENCED_LIBRARIES_PATH)\UnityEngine.UnityWebRequestAssetBundleModule.dll</HintPath>
       <Private>false</Private>
     </Reference>
     <Reference Include="UnityEngine.UnityWebRequestAudioModule">
-      <HintPath>..\..\References\UnityEngine.UnityWebRequestAudioModule.dll</HintPath>
+      <HintPath>$(HUMANKIND_REFERENCED_LIBRARIES_PATH)\UnityEngine.UnityWebRequestAudioModule.dll</HintPath>
       <Private>false</Private>
     </Reference>
     <Reference Include="UnityEngine.UnityWebRequestModule">
-      <HintPath>..\..\References\UnityEngine.UnityWebRequestModule.dll</HintPath>
+      <HintPath>$(HUMANKIND_REFERENCED_LIBRARIES_PATH)\UnityEngine.UnityWebRequestModule.dll</HintPath>
       <Private>false</Private>
     </Reference>
     <Reference Include="UnityEngine.UnityWebRequestTextureModule">
-      <HintPath>..\..\References\UnityEngine.UnityWebRequestTextureModule.dll</HintPath>
+      <HintPath>$(HUMANKIND_REFERENCED_LIBRARIES_PATH)\UnityEngine.UnityWebRequestTextureModule.dll</HintPath>
       <Private>false</Private>
     </Reference>
     <Reference Include="UnityEngine.UnityWebRequestWWWModule">
-      <HintPath>..\..\References\UnityEngine.UnityWebRequestWWWModule.dll</HintPath>
+      <HintPath>$(HUMANKIND_REFERENCED_LIBRARIES_PATH)\UnityEngine.UnityWebRequestWWWModule.dll</HintPath>
       <Private>false</Private>
     </Reference>
     <Reference Include="UnityEngine.VehiclesModule">
-      <HintPath>..\..\References\UnityEngine.VehiclesModule.dll</HintPath>
+      <HintPath>$(HUMANKIND_REFERENCED_LIBRARIES_PATH)\UnityEngine.VehiclesModule.dll</HintPath>
       <Private>false</Private>
     </Reference>
     <Reference Include="UnityEngine.VFXModule">
-      <HintPath>..\..\References\UnityEngine.VFXModule.dll</HintPath>
+      <HintPath>$(HUMANKIND_REFERENCED_LIBRARIES_PATH)\UnityEngine.VFXModule.dll</HintPath>
       <Private>false</Private>
     </Reference>
     <Reference Include="UnityEngine.VideoModule">
-      <HintPath>..\..\References\UnityEngine.VideoModule.dll</HintPath>
+      <HintPath>$(HUMANKIND_REFERENCED_LIBRARIES_PATH)\UnityEngine.VideoModule.dll</HintPath>
       <Private>false</Private>
     </Reference>
     <Reference Include="UnityEngine.VirtualTexturingModule">
-      <HintPath>..\..\References\UnityEngine.VirtualTexturingModule.dll</HintPath>
+      <HintPath>$(HUMANKIND_REFERENCED_LIBRARIES_PATH)\UnityEngine.VirtualTexturingModule.dll</HintPath>
       <Private>false</Private>
     </Reference>
     <Reference Include="UnityEngine.VRModule">
-      <HintPath>..\..\References\UnityEngine.VRModule.dll</HintPath>
+      <HintPath>$(HUMANKIND_REFERENCED_LIBRARIES_PATH)\UnityEngine.VRModule.dll</HintPath>
       <Private>false</Private>
     </Reference>
     <Reference Include="UnityEngine.WindModule">
-      <HintPath>..\..\References\UnityEngine.WindModule.dll</HintPath>
+      <HintPath>$(HUMANKIND_REFERENCED_LIBRARIES_PATH)\UnityEngine.WindModule.dll</HintPath>
       <Private>false</Private>
     </Reference>
     <Reference Include="UnityEngine.XRModule">
-      <HintPath>..\..\References\UnityEngine.XRModule.dll</HintPath>
+      <HintPath>$(HUMANKIND_REFERENCED_LIBRARIES_PATH)\UnityEngine.XRModule.dll</HintPath>
       <Private>false</Private>
     </Reference>
   </ItemGroup>
