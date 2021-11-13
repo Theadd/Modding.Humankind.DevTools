@@ -15,12 +15,8 @@
     <Message Text="HUMANKIND_GAME_PATH is $(HUMANKIND_GAME_PATH)" />
     <Message Text="HUMANKIND_REFERENCED_LIBRARIES_PATH is $(HUMANKIND_REFERENCED_LIBRARIES_PATH)" />
     <Message Text="Compile item type contains @(Compile, '%0A%0D')" />
-    <!--<Exec Command="MSBuildProjectDefaultTargets"-->
   </Target>
   <Target Name="CustomAfterRebuild" AfterTargets="Rebuild">
-    <Message Text="WOLOLOOOOOOOOOOOOOOOOOOO!!!" />
-    <Message Text="WOLOLOOOOOOOOOOOOOOOOOOO222!!!" />
-    <Message Text="WOLOLOOOOOOOOOOOOOOOOOOO!!! $(DebugSymbols)" />
     <PropertyGroup>
       <GenDocsDir>.\gen-docs\</GenDocsDir>
       <GenDocsResourcesDir>.\gen-docs\resources\</GenDocsResourcesDir>

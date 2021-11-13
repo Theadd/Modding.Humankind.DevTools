@@ -13,3 +13,6 @@ TEMP/
 /gen-docs/
 /Modding.Humankind.DevTools.xml
 /docgen.sh
+
+# User-specific config file
+/Directory.Build.props
