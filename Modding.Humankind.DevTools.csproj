@@ -1,12 +1,39 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<Project Sdk="Microsoft.NET.Sdk">
+<Project InitialTargets="SetupFirst" Sdk="Microsoft.NET.Sdk">
+  <Target Name="SetupFirst">
+    <Message Text="Configuration is $(Configuration)" />
+    <PropertyGroup>
+      <DefaultRelativeOutputPath>\BepInEx\plugins</DefaultRelativeOutputPath>
+      <DefaultRelativeOutputPath Condition=" '$(Configuration)' == 'Debug' ">\BepInEx\scripts</DefaultRelativeOutputPath>
+      <RELATIVE_OUTPUT_PATH Condition=" '$(RELATIVE_OUTPUT_PATH)' == '' ">$(DefaultRelativeOutputPath)</RELATIVE_OUTPUT_PATH>
+      <OUTPUT_PATH>$(HUMANKIND_GAME_PATH)$(RELATIVE_OUTPUT_PATH)</OUTPUT_PATH>
+    </PropertyGroup>
+    <Error Condition="!Exists('$(OUTPUT_PATH)')" Text="Are the environment variables required for this build correctly set? Target output path, which should point to ...\BepInEx\plugins or ...\BepInEx\scripts folder within your game installation path does NOT exists: $(OUTPUT_PATH)" />
+    <Message Text="MSBuildToolsPath is $(MSBuildToolsPath)" />
+    <Message Text="MSBuildProjectDefaultTargets is $(MSBuildProjectDefaultTargets)" />
+    <Message Text="RELATIVE_OUTPUT_PATH is $(RELATIVE_OUTPUT_PATH)" />
+    <Message Text="HUMANKIND_GAME_PATH is $(HUMANKIND_GAME_PATH)" />
+    <Message Text="HUMANKIND_REFERENCED_LIBRARIES_PATH is $(HUMANKIND_REFERENCED_LIBRARIES_PATH)" />
+    <Message Text="Compile item type contains @(Compile, '%0A%0D')" />
+    <!--<Exec Command="MSBuildProjectDefaultTargets"-->
+  </Target>
   <PropertyGroup>
-    <TargetFrameworks>netstandard2.0;net471</TargetFrameworks>
+    <HUMANKIND_GAME_PATH Condition=" '$(HUMANKIND_GAME_PATH)' == '' ">S:\Games\HUMANKIND</HUMANKIND_GAME_PATH>
+    <HUMANKIND_REFERENCED_LIBRARIES_PATH Condition=" '$(HUMANKIND_REFERENCED_LIBRARIES_PATH)' == '' ">..\..\References</HUMANKIND_REFERENCED_LIBRARIES_PATH>
+    <HUMANKIND_REFERENCED_LIBRARIES_PATH Condition="!Exists('$(HUMANKIND_REFERENCED_LIBRARIES_PATH)')">$(USERPROFILE)\Documents\Humankind Mod Tool\References</HUMANKIND_REFERENCED_LIBRARIES_PATH>
+  </PropertyGroup>
+  <PropertyGroup>
+    <ResolveAssemblyWarnOrErrorOnTargetArchitectureMismatch>None</ResolveAssemblyWarnOrErrorOnTargetArchitectureMismatch>
+  </PropertyGroup>
+  <PropertyGroup>
+    <TargetFramework>net471</TargetFramework>
     <Platforms>AnyCPU</Platforms>
     <PreserveCompilationContext>false</PreserveCompilationContext>
     <AppendTargetFrameworkToOutputPath>false</AppendTargetFrameworkToOutputPath>
-    <OutputPath>S:\Games\HUMANKIND\BepInEx\scripts</OutputPath>
+    <OutputPath>$(OUTPUT_PATH)</OutputPath>
     <DebugType>embedded</DebugType>
+    <DebugSymbols>false</DebugSymbols>
+    <DebugSymbols Condition=" '$(Configuration)' == 'Debug' ">true</DebugSymbols>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
     <DocumentationFile>C:\Users\R. Beltran\Documents\Humankind Mod Tool\Projects\Modding.Humankind.DevTools\Modding.Humankind.DevTools.xml</DocumentationFile>

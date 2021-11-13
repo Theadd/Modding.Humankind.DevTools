@@ -1,0 +1,27 @@
+<Project>
+  <!--
+    * Do not add a trailing slash in any path defined here.
+    * Write paths as is, no need for quotes of any kind, no escaping either.
+  -->
+  <PropertyGroup>
+    <!-- 
+      Full path to Humankind installation directory, ex: C:\Games\Humankind
+    -->
+    <HUMANKIND_GAME_PATH></HUMANKIND_GAME_PATH>
+    <!-- 
+      Where to place compiled DLL, added at the end of HUMANKIND_GAME_PATH.
+      If not specified, defaults to \BepInEx\scripts when building Configuration is set
+       to Debug. Otherwise, to \BepInEx\plugins
+    -->
+    <RELATIVE_OUTPUT_PATH></RELATIVE_OUTPUT_PATH>
+    <!-- 
+      Path to look for reference assemblies (game DLLs), since [Humankind Mod Tool] provides 
+      a one-click way to decompile game binaries and copies all its DLLs in a single place, 
+      it defaults to that location if no path is provided here.
+      First looks for the relative path to ..\..\References in the case you cloned the repo 
+      in some folder within Humankind Mod Tools directory. Otherwise, attempts an absolute
+      path there. 
+    -->
+    <HUMANKIND_REFERENCED_LIBRARIES_PATH></HUMANKIND_REFERENCED_LIBRARIES_PATH>
+  </PropertyGroup>
+</Project>
