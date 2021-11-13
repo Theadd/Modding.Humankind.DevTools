@@ -16,3 +16,5 @@ TEMP/
 
 # User-specific config file
 /Directory.Build.props
+Directory.Build.props
+./Directory.Build.props
