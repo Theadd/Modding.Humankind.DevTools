@@ -9,7 +9,7 @@ This guide is only intended for those who want to contribute in the development 
 #### Prerequisites
 
 <sub></sub>
-* Requires `Visual Studio 2019 Community Edition` or **newer**. 
+* Requires MSBuild v16 or greater to build, an easy way to get it is to install `Visual Studio 2019` or **newer** if you don't have it already. 
 <br/><kbd>Latest `Visual Studio Community Edition` can be downloaded [here](https://visualstudio.microsoft.com/vs/community/).</kbd>
 
 #### Clone and build
