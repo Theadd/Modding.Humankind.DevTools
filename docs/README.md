@@ -1,2 +1,0 @@
-# Humankind DevTools - API DOCS
-
