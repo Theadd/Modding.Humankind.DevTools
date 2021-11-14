@@ -8,7 +8,7 @@ namespace Modding.Humankind.DevTools
 
     [BepInPlugin(PLUGIN_GUID, "DevTools", "1.3.0.0")]
     [BepInIncompatibility("AOM.Humankind.Teams")]
-    public class DevTools : BaseUnityPlugin
+    internal class DevTools : BaseUnityPlugin
     {
         const string PLUGIN_GUID = "Modding.Humankind.DevTools";
 
@@ -16,13 +16,10 @@ namespace Modding.Humankind.DevTools
 
         public static bool IncludeExternalModules = true;
 
-        // public static DevTools Instance;
-
         private Harmony _harmony;
 
         private void Awake()
         {
-            // Instance = this;
             Log = Logger;
             
             _harmony = new Harmony(PLUGIN_GUID);
@@ -41,7 +38,6 @@ namespace Modding.Humankind.DevTools
             GameController.Unload();
             ActionManager.Unload();
             Loggr.Debug("Unloaded DevTools Framework.");
-            // Instance = null;
         }
     }
 }
