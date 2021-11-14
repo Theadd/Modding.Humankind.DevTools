@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <title>Document</title>
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+  <meta name="description" content="Description">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/docsify-themeable@0/dist/css/theme-simple-dark.css">
+  <style>
+    /* docsify-themeable - search plugin */
+    :root {
+      --search-background: ;
+      --search-margin: 1.5rem 0 0;
+      --search-padding: ;
+
+      /* Clear Button */
+      --search-clear-icon-color1: ;
+      --search-clear-icon-color2: ;
+
+      /* Input */
+      --search-input-background-color: ;
+      --search-input-background-color--focus: ;
+      --search-input-background-image: ;
+      --search-input-background-image--focus: ;
+      --search-input-background-position: ;
+      --search-input-background-position--focus: ;
+      --search-input-background-repeat: no-repeat;
+      --search-input-background-size: ;
+      --search-input-background-size--focus: ;
+      --search-input-border-color: var(--mono-tint1);
+      --search-input-border-radius: ;
+      --search-input-border-width: 1px;
+      --search-input-color: ;
+      --search-input-font-size: ;
+      --search-input-margin: ;
+      --search-input-padding: 0.5em;
+      --search-input-placeholder-color: ;
+      --search-input-transition: ;
+
+      /* Order */
+      --search-flex-order: 1;
+
+      /* Results */
+      --search-result-heading-color: var(--heading-color);
+      --search-result-heading-font-size: var(--base-font-size);
+      --search-result-heading-font-weight: normal;
+      --search-result-heading-margin: 0 0 0.25em;
+      --search-result-item-border-color: var(--mono-tint2);
+      --search-result-item-border-style: solid;
+      --search-result-item-border-width: 0 0 1px 0;
+      --search-result-item-color: ;
+      --search-result-item-font-size: ;
+      --search-result-item-font-weight: normal;
+      --search-result-item-margin: ;
+      --search-result-item-padding: 1em 0;
+      --search-result-keyword-background: var(--mark-background);
+      --search-result-keyword-border-radius: var(--border-radius-s);
+      --search-result-keyword-color: var(--mark-color);
+      --search-result-keyword-font-weight: normal;
+      --search-result-keyword-margin: 0 0.1em;
+      --search-result-keyword-padding: 0.2em 0;
+    }
+  </style>
+  <!--
+    PrismJS theme: https://cdn.jsdelivr.net/npm/prismjs@1.25.0/themes/prism-dark.css
+    Available PrismJS themes: https://cdn.jsdelivr.net/npm/prismjs/themes/
+  -->
+</head>
+
+<body>
+  <div id="app"></div>
+  <script>
+    window.$docsify = {
+      name: 'Humankind DevTools',
+      repo: 'https://github.com/Theadd/Modding.Humankind.DevTools/',
+      loadSidebar: true,
+      search: 'auto',
+      themeable: {
+        responsiveTables: true // default
+      },
+      markdown: {
+        smartypants: false,
+        renderer: {},
+        sanitize: false,
+        sanitizer: str => str,
+        silent: false,
+        gfm: true
+      }
+    }
+  </script>
+  <!-- Docsify v4 -->
+  <script src="//cdn.jsdelivr.net/npm/docsify/lib/docsify.min.js"></script>
+  <script src="//cdn.jsdelivr.net/npm/docsify/lib/plugins/search.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/docsify-themeable@0/dist/js/docsify-themeable.min.js"></script>
+  <script src="//unpkg.com/prismjs/components/prism-powershell.min.js"></script>
+  <script src="//unpkg.com/prismjs/components/prism-csharp.min.js"></script>
+</body>
+
+</html>

@@ -9,7 +9,7 @@ This guide is only intended for those who want to contribute in the development 
 #### Prerequisites
 
 <sub></sub>
-* Requires MSBuild v16 or greater to build, an easy way to get it is to install `Visual Studio 2019` or **newer** if you don't have it already. 
+* Requires `MSBuild 16` or greater to build, an easy way to get it is to install `Visual Studio 2019` or **newer** if you don't have it already. 
 <br/><kbd>Latest `Visual Studio Community Edition` can be downloaded [here](https://visualstudio.microsoft.com/vs/community/).</kbd>
 
 #### Clone and build
@@ -19,13 +19,13 @@ This guide is only intended for those who want to contribute in the development 
 
 * __Clone the repo:__
 
-    ```ps1
+    ```powershell
     git clone https://github.com/Theadd/Modding.Humankind.DevTools.git
     ```
 
 * __Open it and restore dotnet local files:__ 
 
-    ```ps1
+    ```powershell
     cd Modding.Humankind.DevTools
     dotnet restore
     ```
