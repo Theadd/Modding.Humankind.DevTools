@@ -46,7 +46,7 @@ namespace Modding.Humankind.DevTools
         ///     Returns an integer representing current's game speed, values range from 1 to 7 where 2 is Endless game
         ///     speed and 6 is Blitz game speed. 1 and 7 were introduced in case the user is playing with a modded game
         ///     where speed value multipliers make it faster than blitz (7) or slower than endless (1).
-        ///     Test: <see href="GameSpeedLevel.md">GameSpeedLevel</see> and <see cref="GameSpeedLevel">GameSpeedLevel</see>.
+        ///     See <see href="GameSpeedLevel.md">GameSpeedLevel</see>.
         /// </summary>
         public static int GameSpeedLevel => GameUtils.GetGameSpeedLevel();
 

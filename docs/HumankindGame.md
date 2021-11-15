@@ -27,7 +27,7 @@ public static HumankindEmpire[] Empires
 </td><td align="left" valign="top">
 
 ### Empires
-
+<img src="./resources/getter.svg" alt="Getter" height="16px"/><br/>
 An array of `HumankindEmpire`'s present in the current game, if any.</td></tr>
 <tr><td align="left" valign="top">
 
@@ -37,7 +37,7 @@ public static int GameID
 </td><td align="left" valign="top">
 
 ### GameID
-
+<img src="./resources/getter.svg" alt="Getter" height="16px"/><br/>
 A unique number for every started new game.</td></tr>
 <tr><td align="left" valign="top">
 
@@ -47,7 +47,7 @@ public static GameSpeedDefinition GameSpeedDefinition
 </td><td align="left" valign="top">
 
 ### GameSpeedDefinition
-
+<img src="./resources/getter.svg" alt="Getter" height="16px"/><br/>
 Gets current game's `GameSpeedDefinition` declared in `Amplitude.Mercury.Data.Simulation` namespace.</td></tr>
 <tr><td align="left" valign="top">
 
@@ -57,8 +57,8 @@ public static int GameSpeedLevel
 </td><td align="left" valign="top">
 
 ### GameSpeedLevel
-
-Returns an integer representing current's game speed, values range from 1 to 7 where 2 is Endless game speed and 6 is Blitz game speed. 1 and 7 were introduced in case the user is playing with a modded game where speed value multipliers make it faster than blitz (7) or slower than endless (1). Test: [GameSpeedLevel](GameSpeedLevel.md 'GameSpeedLevel.md') and [GameSpeedLevel](HumankindGame_GameSpeedLevel.md 'Modding.Humankind.DevTools.HumankindGame.GameSpeedLevel').</td></tr>
+<img src="./resources/getter.svg" alt="Getter" height="16px"/><br/>
+Returns an integer representing current's game speed, values range from 1 to 7 where 2 is Endless game speed and 6 is Blitz game speed. 1 and 7 were introduced in case the user is playing with a modded game where speed value multipliers make it faster than blitz (7) or slower than endless (1). See [GameSpeedLevel](GameSpeedLevel.md 'GameSpeedLevel.md').</td></tr>
 <tr><td align="left" valign="top">
 
 ```csharp
@@ -67,7 +67,7 @@ public static bool IsGameLoaded
 </td><td align="left" valign="top">
 
 ### IsGameLoaded
-
+<img src="./resources/getter.svg" alt="Getter" height="16px"/><br/>
 Whether a game is fully loaded and ready to play with.</td></tr>
 <tr><td align="left" valign="top">
 
@@ -77,7 +77,7 @@ public static bool IsNewGame
 </td><td align="left" valign="top">
 
 ### IsNewGame
-
+<img src="./resources/getter.svg" alt="Getter" height="16px"/><br/>
 Whether current game (if any) is a continuation of a previously saved game or a newly started one.</td></tr>
 <tr><td align="left" valign="top">
 
@@ -87,7 +87,7 @@ public static int Turn
 </td><td align="left" valign="top">
 
 ### Turn
-
+<img src="./resources/getter.svg" alt="Getter" height="16px"/><br/>
 Current game's turn,</td></tr>
 <tr><td align="left" valign="top">
 
@@ -108,10 +108,10 @@ public static event Action OnNewTurnStart;
 
 ### OnNewTurnStart
 <img src="./resources/event.svg" alt="Event" height="16px"/><br/>
-Add/Remove Action handlers to be called at the start of every turn.<br/><sub><details open><summary><code>REMARKS</code></summary><ul>
+Add/Remove Action handlers to be called at the start of every turn.<details open><summary><code>REMARKS</code></summary><ul>
 <li>
 
 All registered actions are automatically removed when game unloads and before a game loads.</li>
-</ul></details></sub>
+</ul></details>
 </td></tr>
 </tbody></table>
