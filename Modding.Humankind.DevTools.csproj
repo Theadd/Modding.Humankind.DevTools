@@ -16,7 +16,7 @@
     <Message Text="HUMANKIND_REFERENCED_LIBRARIES_PATH is $(HUMANKIND_REFERENCED_LIBRARIES_PATH)" />
     <Message Text="Compile item type contains @(Compile, '%0A%0D')" />
   </Target>
-  <Target Name="CustomAfterRebuild" AfterTargets="Rebuild">
+  <Target Name="CustomAfterRebuild" AfterTargets="Rebuild" Condition=" '$(Configuration)' == 'Debug' ">
     <PropertyGroup>
       <GenDocsDir>.\gen-docs\</GenDocsDir>
       <GenDocsResourcesDir>.\gen-docs\resources\</GenDocsResourcesDir>
@@ -25,7 +25,7 @@
       <TargetBinPath>.\bin\Debug\</TargetBinPath>
       <TargetBinPath Condition=" '$(Configuration)' == 'Release' ">.\bin\Release\</TargetBinPath>
       <CustomDocumentationTool>.\bin\GenerateDocsTool\DefaultDocumentation.Console.exe</CustomDocumentationTool>
-      <DocsPagesDir>.\docs\pages\</DocsPagesDir>
+      <DocsPagesDir>.\docs\</DocsPagesDir>
     </PropertyGroup>
     <ItemGroup>
       <TargetBinFiles Include="$(TargetBinPath)\*.*"/>
@@ -44,6 +44,9 @@
     <HUMANKIND_GAME_PATH Condition=" '$(HUMANKIND_GAME_PATH)' == '' ">S:\Games\HUMANKIND</HUMANKIND_GAME_PATH>
     <HUMANKIND_REFERENCED_LIBRARIES_PATH Condition=" '$(HUMANKIND_REFERENCED_LIBRARIES_PATH)' == '' ">..\..\References</HUMANKIND_REFERENCED_LIBRARIES_PATH>
     <HUMANKIND_REFERENCED_LIBRARIES_PATH Condition="!Exists('$(HUMANKIND_REFERENCED_LIBRARIES_PATH)')">$(USERPROFILE)\Documents\Humankind Mod Tool\References</HUMANKIND_REFERENCED_LIBRARIES_PATH>
+  </PropertyGroup>
+  <PropertyGroup>
+    <NoWarn>$(NoWarn);CS1591</NoWarn>
   </PropertyGroup>
   <PropertyGroup>
     <ResolveAssemblyWarnOrErrorOnTargetArchitectureMismatch>None</ResolveAssemblyWarnOrErrorOnTargetArchitectureMismatch>

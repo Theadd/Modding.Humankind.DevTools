@@ -1,0 +1,15 @@
+
+- [Home](/)
+- **Mod Development Guide**
+  - [Getting Started](GETTING_STARTED_GUIDE.md "Getting Started Guide")
+- **DevTools Contributing Guide**
+  - [Getting Started](CONTRIBUTING_GUIDE.md "Contributing Guide")
+- **[API DOCS](API_DOCS.md)**
+  - <small>CLASSES</small>
+  - [HumankindEmpire](HumankindEmpire.md)
+  - [HumankindGame](HumankindGame.md)
+  - <small>ATTRIBUTES</small>
+  - [DevToolsModule](DevToolsModuleAttribute.md)
+  - [InGameKeyboardShortcut](InGameKeyboardShortcutAttribute.md)
+  - [OnGameHasLoaded](OnGameHasLoadedAttribute.md)
+  - [OnGameHasUnloaded](OnGameHasUnloadedAttribute.md)

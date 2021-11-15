@@ -1,31 +1,29 @@
-# Contributing Guide
+# Contributing - Getting Started
 
 This guide is only intended for those who want to contribute in the development of this project, since **in order to develop game mods, this steps are not necessary**.
 
-## Getting Started
+## Building from sources
 
-### Building from sources
-
-#### Prerequisites
+### Prerequisites
 
 <sub></sub>
-* Requires `Visual Studio 2019 Community Edition` or **newer**. 
+* Requires `MSBuild 16` or greater to build, an easy way to get it is to install `Visual Studio 2019` or **newer** if you don't have it already. 
 <br/><kbd>Latest `Visual Studio Community Edition` can be downloaded [here](https://visualstudio.microsoft.com/vs/community/).</kbd>
 
-#### Clone and build
+### Clone and build
 
 <sub></sub>
 * __Open__ `Developer Command Prompt for VS 20XX` __by pressing the__ <kbd><sub><img src="https://img.icons8.com/ultraviolet/50/000000/windows-10.png" height="14px"/></sub> Win</kbd> __key and start typing its name.__
 
 * __Clone the repo:__
 
-    ```ps1
+    ```bash
     git clone https://github.com/Theadd/Modding.Humankind.DevTools.git
     ```
 
 * __Open it and restore dotnet local files:__ 
 
-    ```ps1
+    ```bash
     cd Modding.Humankind.DevTools
     dotnet restore
     ```
@@ -34,7 +32,7 @@ This guide is only intended for those who want to contribute in the development 
 
     First, create the local config file by making a copy of the provided one.
 
-    ```ps1
+    ```bash
     copy Directory.Build.props.default Directory.Build.props
     ```
 
@@ -43,6 +41,6 @@ This guide is only intended for those who want to contribute in the development 
 
 * __That's it! You can build the project in your IDE of choice or by typing the following in the__ `Developer Command Prompt for VS 20XX`:
 
-    ```ps1
+    ```bash
     msbuild -p:Configuration=Release 
     ```

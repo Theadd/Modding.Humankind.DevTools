@@ -25,8 +25,8 @@ namespace Modding.Humankind.DevTools
             ActionName = actionName;
         }
 
-        public KeyboardShortcut Key { get; }
+        internal KeyboardShortcut Key { get; }
         
-        public string ActionName { get; }
+        internal string ActionName { get; }
     }
 }
