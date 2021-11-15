@@ -8,8 +8,8 @@ namespace Modding.Humankind.DevTools
 {
     /// <summary>
     ///     A simplified interface (Facade) that masks a complex underlying structure of game classes
-    ///     in a single, simplified and well documented class to access and, where possible, edit most
-    ///     significant values related to a game Empire.
+    /// in a single, simplified and well documented class to access and, where possible, edit most
+    /// significant values related to a game Empire.
     /// </summary>
     public class HumankindEmpire : EmpireAbstraction, IEmpireDiplomacy, IMilitary, IResearch, IEmpireEconomy, IAIPersona, IEmpireExpansion
     {

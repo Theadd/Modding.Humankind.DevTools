@@ -1,7 +1,6 @@
 # **OnGameHasLoadedAttribute Class**
 
-Any static method with the `OnGameHasLoaded` annotation will be called everytime a game has loaded and it  
-is ready to play.
+Any static method with the `OnGameHasLoaded` annotation will be called everytime a game has loaded and it is ready to play.
 
 ```csharp
 public class OnGameHasLoadedAttribute : Attribute

@@ -25,7 +25,7 @@
       <TargetBinPath>.\bin\Debug\</TargetBinPath>
       <TargetBinPath Condition=" '$(Configuration)' == 'Release' ">.\bin\Release\</TargetBinPath>
       <CustomDocumentationTool>.\bin\GenerateDocsTool\DefaultDocumentation.Console.exe</CustomDocumentationTool>
-      <DocsPagesDir>.\docs\pages\</DocsPagesDir>
+      <DocsPagesDir>.\docs\</DocsPagesDir>
     </PropertyGroup>
     <ItemGroup>
       <TargetBinFiles Include="$(TargetBinPath)\*.*"/>
