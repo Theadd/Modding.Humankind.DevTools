@@ -18,7 +18,7 @@ namespace Modding.Humankind.DevTools
         /// <summary>
         ///     Position of this empire within current game's array of empires.
         /// </summary>
-        public int EmpireIndex => MajorEmpire.EmpireIndex;
+        public int EmpireIndex => MajorEmpireEntity.EmpireIndex;
 
         /// <summary>
         ///     Total Fame currently accumulated by this empire.
@@ -28,7 +28,7 @@ namespace Modding.Humankind.DevTools
         /// <summary>
         ///     Number of technologies already researched by this empire.
         /// </summary>
-        public int CompletedTechnologiesCount => MajorEmpire.CompletedTechnologyCount;
+        public int CompletedTechnologiesCount => MajorEmpireEntity.CompletedTechnologyCount;
 
         /// <summary>
         ///     Number of technological eras available ahead.
@@ -63,7 +63,7 @@ namespace Modding.Humankind.DevTools
         /// <summary>
         ///     Number of outposts currently controlled by this empire.
         /// </summary>
-        public int OutpostCount => MajorEmpire.Camps.Length;
+        public int OutpostCount => MajorEmpireEntity.Camps.Length;
 
         /// <summary>
         ///     Number of cities currently controlled by this empire.
@@ -93,7 +93,7 @@ namespace Modding.Humankind.DevTools
         /// <summary>
         ///     Number of armies controlled by this empire.
         /// </summary>
-        public int ArmyCount => MajorEmpire.Armies.Length;
+        public int ArmyCount => MajorEmpireEntity.Armies.Length;
 
         /// <summary>
         ///     Number of armies controlled by this empire.
@@ -130,7 +130,7 @@ namespace Modding.Humankind.DevTools
         /// <summary>
         ///     Computed empire's current military power.
         /// </summary>
-        public int CombatStrength => (int) MajorEmpire.CombatStrength;
+        public int CombatStrength => (int) MajorEmpireEntity.CombatStrength;
 
         /// <summary>
         ///     Sum of trade nodes.
@@ -458,7 +458,7 @@ namespace Modding.Humankind.DevTools
         {
             return new HumankindEmpire
             {
-                MajorEmpire = fromMajorEmpire,
+                MajorEmpireEntity = fromMajorEmpire,
                 MajorEmpireSimulation = Sandbox.MajorEmpires[fromMajorEmpire.EmpireIndex]
             };
         }

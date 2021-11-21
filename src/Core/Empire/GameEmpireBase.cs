@@ -6,8 +6,8 @@ namespace Modding.Humankind.DevTools.Core
 {
     public abstract class GameEmpireBase
     {
-        protected MajorEmpire MajorEmpire { get; set; }
+        protected MajorEmpire MajorEmpireEntity { get; set; }
         protected Amplitude.Mercury.Simulation.MajorEmpire MajorEmpireSimulation { get; set; }
-        public IReadOnlyList<HumankindSettlement> Settlements => new SettlementList(MajorEmpire, MajorEmpireSimulation);
+        public IReadOnlyList<HumankindSettlement> Settlements => new SettlementList(MajorEmpireEntity, MajorEmpireSimulation);
     }
 }

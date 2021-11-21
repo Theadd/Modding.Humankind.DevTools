@@ -17,10 +17,10 @@ namespace Modding.Humankind.DevTools
         {
             get
             {
-                if (Settlement.WorldPosition != SettlementEntity.Position)
+                if (SettlementSimulation.WorldPosition != SettlementEntity.Position)
                     Loggr.LogError("WORLD POSITIONS DIFFER!!");
 
-                return Settlement.WorldPosition;
+                return SettlementSimulation.WorldPosition;
             }
         }
 
@@ -40,14 +40,14 @@ namespace Modding.Humankind.DevTools
 
         public int Population
         {
-            get => (int)Settlement.Population.Value;
-            set => AddOrRemovePopulation(value - ((int) Settlement.Population.Value));
+            get => (int)SettlementSimulation.Population.Value;
+            set => AddOrRemovePopulation(value - ((int) SettlementSimulation.Population.Value));
         }
 
         public new Unit BuildUnit(UnitDefinition unitDefinition) => base.BuildUnit(unitDefinition);
         
         public static HumankindSettlement Create(Settlement settlementEntity, Amplitude.Mercury.Simulation.Settlement settlement) =>
-            new HumankindSettlement { SettlementEntity = settlementEntity, Settlement = settlement };
+            new HumankindSettlement { SettlementEntity = settlementEntity, SettlementSimulation = settlement };
 
         public bool Equals(HumankindSettlement other) =>
             other != null && WorldPosition.ToTileIndex() == other.WorldPosition.ToTileIndex();

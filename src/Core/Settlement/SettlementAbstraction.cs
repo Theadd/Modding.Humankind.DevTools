@@ -12,11 +12,11 @@ namespace Modding.Humankind.DevTools.Core
         protected void AddOrRemovePopulation(int population, bool raiseSimulationEvents = true)
         {
             R.Methods.AddOrRemovePopulationToSettlementMethod.Invoke(Empire.DepartmentOfTheInterior,
-                new object[] {FixedPoint.Zero + population, Settlement, raiseSimulationEvents});
+                new object[] {FixedPoint.Zero + population, SettlementSimulation, raiseSimulationEvents});
         }
 
         protected Unit BuildUnit(UnitDefinition unitDefinition) =>
             (Unit) R.Methods.BuildUnitAtMethod.Invoke(Empire.DepartmentOfDefense,
-                new object[] {unitDefinition, Settlement});
+                new object[] {unitDefinition, SettlementSimulation});
     }
 }
