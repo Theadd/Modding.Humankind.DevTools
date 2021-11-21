@@ -142,7 +142,7 @@ namespace Modding.Humankind.DevTools
         public int Stability => (int) MajorEmpireSimulation.Stability.Value;
 
         /// <summary>
-        ///     This empire's current Era as number, where 1 is Neolithic.
+        ///     This empire's current Era as number, where 0 is Neolithic.
         /// </summary>
         public int EraLevel => (int) MajorEmpireSimulation.EraLevel.Value;
 
@@ -417,6 +417,15 @@ namespace Modding.Humankind.DevTools
         /// </summary>
         /// <param name="enable">Whether to enable or disable it.</param>
         public new void EnableFogOfWar(bool enable) => base.EnableFogOfWar(enable);
+
+        /// <summary>
+        ///     TODO: Add XML comments for AddResearchCostModifier
+        /// </summary>
+        /// <param name="costModifierValue"></param>
+        /// <param name="operationType"></param>
+        public new void AddResearchCostModifier(float costModifierValue,
+            CostModifierDefinition.OperationTypes operationType) =>
+            base.AddResearchCostModifier(costModifierValue, operationType);
         
         // TODO: What is this for?
         public int IndustryWorkplaceBonusGain

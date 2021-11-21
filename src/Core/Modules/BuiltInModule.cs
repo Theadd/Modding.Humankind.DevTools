@@ -101,6 +101,13 @@ namespace Modding.Humankind.DevTools.Core
             HumankindGame.Empires[_targetEmpireIndex].EnableFogOfWar(false);
         }
         
+        [InGameKeyboardShortcut("Add100ToResearchCostModifierToAllTechnologiesOfSelectedEmpire", KeyCode.W, KeyCode.LeftControl)]
+        public static void Add100ToResearchCostModifierToSelectedEmpire()
+        {
+            HumankindGame.Empires[_targetEmpireIndex]
+                .AddResearchCostModifier(100f, CostModifierDefinition.OperationTypes.Add);
+        }
+        
         public static void SetTargetEmpire(int empireIndex)
         {
             Loggr.Log("SELECTED EMPIRE = [" + empireIndex + "] " + HumankindGame.Empires[empireIndex].PersonaName,
