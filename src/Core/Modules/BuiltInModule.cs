@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Linq;
 using Amplitude.Mercury.Data.Simulation;
 using BepInEx.Configuration;
 using UnityEngine;
@@ -122,6 +123,51 @@ namespace Modding.Humankind.DevTools.Core
                 .AddConstructibleCostModifier(0.5f, CostModifierDefinition.OperationTypes.Mult);
         }
         
+        [InGameKeyboardShortcut("PrintSettlementsOfSelectedEmpire", KeyCode.S, KeyCode.LeftShift)]
+        public static void PrintSettlementsOfSelectedEmpire()
+        {
+            foreach (var settlement in HumankindGame.Empires[_targetEmpireIndex].Settlements)
+            {
+                Loggr.Log("Settlement @ Tile: " + settlement.WorldPosition.ToTileIndex(), ConsoleColor.Cyan);
+                Loggr.Log("EmpireIndex: " + settlement.EmpireIndex, ConsoleColor.Cyan);
+                Loggr.Log("Type: " + (settlement.IsCity ? "CITY" : settlement.IsOutpost ? "OUTPOST" : "--OTHER--"), ConsoleColor.Cyan);
+                Loggr.Log("IsCapital: " + settlement.IsCapital, ConsoleColor.Cyan);
+                Loggr.Log("TerritoryCount: " + settlement.Territories.Length, ConsoleColor.Cyan);
+                Loggr.Log("ArmiesCount: " + settlement.Armies.Count(), ConsoleColor.Cyan);
+                Loggr.Log(" ", ConsoleColor.Cyan);
+            }
+        }
+        
+        [InGameKeyboardShortcut("IncreasePopulationByOneInCitiesOfSelectedEmpire", KeyCode.B, KeyCode.LeftShift)]
+        public static void IncreasePopulationByOneInCitiesOfSelectedEmpire()
+        {
+            foreach (var city in HumankindGame.Empires[_targetEmpireIndex].Settlements.Where(settlement => settlement.IsCity))
+            {
+                city.Population += 1;
+            }
+        }
+        
+        [InGameKeyboardShortcut("PrintUnitDefinitionsInDatabase", KeyCode.U, KeyCode.LeftShift)]
+        public static void PrintUnitDefinitionsInDatabase()
+        {
+            foreach (var unit in QuickAccess.UnitDefinitions)
+            {
+                Loggr.Log("UNIT: " + unit.name + " | FAMILY: " + unit.Family + " | SPAWN TYPE: " + unit.SpawnType.ToString(), ConsoleColor.Yellow);
+            }
+        }
+        [InGameKeyboardShortcut("SpawnUnitInAllCitiesOfSelectedEmpire", KeyCode.I, KeyCode.LeftShift)]
+        public static void SpawnUnitInAllCitiesOfSelectedEmpire()
+        {
+            var commonWarriors = QuickAccess.UnitDefinitions
+                .Where(unit => unit.name == "LandUnit_Era6_Common_HelicopterGunships")
+                .ElementAtOrDefault(0);
+            
+            foreach (var city in HumankindGame.Empires[_targetEmpireIndex].Settlements.Where(settlement => settlement.IsCity))
+            {
+                city.BuildUnit(commonWarriors);
+            }
+        }
+
         public static void SetTargetEmpire(int empireIndex)
         {
             Loggr.Log("SELECTED EMPIRE = [" + empireIndex + "] " + HumankindGame.Empires[empireIndex].PersonaName,

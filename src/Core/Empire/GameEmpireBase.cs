@@ -1,4 +1,6 @@
-﻿using Amplitude.Mercury.Interop.AI.Entities;
+﻿using System.Collections.Generic;
+using System.Runtime.CompilerServices;
+using Amplitude.Mercury.Interop.AI.Entities;
 
 namespace Modding.Humankind.DevTools.Core
 {
@@ -6,5 +8,6 @@ namespace Modding.Humankind.DevTools.Core
     {
         protected MajorEmpire MajorEmpire { get; set; }
         protected Amplitude.Mercury.Simulation.MajorEmpire MajorEmpireSimulation { get; set; }
+        public IReadOnlyList<HumankindSettlement> Settlements => new SettlementList(MajorEmpire, MajorEmpireSimulation);
     }
 }

@@ -1,8 +1,9 @@
 ﻿using Amplitude.Mercury.Data.AI;
 using Amplitude.Mercury.Data.Simulation;
-using Amplitude.Mercury.Interop.AI.Entities;
 using Amplitude.Mercury.Sandbox;
+using Amplitude.Mercury.Simulation;
 using Modding.Humankind.DevTools.Core;
+using MajorEmpire = Amplitude.Mercury.Interop.AI.Entities.MajorEmpire;
 
 namespace Modding.Humankind.DevTools
 {
@@ -444,6 +445,14 @@ namespace Modding.Humankind.DevTools
             set => R.Fields.FixedPointRawValueField.SetValue(MajorEmpireSimulation.IndustryWorkplaceBonusGain,
                 value * 1000);
         }
+
+        public new DepartmentOfTheTreasury DepartmentOfTheTreasury => base.DepartmentOfTheTreasury;
+        public new DepartmentOfScience DepartmentOfScience => base.DepartmentOfScience;
+        public new DepartmentOfCulture DepartmentOfCulture => base.DepartmentOfCulture;
+        public new DepartmentOfForeignAffairs DepartmentOfForeignAffairs => base.DepartmentOfForeignAffairs;
+        public new DepartmentOfDevelopment DepartmentOfDevelopment => base.DepartmentOfDevelopment;
+        public new DepartmentOfTheInterior DepartmentOfTheInterior => base.DepartmentOfTheInterior;
+        public new DepartmentOfDefense DepartmentOfDefense => base.DepartmentOfDefense;
         
         public static HumankindEmpire Create(MajorEmpire fromMajorEmpire)
         {

@@ -146,6 +146,10 @@ namespace Modding.Humankind.DevTools.Core
         protected DepartmentOfTheInterior DepartmentOfTheInterior =>
             (DepartmentOfTheInterior) R.Fields.DepartmentOfTheInteriorField.GetValue(MajorEmpireSimulation);
 
+        protected DepartmentOfDefense DepartmentOfDefense =>
+            (DepartmentOfDefense) R.Fields.DepartmentOfDefenseField.GetValue(MajorEmpireSimulation);
+
+        
         // Other empire's values
         protected string PersonaName => (string) R.Fields.PersonaNameField.GetValue(MajorEmpireSimulation);
         
