@@ -89,7 +89,7 @@ namespace Modding.Humankind.DevTools.Core
         {
             ResearchCostModifierDefinition orderInstance =
                 ScriptableObject.CreateInstance<ResearchCostModifierDefinition>();
-            
+
             orderInstance.TargetType = ResearchCostModifierDefinition.TechnologyTargetTypes.AllTechnologies;
             orderInstance.ApplyIfCostZero = true;
             orderInstance.CanBeCumulated = true;
@@ -98,7 +98,26 @@ namespace Modding.Humankind.DevTools.Core
             orderInstance.IsObsolete = false;
             orderInstance.OperationType = operationType;
 
-            DepartmentOfTheTreasury.AddCostModifierToMajorEmpire(orderInstance);
+            R.Methods.AddCostModifierToMajorEmpireMethod.Invoke(DepartmentOfTheTreasury,
+                new object[] {orderInstance});
+        }
+        
+        protected void AddConstructibleCostModifier(float costModifierValue,
+            CostModifierDefinition.OperationTypes operationType)
+        {
+            ConstructibleCostModifierDefinition orderInstance =
+                ScriptableObject.CreateInstance<ConstructibleCostModifierDefinition>();
+
+            orderInstance.TargetType = ConstructibleCostModifierDefinition.TargetTypes.AllConstructibles;
+            orderInstance.ApplyIfCostZero = true;
+            orderInstance.CanBeCumulated = true;
+            orderInstance.CostModifierValue = FixedPoint.Zero + costModifierValue;
+            orderInstance.CostType = CostModifierDefinition.CostTypes.Production;
+            orderInstance.IsObsolete = false;
+            orderInstance.OperationType = operationType;
+
+            R.Methods.AddCostModifierToMajorEmpireMethod.Invoke(DepartmentOfTheTreasury,
+                new object[] {orderInstance});
         }
 
         # endregion Protected method calls

@@ -427,6 +427,15 @@ namespace Modding.Humankind.DevTools
             CostModifierDefinition.OperationTypes operationType) =>
             base.AddResearchCostModifier(costModifierValue, operationType);
         
+        /// <summary>
+        ///     TODO: Add XML comments for AddConstructibleCostModifier
+        /// </summary>
+        /// <param name="costModifierValue"></param>
+        /// <param name="operationType"></param>
+        public new void AddConstructibleCostModifier(float costModifierValue,
+            CostModifierDefinition.OperationTypes operationType) =>
+            base.AddConstructibleCostModifier(costModifierValue, operationType);
+        
         // TODO: What is this for?
         public int IndustryWorkplaceBonusGain
         {

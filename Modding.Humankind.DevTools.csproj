@@ -30,6 +30,7 @@
     <ItemGroup>
       <TargetBinFiles Include="$(TargetBinPath)\*.*"/>
       <GeneratedDocsFiles Include="./gen-docs/generated-allpages/GameSpeedLevel.md;./gen-docs/generated/InGameKeyboardShortcutAttribute.md;./gen-docs/generated/DevToolsModuleAttribute.md;./gen-docs/generated/OnGameHasLoadedAttribute.md;./gen-docs/generated/OnGameHasUnloadedAttribute.md;./gen-docs/generated-allpages/HumankindEmpire.md;./gen-docs/generated-allpages/HumankindGame.md"/>
+      <DevToolsBinary Include="$(TargetBinPath)\Modding.Humankind.DevTools.dll"/>
     </ItemGroup>
     <MakeDir Directories="$(GenDocsDir)" />
     <MakeDir Directories="$(GenDocsResourcesDir)" />
@@ -39,6 +40,7 @@
     <Exec Command="$(CustomDocumentationTool) -a ./gen-docs/resources/Modding.Humankind.DevTools.dll --FileNameFactory Name -g Types -n DevTools -o ./gen-docs/generated/ -p ./"/>
     <Exec Command="$(CustomDocumentationTool) -a ./gen-docs/resources/Modding.Humankind.DevTools.dll --FileNameFactory Name -n DevTools -o ./gen-docs/generated-allpages/ -p ./"/>
     <Copy SourceFiles="@(GeneratedDocsFiles)" DestinationFolder="$(DocsPagesDir)" />
+    <Copy SourceFiles="@(DevToolsBinary)" DestinationFolder="$(OUTPUT_PATH)\" />
   </Target>
   <PropertyGroup>
     <HUMANKIND_GAME_PATH Condition=" '$(HUMANKIND_GAME_PATH)' == '' ">S:\Games\HUMANKIND</HUMANKIND_GAME_PATH>

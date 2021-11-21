@@ -108,6 +108,20 @@ namespace Modding.Humankind.DevTools.Core
                 .AddResearchCostModifier(100f, CostModifierDefinition.OperationTypes.Add);
         }
         
+        [InGameKeyboardShortcut("Add100ToConstructibleCostModifierOfSelectedEmpire", KeyCode.Q, KeyCode.LeftControl)]
+        public static void Add100ToConstructibleCostModifierOfSelectedEmpire()
+        {
+            HumankindGame.Empires[_targetEmpireIndex]
+                .AddConstructibleCostModifier(100f, CostModifierDefinition.OperationTypes.Add);
+        }
+        
+        [InGameKeyboardShortcut("ReduceTo50PercentTheConstructibleCostModifierOfSelectedEmpire", KeyCode.Q, KeyCode.LeftShift)]
+        public static void ReduceTo50PercentTheConstructibleCostModifierOfSelectedEmpire()
+        {
+            HumankindGame.Empires[_targetEmpireIndex]
+                .AddConstructibleCostModifier(0.5f, CostModifierDefinition.OperationTypes.Mult);
+        }
+        
         public static void SetTargetEmpire(int empireIndex)
         {
             Loggr.Log("SELECTED EMPIRE = [" + empireIndex + "] " + HumankindGame.Empires[empireIndex].PersonaName,

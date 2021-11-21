@@ -30,7 +30,7 @@ public int EraLevel
 
 ### EraLevel
 <img src="./resources/getter.svg" alt="Getter" height="16px"/><br/>
-This empire's current Era as number, where 1 is Neolithic.</td></tr>
+This empire's current Era as number, where 0 is Neolithic.</td></tr>
 <tr><td align="left" valign="top">
 
 ```csharp
