@@ -1,4 +1,5 @@
-﻿using Amplitude.Mercury.Data.AI;
+﻿using System.Collections.Generic;
+using Amplitude.Mercury.Data.AI;
 using Amplitude.Mercury.Data.Simulation;
 using Amplitude.Mercury.Sandbox;
 using Amplitude.Mercury.Simulation;
@@ -19,6 +20,16 @@ namespace Modding.Humankind.DevTools
         ///     Position of this empire within current game's array of empires.
         /// </summary>
         public int EmpireIndex => MajorEmpireEntity.EmpireIndex;
+        
+        /// <summary>
+        ///     List of <c>HumankindSettlement</c>s controlled by this empire.
+        /// </summary>
+        public new IEnumerable<HumankindSettlement> Settlements => base.Settlements;
+
+        /// <summary>
+        ///     Armies controlled by this empire.
+        /// </summary>
+        public IEnumerable<Amplitude.Mercury.Interop.AI.Entities.Army> Armies => MajorEmpireEntity.Armies;
 
         /// <summary>
         ///     Total Fame currently accumulated by this empire.
@@ -119,18 +130,38 @@ namespace Modding.Humankind.DevTools
         ///     Whether this empire is being controlled by the AI or by a human player.
         /// </summary>
         /// <seealso cref="IsControlledByHuman" />
-        public bool IsAIActivated => !MajorEmpireSimulation.IsControlledByHuman;
+        public bool IsAIActivated => !MajorEmpireEntity.IsControlledByHuman;
 
         /// <summary>
         ///     Whether this empire is being controlled by a human player or by the AI.
         /// </summary>
         /// <seealso cref="IsAIActivated" />
-        public bool IsControlledByHuman => MajorEmpireSimulation.IsControlledByHuman;
+        public bool IsControlledByHuman => MajorEmpireEntity.IsControlledByHuman;
 
         /// <summary>
         ///     Computed empire's current military power.
         /// </summary>
         public int CombatStrength => (int) MajorEmpireEntity.CombatStrength;
+
+        /// <summary>
+        ///     Computed empire's current ground military power.
+        /// </summary>
+        public int GroundCombatStrength => (int) MajorEmpireEntity.GroundCombatStrength;
+
+        /// <summary>
+        ///     Computed empire's current naval military power.
+        /// </summary>
+        public int NavalCombatStrength => (int) MajorEmpireEntity.NavalCombatStrength;
+
+        /// <summary>
+        ///     Computed empire's current aerial military power.
+        /// </summary>
+        public int AerialCombatStrength => (int) MajorEmpireEntity.AerialCombatStrength;
+
+        /// <summary>
+        ///     Empire's maximum army size.
+        /// </summary>
+        public int ArmyMaximumSize => (int) MajorEmpireEntity.ArmyMaximumSize;
 
         /// <summary>
         ///     Sum of trade nodes.
@@ -446,6 +477,11 @@ namespace Modding.Humankind.DevTools
                 value * 1000);
         }
 
+        // TODO
+        public void SetControlledByHuman(bool IsControlledByHuman) => MajorEmpireSimulation.SetControlledByHuman(IsControlledByHuman, true);
+
+        public MajorEmpire Entity => base.MajorEmpireEntity;
+        public Amplitude.Mercury.Simulation.MajorEmpire Simulation => base.MajorEmpireSimulation;
         public new DepartmentOfTheTreasury DepartmentOfTheTreasury => base.DepartmentOfTheTreasury;
         public new DepartmentOfScience DepartmentOfScience => base.DepartmentOfScience;
         public new DepartmentOfCulture DepartmentOfCulture => base.DepartmentOfCulture;

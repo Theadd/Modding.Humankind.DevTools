@@ -63,9 +63,9 @@ namespace Modding.Humankind.DevTools.Core
                 {
                     _hasPendingInvoke = false;
 
-                    // Register actions found in decoupled modules annotated with [AIStrategyModule] attribute.
-                    RemoveAllOnNewTurnActions();
-                    ModuleHelper.FindAllAndRegister();
+                    // Register actions found in decoupled modules annotated with [DevToolsModule] attribute.
+                    ReloadAllModules(false);
+                    
                     Instance.Setup((int) R.Fields.LastRunTurnField.GetValue(Sandbox.AIController), Sandbox.AIController,
                         Sandbox.GameID, true);
 

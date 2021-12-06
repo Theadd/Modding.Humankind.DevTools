@@ -8,6 +8,6 @@ namespace Modding.Humankind.DevTools.Core
     {
         protected MajorEmpire MajorEmpireEntity { get; set; }
         protected Amplitude.Mercury.Simulation.MajorEmpire MajorEmpireSimulation { get; set; }
-        public IReadOnlyList<HumankindSettlement> Settlements => new SettlementList(MajorEmpireEntity, MajorEmpireSimulation);
+        protected IEnumerable<HumankindSettlement> Settlements => new SettlementList(MajorEmpireEntity, MajorEmpireSimulation);
     }
 }

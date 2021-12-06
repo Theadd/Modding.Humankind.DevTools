@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
 using Amplitude.Mercury.Data.Simulation;
 using Modding.Humankind.DevTools.Core;
 
@@ -55,7 +54,7 @@ namespace Modding.Humankind.DevTools
         ///     many of their values found in <c>HumankindEmpire</c> class.
         /// </summary>
         public new static string ToString() => string.Join("\n", GameUtils.GetGameStatistics(Empires));
-
+        
         /// <summary>
         ///     Add/Remove Action handlers to be called at the start of every turn.
         /// </summary>

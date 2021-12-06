@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using Amplitude.Mercury.Sandbox;
 
 namespace Modding.Humankind.DevTools.Core
 {
@@ -64,6 +65,27 @@ namespace Modding.Humankind.DevTools.Core
             OnGameHasLoaded = null;
             OnNewTurnStarts = null;
             OnGameHasUnloaded = null;
+        }
+
+        internal static void ReloadAllModules(bool invokeOnGameHasLoaded)
+        {
+            if (!SandboxManager.IsStarted)
+            {
+                Loggr.LogError("SandboxManager is NOT started IN ReloadAllModules.");
+                return;
+            }            
+            if (!BepInEx.Utility.TryDo(OnGameHasUnloaded, out Exception ex))
+            {
+                // Ignore exceptions while reloading all modules
+            }
+
+            RemoveAllOnNewTurnActions();
+            
+            Loggr.Debug("Reloading modules...");
+            ModuleHelper.FindAllAndRegister();
+            
+            if (invokeOnGameHasLoaded)
+                InvokeOnGameHasLoaded();
         }
     }
 }

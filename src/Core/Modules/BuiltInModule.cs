@@ -15,12 +15,20 @@ namespace Modding.Humankind.DevTools.Core
         [OnGameHasLoaded]
         public static void OnGameHasLoaded()
         {
-            Loggr.Debug("[OnGameHasLoaded]BuiltInModule.OnGameHasLoaded();");
+            Loggr.Debug("[OnGameHasLoaded] BuiltInModule.OnGameHasLoaded();");
 
             SetTargetEmpire(0);
         }
+        
+        [InGameKeyboardShortcut("Reload all modules", KeyCode.R, KeyCode.LeftControl, KeyCode.LeftAlt, KeyCode.LeftShift)]
+        public static void ReloadAllModules()
+        {
+            Loggr.Log("BEGIN Reloading all modules", ConsoleColor.Magenta);
+            HumankindDevTools.ReloadAllModules();
+            Loggr.Log("END Reloading all modules", ConsoleColor.Magenta);
+        }
 
-        [InGameKeyboardShortcut("PrintGameStatistics", KeyCode.P, KeyCode.LeftControl)]
+        [InGameKeyboardShortcut("Print game statistics", KeyCode.P, KeyCode.LeftControl)]
         public static void PrintGameStatistics()
         {
             Loggr.Log(HumankindGame.ToString(), ConsoleColor.Cyan);
@@ -33,8 +41,16 @@ namespace Modding.Humankind.DevTools.Core
             Loggr.Debug("Increased " + HumankindGame.Empires[_targetEmpireIndex].PersonaName +
                         "'s InfluenceStock by 300.");
         }
+        
+        [InGameKeyboardShortcut("Add100MoneyToSelectedEmpire", KeyCode.M, KeyCode.LeftControl)]
+        public static void Add100MoneyToSelectedEmpire()
+        {
+            HumankindGame.Empires[_targetEmpireIndex].MoneyStock += 100;
+            Loggr.Debug("Increased " + HumankindGame.Empires[_targetEmpireIndex].PersonaName +
+                        "'s Money by 100.");
+        }
 
-        [InGameKeyboardShortcut("Add2kResearchToSelectedEmpire", KeyCode.R, KeyCode.LeftControl)]
+        [InGameKeyboardShortcut("Add2kResearchToSelectedEmpire", KeyCode.R, KeyCode.LeftShift)]
         public static void Add2kResearchToSelectedEmpire()
         {
             HumankindGame.Empires[_targetEmpireIndex].ResearchStock += 2000;

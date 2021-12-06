@@ -14,6 +14,16 @@ public class HumankindEmpire : EmpireAbstraction, IEmpireDiplomacy, IMilitary, I
 <tr><td align="left" valign="top">
 
 ```csharp
+public IEnumerable<Army> Armies
+```
+</td><td align="left" valign="top">
+
+### Armies
+<img src="./resources/getter.svg" alt="Getter" height="16px"/><br/>
+Armies controlled by this empire.</td></tr>
+<tr><td align="left" valign="top">
+
+```csharp
 public int EmpireIndex
 ```
 </td><td align="left" valign="top">
@@ -74,6 +84,16 @@ Whether this empire has an ongoing battle active.</td></tr>
 <tr><td align="left" valign="top">
 
 ```csharp
+public IEnumerable<HumankindSettlement> Settlements
+```
+</td><td align="left" valign="top">
+
+### Settlements
+<img src="./resources/getter.svg" alt="Getter" height="16px"/><br/>
+List of `HumankindSettlement`s controlled by this empire.</td></tr>
+<tr><td align="left" valign="top">
+
+```csharp
 public int Stability
 ```
 </td><td align="left" valign="top">
@@ -103,6 +123,103 @@ void EnableFogOfWar(bool enable)
 Enable or disable this empire's FogOfWar. This action may take several seconds to apply effects.<details><summary><code>PARAMETERS</code></summary><ul><li>
 <kbd>enable</kbd> → Whether to enable or disable it.</li>
 </ul></details></td></tr>
+</tbody></table>
+
+<table width="100%"><caption>
+
+## MILITARY  
+</caption><thead><tr><th>MEMBER</th><th>DOCUMENTATION</th></tr></thead>
+<tbody>
+<tr><td align="left" valign="top">
+
+```csharp
+public int AerialCombatStrength
+```
+</td><td align="left" valign="top">
+
+### AerialCombatStrength
+<img src="./resources/getter.svg" alt="Getter" height="16px"/><br/>
+Computed empire's current aerial military power.</td></tr>
+<tr><td align="left" valign="top">
+
+```csharp
+public int ArmyCount
+```
+</td><td align="left" valign="top">
+
+### ArmyCount
+<img src="./resources/getter.svg" alt="Getter" height="16px"/><br/>
+Number of armies controlled by this empire.</td></tr>
+<tr><td align="left" valign="top">
+
+```csharp
+public int ArmyMaximumSize
+```
+</td><td align="left" valign="top">
+
+### ArmyMaximumSize
+<img src="./resources/getter.svg" alt="Getter" height="16px"/><br/>
+Empire's maximum army size.</td></tr>
+<tr><td align="left" valign="top">
+
+```csharp
+public int CombatStrength
+```
+</td><td align="left" valign="top">
+
+### CombatStrength
+<img src="./resources/getter.svg" alt="Getter" height="16px"/><br/>
+Computed empire's current military power.</td></tr>
+<tr><td align="left" valign="top">
+
+```csharp
+public int GroundCombatStrength
+```
+</td><td align="left" valign="top">
+
+### GroundCombatStrength
+<img src="./resources/getter.svg" alt="Getter" height="16px"/><br/>
+Computed empire's current ground military power.</td></tr>
+<tr><td align="left" valign="top">
+
+```csharp
+public int MilitaryUpkeep
+```
+</td><td align="left" valign="top">
+
+### MilitaryUpkeep
+<img src="./resources/getter.svg" alt="Getter" height="16px"/><br/>
+Sum of armies upkeep amount of money.</td></tr>
+<tr><td align="left" valign="top">
+
+```csharp
+public int NavalCombatStrength
+```
+</td><td align="left" valign="top">
+
+### NavalCombatStrength
+<img src="./resources/getter.svg" alt="Getter" height="16px"/><br/>
+Computed empire's current naval military power.</td></tr>
+<tr><td align="left" valign="top">
+
+```csharp
+public int RentedArmyCount
+```
+</td><td align="left" valign="top">
+
+### RentedArmyCount
+<img src="./resources/getter.svg" alt="Getter" height="16px"/><br/>
+Number of armies controlled by this empire.</td></tr>
+<tr><td align="left" valign="top">
+
+```csharp
+public int UnitCount
+```
+</td><td align="left" valign="top">
+
+### UnitCount
+<img src="./resources/getter.svg" alt="Getter" height="16px"/><br/>
+Number of units among all empire's armies.</td></tr>
 </tbody></table>
 
 <table width="100%"><caption>
@@ -176,63 +293,6 @@ Add or remove given `Archetype` from this empire's `Archetype` bitmask.<details>
 <li>
 <kbd>remove</kbd> → Whether to add or remove it from the bitmask</li>
 </ul></details></td></tr>
-</tbody></table>
-
-<table width="100%"><caption>
-
-## MILITARY  
-</caption><thead><tr><th>MEMBER</th><th>DOCUMENTATION</th></tr></thead>
-<tbody>
-<tr><td align="left" valign="top">
-
-```csharp
-public int ArmyCount
-```
-</td><td align="left" valign="top">
-
-### ArmyCount
-<img src="./resources/getter.svg" alt="Getter" height="16px"/><br/>
-Number of armies controlled by this empire.</td></tr>
-<tr><td align="left" valign="top">
-
-```csharp
-public int CombatStrength
-```
-</td><td align="left" valign="top">
-
-### CombatStrength
-<img src="./resources/getter.svg" alt="Getter" height="16px"/><br/>
-Computed empire's current military power.</td></tr>
-<tr><td align="left" valign="top">
-
-```csharp
-public int MilitaryUpkeep
-```
-</td><td align="left" valign="top">
-
-### MilitaryUpkeep
-<img src="./resources/getter.svg" alt="Getter" height="16px"/><br/>
-Sum of armies upkeep amount of money.</td></tr>
-<tr><td align="left" valign="top">
-
-```csharp
-public int RentedArmyCount
-```
-</td><td align="left" valign="top">
-
-### RentedArmyCount
-<img src="./resources/getter.svg" alt="Getter" height="16px"/><br/>
-Number of armies controlled by this empire.</td></tr>
-<tr><td align="left" valign="top">
-
-```csharp
-public int UnitCount
-```
-</td><td align="left" valign="top">
-
-### UnitCount
-<img src="./resources/getter.svg" alt="Getter" height="16px"/><br/>
-Number of units among all empire's armies.</td></tr>
 </tbody></table>
 
 <table width="100%"><caption>

@@ -7,4 +7,4 @@
 <a href="https://github.com/Theadd/Modding.Humankind.DevTools"><img src="https://img.shields.io/github/stars/Theadd/Modding.Humankind.DevTools.svg?style=social&label=Star"></a>
 </p>
 
-Provides a simplified interface to access 
+Documentation can be found [here](https://theadd.github.io/Modding.Humankind.DevTools/#/).
