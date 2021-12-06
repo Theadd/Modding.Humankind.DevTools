@@ -42,6 +42,19 @@ namespace Modding.Humankind.DevTools.Core
             public static MethodInfo ProcessOrderEnableFogOfWarMethod =
                 GetMethod<DepartmentOfTheInterior>("ProcessOrderEnableFogOfWar", NonPublicInstance,
                     new[] {typeof(OrderEnableFogOfWar)});
+
+            public static readonly MethodInfo AddCostModifierToMajorEmpireMethod = 
+                GetMethod<DepartmentOfTheTreasury>("AddCostModifierToMajorEmpire", PublicInstance,
+                    new[] {typeof(CostModifierDefinition)});
+            
+            public static readonly MethodInfo AddOrRemovePopulationToSettlementMethod = 
+                GetMethod<DepartmentOfTheInterior>("AddOrRemovePopulationToSettlement", NonPublicInstance,
+                    new[] {typeof(FixedPoint), typeof(Settlement), typeof(bool)});
+            
+            public static readonly MethodInfo BuildUnitAtMethod = 
+                GetMethod<DepartmentOfDefense>("BuildUnitAt", NonPublicInstance,
+                    new[] {typeof(UnitDefinition), typeof(Settlement)});
+
         }
     }
 }

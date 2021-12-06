@@ -126,17 +126,47 @@ namespace Modding.Humankind.DevTools.Core
                 return;
 
             if (_mappedActions.ContainsKey(key))
+            {
+                Loggr.LogError("Unable to register key [" + key + "] since it's already registered.");
                 return;
+            }
 
             _mappedActions.Add(key, actionName);
             _mappedMethods.Add(actionName, staticMethodInfo);
 
             Loggr.Announce("\t[" + key + "] => " + actionName);
         }
+        
+        public static void UnregisterAction(KeyboardShortcut key, string actionName)
+        {
+            if (_mappedActions.TryGetValue(key, out string expectedActionName))
+            {
+                if (expectedActionName != actionName)
+                {
+                    Loggr.LogError("Unable to unregister key [" + key + "] due to registered actionName '" + 
+                                   expectedActionName + "' differs from provided action name to unregister '" + 
+                                   actionName + "'.");
+                    return;
+                }
+            }
+            else
+            {
+                Loggr.LogError("Unable to unregister key [" + key + "], key not found.");
+                return;
+            }
+
+            _mappedActions.Remove(key);
+            _mappedMethods.Remove(actionName);
+        }
 
         private static void Initialize()
         {
             Loggr.Debug("Initializing ActionManager...");
+            Reset();
+        }
+
+        internal static void Reset()
+        {
             _mappedActions = new Dictionary<KeyboardShortcut, string>();
             _mappedMethods = new Dictionary<string, MethodInfo>();
         }

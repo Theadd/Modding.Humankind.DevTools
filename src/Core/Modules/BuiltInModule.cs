@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Linq;
 using Amplitude.Mercury.Data.Simulation;
 using BepInEx.Configuration;
 using UnityEngine;
@@ -14,12 +15,20 @@ namespace Modding.Humankind.DevTools.Core
         [OnGameHasLoaded]
         public static void OnGameHasLoaded()
         {
-            Loggr.Debug("[OnGameHasLoaded]BuiltInModule.OnGameHasLoaded();");
+            Loggr.Debug("[OnGameHasLoaded] BuiltInModule.OnGameHasLoaded();");
 
             SetTargetEmpire(0);
         }
+        
+        [InGameKeyboardShortcut("Reload all modules", KeyCode.R, KeyCode.LeftControl, KeyCode.LeftAlt, KeyCode.LeftShift)]
+        public static void ReloadAllModules()
+        {
+            Loggr.Log("BEGIN Reloading all modules", ConsoleColor.Magenta);
+            HumankindDevTools.ReloadAllModules();
+            Loggr.Log("END Reloading all modules", ConsoleColor.Magenta);
+        }
 
-        [InGameKeyboardShortcut("PrintGameStatistics", KeyCode.P, KeyCode.LeftControl)]
+        [InGameKeyboardShortcut("Print game statistics", KeyCode.P, KeyCode.LeftControl)]
         public static void PrintGameStatistics()
         {
             Loggr.Log(HumankindGame.ToString(), ConsoleColor.Cyan);
@@ -32,8 +41,16 @@ namespace Modding.Humankind.DevTools.Core
             Loggr.Debug("Increased " + HumankindGame.Empires[_targetEmpireIndex].PersonaName +
                         "'s InfluenceStock by 300.");
         }
+        
+        [InGameKeyboardShortcut("Add100MoneyToSelectedEmpire", KeyCode.M, KeyCode.LeftControl)]
+        public static void Add100MoneyToSelectedEmpire()
+        {
+            HumankindGame.Empires[_targetEmpireIndex].MoneyStock += 100;
+            Loggr.Debug("Increased " + HumankindGame.Empires[_targetEmpireIndex].PersonaName +
+                        "'s Money by 100.");
+        }
 
-        [InGameKeyboardShortcut("Add2kResearchToSelectedEmpire", KeyCode.R, KeyCode.LeftControl)]
+        [InGameKeyboardShortcut("Add2kResearchToSelectedEmpire", KeyCode.R, KeyCode.LeftShift)]
         public static void Add2kResearchToSelectedEmpire()
         {
             HumankindGame.Empires[_targetEmpireIndex].ResearchStock += 2000;
@@ -101,6 +118,72 @@ namespace Modding.Humankind.DevTools.Core
             HumankindGame.Empires[_targetEmpireIndex].EnableFogOfWar(false);
         }
         
+        [InGameKeyboardShortcut("Add100ToResearchCostModifierToAllTechnologiesOfSelectedEmpire", KeyCode.W, KeyCode.LeftControl)]
+        public static void Add100ToResearchCostModifierToSelectedEmpire()
+        {
+            HumankindGame.Empires[_targetEmpireIndex]
+                .AddResearchCostModifier(100f, CostModifierDefinition.OperationTypes.Add);
+        }
+        
+        [InGameKeyboardShortcut("Add100ToConstructibleCostModifierOfSelectedEmpire", KeyCode.Q, KeyCode.LeftControl)]
+        public static void Add100ToConstructibleCostModifierOfSelectedEmpire()
+        {
+            HumankindGame.Empires[_targetEmpireIndex]
+                .AddConstructibleCostModifier(100f, CostModifierDefinition.OperationTypes.Add);
+        }
+        
+        [InGameKeyboardShortcut("ReduceTo50PercentTheConstructibleCostModifierOfSelectedEmpire", KeyCode.Q, KeyCode.LeftShift)]
+        public static void ReduceTo50PercentTheConstructibleCostModifierOfSelectedEmpire()
+        {
+            HumankindGame.Empires[_targetEmpireIndex]
+                .AddConstructibleCostModifier(0.5f, CostModifierDefinition.OperationTypes.Mult);
+        }
+        
+        [InGameKeyboardShortcut("PrintSettlementsOfSelectedEmpire", KeyCode.S, KeyCode.LeftShift)]
+        public static void PrintSettlementsOfSelectedEmpire()
+        {
+            foreach (var settlement in HumankindGame.Empires[_targetEmpireIndex].Settlements)
+            {
+                Loggr.Log("Settlement @ Tile: " + settlement.WorldPosition.ToTileIndex(), ConsoleColor.Cyan);
+                Loggr.Log("EmpireIndex: " + settlement.EmpireIndex, ConsoleColor.Cyan);
+                Loggr.Log("Type: " + (settlement.IsCity ? "CITY" : settlement.IsOutpost ? "OUTPOST" : "--OTHER--"), ConsoleColor.Cyan);
+                Loggr.Log("IsCapital: " + settlement.IsCapital, ConsoleColor.Cyan);
+                Loggr.Log("TerritoryCount: " + settlement.Territories.Length, ConsoleColor.Cyan);
+                Loggr.Log("ArmiesCount: " + settlement.Armies.Count(), ConsoleColor.Cyan);
+                Loggr.Log(" ", ConsoleColor.Cyan);
+            }
+        }
+        
+        [InGameKeyboardShortcut("IncreasePopulationByOneInCitiesOfSelectedEmpire", KeyCode.B, KeyCode.LeftShift)]
+        public static void IncreasePopulationByOneInCitiesOfSelectedEmpire()
+        {
+            foreach (var city in HumankindGame.Empires[_targetEmpireIndex].Settlements.Where(settlement => settlement.IsCity))
+            {
+                city.Population += 1;
+            }
+        }
+        
+        [InGameKeyboardShortcut("PrintUnitDefinitionsInDatabase", KeyCode.U, KeyCode.LeftShift)]
+        public static void PrintUnitDefinitionsInDatabase()
+        {
+            foreach (var unit in QuickAccess.UnitDefinitions)
+            {
+                Loggr.Log("UNIT: " + unit.name + " | FAMILY: " + unit.Family + " | SPAWN TYPE: " + unit.SpawnType.ToString(), ConsoleColor.Yellow);
+            }
+        }
+        [InGameKeyboardShortcut("SpawnUnitInAllCitiesOfSelectedEmpire", KeyCode.I, KeyCode.LeftShift)]
+        public static void SpawnUnitInAllCitiesOfSelectedEmpire()
+        {
+            var commonWarriors = QuickAccess.UnitDefinitions
+                .Where(unit => unit.name == "LandUnit_Era6_Common_HelicopterGunships")
+                .ElementAtOrDefault(0);
+            
+            foreach (var city in HumankindGame.Empires[_targetEmpireIndex].Settlements.Where(settlement => settlement.IsCity))
+            {
+                city.BuildUnit(commonWarriors);
+            }
+        }
+
         public static void SetTargetEmpire(int empireIndex)
         {
             Loggr.Log("SELECTED EMPIRE = [" + empireIndex + "] " + HumankindGame.Empires[empireIndex].PersonaName,

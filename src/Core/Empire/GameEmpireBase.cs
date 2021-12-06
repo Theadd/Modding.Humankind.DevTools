@@ -1,10 +1,13 @@
-﻿using Amplitude.Mercury.Interop.AI.Entities;
+﻿using System.Collections.Generic;
+using System.Runtime.CompilerServices;
+using Amplitude.Mercury.Interop.AI.Entities;
 
 namespace Modding.Humankind.DevTools.Core
 {
     public abstract class GameEmpireBase
     {
-        protected MajorEmpire MajorEmpire { get; set; }
+        protected MajorEmpire MajorEmpireEntity { get; set; }
         protected Amplitude.Mercury.Simulation.MajorEmpire MajorEmpireSimulation { get; set; }
+        protected IEnumerable<HumankindSettlement> Settlements => new SettlementList(MajorEmpireEntity, MajorEmpireSimulation);
     }
 }

@@ -4,6 +4,7 @@ using Amplitude.Mercury.Data.AI;
 using Amplitude.Mercury.Data.Simulation;
 using Amplitude.Mercury.Interop;
 using Amplitude.Mercury.Simulation;
+using UnityEngine;
 
 namespace Modding.Humankind.DevTools.Core
 {
@@ -80,6 +81,44 @@ namespace Modding.Humankind.DevTools.Core
         protected void EnableFogOfWar(bool enable) =>
             R.Methods.ProcessOrderEnableFogOfWarMethod.Invoke(DepartmentOfTheInterior,
                 new object[] {new OrderEnableFogOfWar {Enable = enable}});
+                
+        // Cost modifiers
+
+        protected void AddResearchCostModifier(float costModifierValue,
+            CostModifierDefinition.OperationTypes operationType)
+        {
+            ResearchCostModifierDefinition orderInstance =
+                ScriptableObject.CreateInstance<ResearchCostModifierDefinition>();
+
+            orderInstance.TargetType = ResearchCostModifierDefinition.TechnologyTargetTypes.AllTechnologies;
+            orderInstance.ApplyIfCostZero = true;
+            orderInstance.CanBeCumulated = true;
+            orderInstance.CostModifierValue = FixedPoint.Zero + costModifierValue;
+            orderInstance.CostType = CostModifierDefinition.CostTypes.Research;
+            orderInstance.IsObsolete = false;
+            orderInstance.OperationType = operationType;
+
+            R.Methods.AddCostModifierToMajorEmpireMethod.Invoke(DepartmentOfTheTreasury,
+                new object[] {orderInstance});
+        }
+        
+        protected void AddConstructibleCostModifier(float costModifierValue,
+            CostModifierDefinition.OperationTypes operationType)
+        {
+            ConstructibleCostModifierDefinition orderInstance =
+                ScriptableObject.CreateInstance<ConstructibleCostModifierDefinition>();
+
+            orderInstance.TargetType = ConstructibleCostModifierDefinition.TargetTypes.AllConstructibles;
+            orderInstance.ApplyIfCostZero = true;
+            orderInstance.CanBeCumulated = true;
+            orderInstance.CostModifierValue = FixedPoint.Zero + costModifierValue;
+            orderInstance.CostType = CostModifierDefinition.CostTypes.Production;
+            orderInstance.IsObsolete = false;
+            orderInstance.OperationType = operationType;
+
+            R.Methods.AddCostModifierToMajorEmpireMethod.Invoke(DepartmentOfTheTreasury,
+                new object[] {orderInstance});
+        }
 
         # endregion Protected method calls
 
@@ -107,6 +146,10 @@ namespace Modding.Humankind.DevTools.Core
         protected DepartmentOfTheInterior DepartmentOfTheInterior =>
             (DepartmentOfTheInterior) R.Fields.DepartmentOfTheInteriorField.GetValue(MajorEmpireSimulation);
 
+        protected DepartmentOfDefense DepartmentOfDefense =>
+            (DepartmentOfDefense) R.Fields.DepartmentOfDefenseField.GetValue(MajorEmpireSimulation);
+
+        
         // Other empire's values
         protected string PersonaName => (string) R.Fields.PersonaNameField.GetValue(MajorEmpireSimulation);
         

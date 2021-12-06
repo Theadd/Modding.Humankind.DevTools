@@ -2,12 +2,16 @@
 - [Home](/)
 - **Mod Development Guide**
   - [Getting Started](GETTING_STARTED_GUIDE.md "Getting Started Guide")
+  - <small>USEFUL TOOLS</small>
+  - [ScriptLoader: Live coding](SCRIPT_LOADER_GUIDE.md)
+  - [ScriptEngine]()
 - **DevTools Contributing Guide**
   - [Getting Started](CONTRIBUTING_GUIDE.md "Contributing Guide")
 - **[API DOCS](API_DOCS.md)**
   - <small>CLASSES</small>
-  - [HumankindEmpire](HumankindEmpire.md)
   - [HumankindGame](HumankindGame.md)
+  - [HumankindEmpire](HumankindEmpire.md)
+  - [HumankindSettlement](HumankindSettlement.md)
   - <small>ATTRIBUTES</small>
   - [DevToolsModule](DevToolsModuleAttribute.md)
   - [InGameKeyboardShortcut](InGameKeyboardShortcutAttribute.md)

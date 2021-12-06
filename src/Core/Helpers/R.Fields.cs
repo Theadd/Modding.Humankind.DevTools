@@ -40,6 +40,9 @@ namespace Modding.Humankind.DevTools.Core
             public static readonly FieldInfo DepartmentOfTheInteriorField =
                 GetField<Empire>("DepartmentOfTheInterior", NonPublicInstance);
 
+            public static readonly FieldInfo DepartmentOfDefenseField =
+                GetField<Empire>("DepartmentOfDefense", NonPublicInstance);
+
             public static readonly FieldInfo PersonaNameField = GetField<MajorEmpire>("PersonaName", NonPublicInstance);
 
             public static readonly FieldInfo PersonaQualityField =
@@ -56,6 +59,8 @@ namespace Modding.Humankind.DevTools.Core
             public static readonly FieldInfo CurrentStateField = GetField<DiplomaticRelation>("CurrentState", NonPublicInstance);
 
             public static readonly FieldInfo TradeNodesField = GetField<MajorEmpire>("TradeNodes", NonPublicInstance);
+
+            public static readonly FieldInfo SettlementsField = GetField<Empire>("Settlements", NonPublicInstance);
         }
     }
 }

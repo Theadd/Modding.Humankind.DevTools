@@ -69,6 +69,36 @@
     .search .input-wrap > input {
       background-color: transparent;
     }
+    td > details[open] {
+      position: relative;
+      margin-left: -13px;
+      padding-left: 13px;
+      background-color: rgba(0, 0, 0, 0.01);
+      margin-right: -13px;
+      border-top: 1px solid rgba(0, 0, 0, 0.08);
+      border-bottom: 1px solid rgba(0, 0, 0, 0.07);
+      padding-top: 10px;
+      margin-top: -5px;
+      margin-bottom: -1px;
+    }
+    td > details {
+      margin-bottom: 10px;
+      margin-top: -5px;
+      padding-top: 15px;
+    }
+    .markdown-section td {
+      padding-bottom: 0;
+    }
+    .markdown-section td p {
+      margin: 1em 0 0.5em;
+    }
+    .markdown-section td > h3 + p {
+      margin-top: 0;
+    }
+    .markdown-section td > h3 + p > img {
+      margin-top: 13px;
+      margin-bottom: -5px;
+    }
   </style>
   
 </head>
@@ -99,10 +129,11 @@
     }
   </script>
   <!-- Docsify v4 -->
-  <script src="//cdn.jsdelivr.net/npm/docsify/lib/docsify.js"></script>
+  <script src="//cdn.jsdelivr.net/npm/docsify/lib/docsify.min.js"></script>
   <script src="//cdn.jsdelivr.net/npm/docsify/lib/plugins/search.min.js"></script>
   <script src="//unpkg.com/prismjs/components/prism-bash.min.js"></script>
   <script src="//unpkg.com/prismjs/components/prism-csharp.min.js"></script>
+  <script src="//unpkg.com/@rakutentech/docsify-code-inline/dist/index.min.js"></script>
 </body>
 
 </html>

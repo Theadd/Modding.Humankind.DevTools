@@ -1,8 +1,10 @@
-﻿using Amplitude.Mercury.Data.AI;
+﻿using System.Collections.Generic;
+using Amplitude.Mercury.Data.AI;
 using Amplitude.Mercury.Data.Simulation;
-using Amplitude.Mercury.Interop.AI.Entities;
 using Amplitude.Mercury.Sandbox;
+using Amplitude.Mercury.Simulation;
 using Modding.Humankind.DevTools.Core;
+using MajorEmpire = Amplitude.Mercury.Interop.AI.Entities.MajorEmpire;
 
 namespace Modding.Humankind.DevTools
 {
@@ -17,7 +19,17 @@ namespace Modding.Humankind.DevTools
         /// <summary>
         ///     Position of this empire within current game's array of empires.
         /// </summary>
-        public int EmpireIndex => MajorEmpire.EmpireIndex;
+        public int EmpireIndex => MajorEmpireEntity.EmpireIndex;
+        
+        /// <summary>
+        ///     List of <c>HumankindSettlement</c>s controlled by this empire.
+        /// </summary>
+        public new IEnumerable<HumankindSettlement> Settlements => base.Settlements;
+
+        /// <summary>
+        ///     Armies controlled by this empire.
+        /// </summary>
+        public IEnumerable<Amplitude.Mercury.Interop.AI.Entities.Army> Armies => MajorEmpireEntity.Armies;
 
         /// <summary>
         ///     Total Fame currently accumulated by this empire.
@@ -27,7 +39,7 @@ namespace Modding.Humankind.DevTools
         /// <summary>
         ///     Number of technologies already researched by this empire.
         /// </summary>
-        public int CompletedTechnologiesCount => MajorEmpire.CompletedTechnologyCount;
+        public int CompletedTechnologiesCount => MajorEmpireEntity.CompletedTechnologyCount;
 
         /// <summary>
         ///     Number of technological eras available ahead.
@@ -62,7 +74,7 @@ namespace Modding.Humankind.DevTools
         /// <summary>
         ///     Number of outposts currently controlled by this empire.
         /// </summary>
-        public int OutpostCount => MajorEmpire.Camps.Length;
+        public int OutpostCount => MajorEmpireEntity.Camps.Length;
 
         /// <summary>
         ///     Number of cities currently controlled by this empire.
@@ -92,7 +104,7 @@ namespace Modding.Humankind.DevTools
         /// <summary>
         ///     Number of armies controlled by this empire.
         /// </summary>
-        public int ArmyCount => MajorEmpire.Armies.Length;
+        public int ArmyCount => MajorEmpireEntity.Armies.Length;
 
         /// <summary>
         ///     Number of armies controlled by this empire.
@@ -118,18 +130,38 @@ namespace Modding.Humankind.DevTools
         ///     Whether this empire is being controlled by the AI or by a human player.
         /// </summary>
         /// <seealso cref="IsControlledByHuman" />
-        public bool IsAIActivated => !MajorEmpireSimulation.IsControlledByHuman;
+        public bool IsAIActivated => !MajorEmpireEntity.IsControlledByHuman;
 
         /// <summary>
         ///     Whether this empire is being controlled by a human player or by the AI.
         /// </summary>
         /// <seealso cref="IsAIActivated" />
-        public bool IsControlledByHuman => MajorEmpireSimulation.IsControlledByHuman;
+        public bool IsControlledByHuman => MajorEmpireEntity.IsControlledByHuman;
 
         /// <summary>
         ///     Computed empire's current military power.
         /// </summary>
-        public int CombatStrength => (int) MajorEmpire.CombatStrength;
+        public int CombatStrength => (int) MajorEmpireEntity.CombatStrength;
+
+        /// <summary>
+        ///     Computed empire's current ground military power.
+        /// </summary>
+        public int GroundCombatStrength => (int) MajorEmpireEntity.GroundCombatStrength;
+
+        /// <summary>
+        ///     Computed empire's current naval military power.
+        /// </summary>
+        public int NavalCombatStrength => (int) MajorEmpireEntity.NavalCombatStrength;
+
+        /// <summary>
+        ///     Computed empire's current aerial military power.
+        /// </summary>
+        public int AerialCombatStrength => (int) MajorEmpireEntity.AerialCombatStrength;
+
+        /// <summary>
+        ///     Empire's maximum army size.
+        /// </summary>
+        public int ArmyMaximumSize => (int) MajorEmpireEntity.ArmyMaximumSize;
 
         /// <summary>
         ///     Sum of trade nodes.
@@ -142,7 +174,7 @@ namespace Modding.Humankind.DevTools
         public int Stability => (int) MajorEmpireSimulation.Stability.Value;
 
         /// <summary>
-        ///     This empire's current Era as number, where 1 is Neolithic.
+        ///     This empire's current Era as number, where 0 is Neolithic.
         /// </summary>
         public int EraLevel => (int) MajorEmpireSimulation.EraLevel.Value;
 
@@ -417,6 +449,24 @@ namespace Modding.Humankind.DevTools
         /// </summary>
         /// <param name="enable">Whether to enable or disable it.</param>
         public new void EnableFogOfWar(bool enable) => base.EnableFogOfWar(enable);
+
+        /// <summary>
+        ///     TODO: Add XML comments for AddResearchCostModifier
+        /// </summary>
+        /// <param name="costModifierValue"></param>
+        /// <param name="operationType"></param>
+        public new void AddResearchCostModifier(float costModifierValue,
+            CostModifierDefinition.OperationTypes operationType) =>
+            base.AddResearchCostModifier(costModifierValue, operationType);
+        
+        /// <summary>
+        ///     TODO: Add XML comments for AddConstructibleCostModifier
+        /// </summary>
+        /// <param name="costModifierValue"></param>
+        /// <param name="operationType"></param>
+        public new void AddConstructibleCostModifier(float costModifierValue,
+            CostModifierDefinition.OperationTypes operationType) =>
+            base.AddConstructibleCostModifier(costModifierValue, operationType);
         
         // TODO: What is this for?
         public int IndustryWorkplaceBonusGain
@@ -426,12 +476,25 @@ namespace Modding.Humankind.DevTools
             set => R.Fields.FixedPointRawValueField.SetValue(MajorEmpireSimulation.IndustryWorkplaceBonusGain,
                 value * 1000);
         }
+
+        // TODO
+        public void SetControlledByHuman(bool IsControlledByHuman) => MajorEmpireSimulation.SetControlledByHuman(IsControlledByHuman, true);
+
+        public MajorEmpire Entity => base.MajorEmpireEntity;
+        public Amplitude.Mercury.Simulation.MajorEmpire Simulation => base.MajorEmpireSimulation;
+        public new DepartmentOfTheTreasury DepartmentOfTheTreasury => base.DepartmentOfTheTreasury;
+        public new DepartmentOfScience DepartmentOfScience => base.DepartmentOfScience;
+        public new DepartmentOfCulture DepartmentOfCulture => base.DepartmentOfCulture;
+        public new DepartmentOfForeignAffairs DepartmentOfForeignAffairs => base.DepartmentOfForeignAffairs;
+        public new DepartmentOfDevelopment DepartmentOfDevelopment => base.DepartmentOfDevelopment;
+        public new DepartmentOfTheInterior DepartmentOfTheInterior => base.DepartmentOfTheInterior;
+        public new DepartmentOfDefense DepartmentOfDefense => base.DepartmentOfDefense;
         
         public static HumankindEmpire Create(MajorEmpire fromMajorEmpire)
         {
             return new HumankindEmpire
             {
-                MajorEmpire = fromMajorEmpire,
+                MajorEmpireEntity = fromMajorEmpire,
                 MajorEmpireSimulation = Sandbox.MajorEmpires[fromMajorEmpire.EmpireIndex]
             };
         }
