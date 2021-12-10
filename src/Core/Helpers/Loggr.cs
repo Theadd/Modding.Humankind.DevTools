@@ -82,6 +82,8 @@ namespace Modding.Humankind.DevTools.Core
             _LogEx(message, defaultColor, appendNewLine);
         }
 
+        public static void Log(string message) => Log(message, ConsoleColor.White);
+        
         public static void Log(object obj) => Log(obj, ConsoleColor.White);
         
         public static void Log(object obj, ConsoleColor defaultColor)

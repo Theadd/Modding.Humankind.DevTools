@@ -192,36 +192,10 @@ namespace Modding.Humankind.DevTools.Core
         [InGameKeyboardShortcut("Iterate every city and center camera to it", KeyCode.C, KeyCode.LeftAlt)]
         public static void CenterCameraToNextCity()
         {
-            /*if (allSettlementsEnumerator == null)
-                allSettlementsEnumerator = HumankindGame.Empires.Settlements().IsCity().GetEnumerator();
-
-            if (allSettlementsEnumerator.MoveNext())
-            {
-                allSettlementsEnumerator.Current?.CenterToCamera();
-            }*/
             HumankindGame.Empires.Settlements().IsCity().Interactive(city => {
-                // Loggr.Log("Hello World",ConsoleColor.Red);
-                // PrintableObject printable = new PrintableObject((Settlement) city.SettlementEntity);
-                // Loggr.Log(printable.ToString(), ConsoleColor.Green);
-			
                 Loggr.Log(city);
             });
-
-            /*Loggr.Debug("BEGGINING Interactive MODE");
-            HumankindGame.Empires.Settlements().IsCity().Interactive(settlement =>
-            {
-                Loggr.Debug("Interactive iteration for city at TileIndex: " + settlement.WorldPosition.ToTileIndex());
-                settlement.CenterToCamera();
-            });*/
         }
-
-        [InGameKeyboardShortcut("Print Assemblies", KeyCode.A, KeyCode.LeftControl, KeyCode.LeftShift)]
-        public static void PrintAssemblies()
-        {
-            AssemblyHelper.PrintAppdomainAssemblies();
-        }
-        
-        
 
         public static void SetTargetEmpire(int empireIndex)
         {
