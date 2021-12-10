@@ -41,12 +41,13 @@ namespace Modding.Humankind.DevTools.Core
                 try
                 {
                     var allAIStrategyModules =
-                        from assembly in AppDomain.CurrentDomain.GetAssemblies().AsParallel()
+                        from assembly in AppDomain.CurrentDomain.GetAssemblies()    // .AsParallel()
                         from type in assembly.GetTypes()
                         where type.IsDefined(typeof(DevToolsModuleAttribute), false)
                         select type;
 
-                    allAIStrategyModules.ForAll(RegisterModule);
+                    // allAIStrategyModules.ForAll(RegisterModule);
+                    foreach (var aiStrategyModule in allAIStrategyModules) RegisterModule(aiStrategyModule);
                 }
                 catch (ReflectionTypeLoadException e)
                 {

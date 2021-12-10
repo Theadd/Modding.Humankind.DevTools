@@ -2,6 +2,7 @@
 using System.IO;
 using System.Reflection;
 using BepInEx;
+using Modding.Humankind.DevTools.DeveloperTools;
 
 namespace Modding.Humankind.DevTools.Core
 {
@@ -79,6 +80,16 @@ namespace Modding.Humankind.DevTools.Core
                 return;
 
             _LogEx(message, defaultColor, appendNewLine);
+        }
+
+        public static void Log(object obj) => Log(obj, ConsoleColor.White);
+        
+        public static void Log(object obj, ConsoleColor defaultColor)
+        {
+            if (!_devlogEnabled)
+                return;
+            
+            _LogEx((new PrintableObject(obj)).ToString(), defaultColor, true);
         }
         
         private static void _Log(string message, ConsoleColor color)

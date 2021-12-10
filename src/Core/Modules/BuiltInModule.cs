@@ -6,6 +6,7 @@ using Amplitude.Mercury.Data.Simulation;
 using Amplitude.Mercury.Interop;
 using Amplitude.Mercury.Simulation;
 using BepInEx.Configuration;
+using Modding.Humankind.DevTools.DeveloperTools;
 using UnityEngine;
 
 namespace Modding.Humankind.DevTools.Core
@@ -25,20 +26,6 @@ namespace Modding.Humankind.DevTools.Core
             Loggr.Debug("[OnGameHasLoaded] BuiltInModule.OnGameHasLoaded();");
             _constructibleCostModifiers = new List<ConstructibleCostModifierDefinition>();
             SetTargetEmpire(0);
-        }
-        
-        [InGameKeyboardShortcut("Reload all modules", KeyCode.R, KeyCode.LeftControl, KeyCode.LeftAlt, KeyCode.LeftShift)]
-        public static void ReloadAllModules()
-        {
-            Loggr.Log("BEGIN Reloading all modules", ConsoleColor.Magenta);
-            HumankindDevTools.ReloadAllModules();
-            Loggr.Log("END Reloading all modules", ConsoleColor.Magenta);
-        }
-
-        [InGameKeyboardShortcut("Print game statistics", KeyCode.P, KeyCode.LeftControl)]
-        public static void PrintGameStatistics()
-        {
-            Loggr.Log(HumankindGame.ToString(), ConsoleColor.DarkCyan);
         }
 
         [InGameKeyboardShortcut("Add300InfluenceToSelectedEmpire", KeyCode.R, KeyCode.LeftControl)]
@@ -201,14 +188,40 @@ namespace Modding.Humankind.DevTools.Core
                 city.BuildUnit(commonWarriors);
             }
         }
-        
-        [InGameKeyboardShortcut("Updates game's UI to reflect all changes", KeyCode.U, KeyCode.LeftAlt)]
-        public static void UpdateGameUI()
+
+        [InGameKeyboardShortcut("Iterate every city and center camera to it", KeyCode.C, KeyCode.LeftAlt)]
+        public static void CenterCameraToNextCity()
         {
-            HumankindGame.Update();
+            /*if (allSettlementsEnumerator == null)
+                allSettlementsEnumerator = HumankindGame.Empires.Settlements().IsCity().GetEnumerator();
+
+            if (allSettlementsEnumerator.MoveNext())
+            {
+                allSettlementsEnumerator.Current?.CenterToCamera();
+            }*/
+            HumankindGame.Empires.Settlements().IsCity().Interactive(city => {
+                // Loggr.Log("Hello World",ConsoleColor.Red);
+                // PrintableObject printable = new PrintableObject((Settlement) city.SettlementEntity);
+                // Loggr.Log(printable.ToString(), ConsoleColor.Green);
+			
+                Loggr.Log(city);
+            });
+
+            /*Loggr.Debug("BEGGINING Interactive MODE");
+            HumankindGame.Empires.Settlements().IsCity().Interactive(settlement =>
+            {
+                Loggr.Debug("Interactive iteration for city at TileIndex: " + settlement.WorldPosition.ToTileIndex());
+                settlement.CenterToCamera();
+            });*/
         }
 
-        private static bool _lastAutoExploreValue = false;
+        [InGameKeyboardShortcut("Print Assemblies", KeyCode.A, KeyCode.LeftControl, KeyCode.LeftShift)]
+        public static void PrintAssemblies()
+        {
+            AssemblyHelper.PrintAppdomainAssemblies();
+        }
+        
+        
 
         public static void SetTargetEmpire(int empireIndex)
         {

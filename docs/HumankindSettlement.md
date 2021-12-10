@@ -101,4 +101,14 @@ Unit BuildUnit(UnitDefinition unitDefinition)
 Spawns a unit to `Settlement`'s assigned spawn point based on `UnitDefinition`'s `UnitSpawnType`.<details><summary><code>PARAMETERS</code></summary><ul><li>
 <kbd>unitDefinition</kbd> → The `UnitDefinition` to spawn a `Unit` from.</li>
 </ul></details></td></tr>
+<tr><td align="left" valign="top">
+
+```csharp
+void CenterToCamera()
+```
+</td><td align="left" valign="top">
+
+### CenterToCamera
+<img src="./resources/method.svg" alt="Method" height="16px"/><br/>
+Center main camera view to this `Settlement`'s TileIndex.</td></tr>
 </tbody></table>
