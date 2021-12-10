@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Reflection;
 using Amplitude.Framework;
 using Amplitude.Framework.Input;
@@ -134,7 +135,7 @@ namespace Modding.Humankind.DevTools.Core
             _mappedActions.Add(key, actionName);
             _mappedMethods.Add(actionName, staticMethodInfo);
 
-            Loggr.Announce("\t[" + key + "] => " + actionName);
+            Loggr.Log("\t%Green%[" + key + "]%Gray% => %Default%" + actionName, ConsoleColor.White);
         }
         
         public static void UnregisterAction(KeyboardShortcut key, string actionName)

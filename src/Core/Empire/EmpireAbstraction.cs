@@ -84,7 +84,7 @@ namespace Modding.Humankind.DevTools.Core
                 
         // Cost modifiers
 
-        protected void AddResearchCostModifier(float costModifierValue,
+        protected ResearchCostModifierDefinition AddResearchCostModifier(float costModifierValue,
             CostModifierDefinition.OperationTypes operationType)
         {
             ResearchCostModifierDefinition orderInstance =
@@ -100,9 +100,16 @@ namespace Modding.Humankind.DevTools.Core
 
             R.Methods.AddCostModifierToMajorEmpireMethod.Invoke(DepartmentOfTheTreasury,
                 new object[] {orderInstance});
+            
+            return orderInstance;
+        }
+
+        protected void RemoveResearchCostModifier(ResearchCostModifierDefinition modifier)
+        {
+            R.Methods.RemoveCostModifierFromMajorEmpireMethod.Invoke(DepartmentOfTheTreasury, new object[] {modifier});
         }
         
-        protected void AddConstructibleCostModifier(float costModifierValue,
+        protected ConstructibleCostModifierDefinition AddConstructibleCostModifier(float costModifierValue,
             CostModifierDefinition.OperationTypes operationType)
         {
             ConstructibleCostModifierDefinition orderInstance =
@@ -118,6 +125,13 @@ namespace Modding.Humankind.DevTools.Core
 
             R.Methods.AddCostModifierToMajorEmpireMethod.Invoke(DepartmentOfTheTreasury,
                 new object[] {orderInstance});
+
+            return orderInstance;
+        }
+
+        protected void RemoveConstructibleCostModifier(ConstructibleCostModifierDefinition modifier)
+        {
+            R.Methods.RemoveCostModifierFromMajorEmpireMethod.Invoke(DepartmentOfTheTreasury, new object[] {modifier});
         }
 
         # endregion Protected method calls
@@ -148,6 +162,9 @@ namespace Modding.Humankind.DevTools.Core
 
         protected DepartmentOfDefense DepartmentOfDefense =>
             (DepartmentOfDefense) R.Fields.DepartmentOfDefenseField.GetValue(MajorEmpireSimulation);
+        
+        protected DepartmentOfTransportation DepartmentOfTransportation =>
+            (DepartmentOfTransportation) R.Fields.DepartmentOfTransportationField.GetValue(MajorEmpireSimulation);
 
         
         // Other empire's values

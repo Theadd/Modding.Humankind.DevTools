@@ -10,6 +10,7 @@ namespace Modding.Humankind.DevTools.Core
         int AvailableTechnologiesCount { get; }
         int ResearchNet { get; }
         int ResearchStock { get; set; }
-        void AddResearchCostModifier(float costModifierValue, CostModifierDefinition.OperationTypes operationType);
+        ResearchCostModifierDefinition AddResearchCostModifier(float costModifierValue, CostModifierDefinition.OperationTypes operationType);
+        void RemoveResearchCostModifier(ResearchCostModifierDefinition modifier);
     }
 }

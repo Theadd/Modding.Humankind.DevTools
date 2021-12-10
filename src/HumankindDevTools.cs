@@ -17,7 +17,11 @@ namespace Modding.Humankind.DevTools
         ///     Unregisters all members of a class Type after invoking any method with `[OnGameHasUnloaded]` attribute.
         /// </summary>
         /// <param name="moduleType"></param>
-        public static void UnloadModule(Type moduleType) => ModuleHelper.UnloadModule(moduleType);
+        public static void UnloadModule(Type moduleType)
+        {
+            if (HumankindGame.IsGameLoaded)
+                ModuleHelper.UnloadModule(moduleType);
+        }
 
         /// <summary>
         ///     Registers all members of a class Type with DevTool's attribute annotations.

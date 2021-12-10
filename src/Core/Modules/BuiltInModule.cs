@@ -1,6 +1,10 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Linq;
+using System.Reflection;
 using Amplitude.Mercury.Data.Simulation;
+using Amplitude.Mercury.Interop;
+using Amplitude.Mercury.Simulation;
 using BepInEx.Configuration;
 using UnityEngine;
 
@@ -12,11 +16,14 @@ namespace Modding.Humankind.DevTools.Core
         private static int _targetEmpireIndex;
         public static string Name => "BuiltInModuleActions";
 
+        private static List<ConstructibleCostModifierDefinition> _constructibleCostModifiers =
+            new List<ConstructibleCostModifierDefinition>();
+
         [OnGameHasLoaded]
         public static void OnGameHasLoaded()
         {
             Loggr.Debug("[OnGameHasLoaded] BuiltInModule.OnGameHasLoaded();");
-
+            _constructibleCostModifiers = new List<ConstructibleCostModifierDefinition>();
             SetTargetEmpire(0);
         }
         
@@ -31,7 +38,7 @@ namespace Modding.Humankind.DevTools.Core
         [InGameKeyboardShortcut("Print game statistics", KeyCode.P, KeyCode.LeftControl)]
         public static void PrintGameStatistics()
         {
-            Loggr.Log(HumankindGame.ToString(), ConsoleColor.Cyan);
+            Loggr.Log(HumankindGame.ToString(), ConsoleColor.DarkCyan);
         }
 
         [InGameKeyboardShortcut("Add300InfluenceToSelectedEmpire", KeyCode.R, KeyCode.LeftControl)]
@@ -125,18 +132,28 @@ namespace Modding.Humankind.DevTools.Core
                 .AddResearchCostModifier(100f, CostModifierDefinition.OperationTypes.Add);
         }
         
-        [InGameKeyboardShortcut("Add100ToConstructibleCostModifierOfSelectedEmpire", KeyCode.Q, KeyCode.LeftControl)]
+        [InGameKeyboardShortcut("Add 100 to ConstructibleCostModifier of player's empire", KeyCode.Q, KeyCode.LeftControl)]
         public static void Add100ToConstructibleCostModifierOfSelectedEmpire()
         {
-            HumankindGame.Empires[_targetEmpireIndex]
-                .AddConstructibleCostModifier(100f, CostModifierDefinition.OperationTypes.Add);
+            _constructibleCostModifiers.Add(HumankindGame.Empires[0]
+                .AddConstructibleCostModifier(100f, CostModifierDefinition.OperationTypes.Add));
         }
         
-        [InGameKeyboardShortcut("ReduceTo50PercentTheConstructibleCostModifierOfSelectedEmpire", KeyCode.Q, KeyCode.LeftShift)]
+        [InGameKeyboardShortcut("Reduce to 50% the ConstructibleCostModifier of player's empire", KeyCode.Q, KeyCode.LeftShift)]
         public static void ReduceTo50PercentTheConstructibleCostModifierOfSelectedEmpire()
         {
-            HumankindGame.Empires[_targetEmpireIndex]
-                .AddConstructibleCostModifier(0.5f, CostModifierDefinition.OperationTypes.Mult);
+            _constructibleCostModifiers.Add(HumankindGame.Empires[0]
+                .AddConstructibleCostModifier(0.5f, CostModifierDefinition.OperationTypes.Mult));
+        }
+        
+        [InGameKeyboardShortcut("Remove all ConstructibleCostModifiers of player's empire", KeyCode.Q, KeyCode.LeftControl, KeyCode.LeftShift)]
+        public static void RemoveAllConstructibleCostModifiers()
+        {
+            foreach (var modifier in _constructibleCostModifiers)
+            {
+                HumankindGame.Empires[0].RemoveConstructibleCostModifier(modifier);
+            }
+            _constructibleCostModifiers.Clear();
         }
         
         [InGameKeyboardShortcut("PrintSettlementsOfSelectedEmpire", KeyCode.S, KeyCode.LeftShift)]
@@ -171,6 +188,7 @@ namespace Modding.Humankind.DevTools.Core
                 Loggr.Log("UNIT: " + unit.name + " | FAMILY: " + unit.Family + " | SPAWN TYPE: " + unit.SpawnType.ToString(), ConsoleColor.Yellow);
             }
         }
+        
         [InGameKeyboardShortcut("SpawnUnitInAllCitiesOfSelectedEmpire", KeyCode.I, KeyCode.LeftShift)]
         public static void SpawnUnitInAllCitiesOfSelectedEmpire()
         {
@@ -183,6 +201,14 @@ namespace Modding.Humankind.DevTools.Core
                 city.BuildUnit(commonWarriors);
             }
         }
+        
+        [InGameKeyboardShortcut("Updates game's UI to reflect all changes", KeyCode.U, KeyCode.LeftAlt)]
+        public static void UpdateGameUI()
+        {
+            HumankindGame.Update();
+        }
+
+        private static bool _lastAutoExploreValue = false;
 
         public static void SetTargetEmpire(int empireIndex)
         {

@@ -47,6 +47,10 @@ namespace Modding.Humankind.DevTools.Core
                 GetMethod<DepartmentOfTheTreasury>("AddCostModifierToMajorEmpire", PublicInstance,
                     new[] {typeof(CostModifierDefinition)});
             
+            public static readonly MethodInfo RemoveCostModifierFromMajorEmpireMethod = 
+                GetMethod<DepartmentOfTheTreasury>("RemoveCostModifierFromMajorEmpire", PublicInstance,
+                    new[] {typeof(CostModifierDefinition)});
+
             public static readonly MethodInfo AddOrRemovePopulationToSettlementMethod = 
                 GetMethod<DepartmentOfTheInterior>("AddOrRemovePopulationToSettlement", NonPublicInstance,
                     new[] {typeof(FixedPoint), typeof(Settlement), typeof(bool)});

@@ -42,6 +42,9 @@ namespace Modding.Humankind.DevTools.Core
 
             public static readonly FieldInfo DepartmentOfDefenseField =
                 GetField<Empire>("DepartmentOfDefense", NonPublicInstance);
+            
+            public static readonly FieldInfo DepartmentOfTransportationField =
+                GetField<Empire>("DepartmentOfTransportation", NonPublicInstance);
 
             public static readonly FieldInfo PersonaNameField = GetField<MajorEmpire>("PersonaName", NonPublicInstance);
 

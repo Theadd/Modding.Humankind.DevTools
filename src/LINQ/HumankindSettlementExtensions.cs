@@ -8,8 +8,8 @@ namespace Modding.Humankind.DevTools
 {
     public static class HumankindSettlementExtensions
     {
-        public static IEnumerable<HumankindSettlement> IsCapital(this IEnumerable<HumankindSettlement> sequence) =>
-            sequence.Where(city => city.IsCapital);
+        public static IEnumerable<HumankindSettlement> IsCapital(this IEnumerable<HumankindSettlement> sequence, bool isCapital = true) =>
+            sequence.Where(city => city.IsCapital == isCapital);
 
         /// <summary>
         ///     Spawns a unit to the <c>Settlement</c>'s assigned spawn point for every <c>HumankindSettlement</c> in the sequence.
