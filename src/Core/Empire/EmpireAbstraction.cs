@@ -85,8 +85,9 @@ namespace Modding.Humankind.DevTools.Core
         // Cost modifiers
 
         protected ResearchCostModifierDefinition AddResearchCostModifier(float costModifierValue,
-            CostModifierDefinition.OperationTypes operationType)
+            bool isOperationTypeMult)
         {
+            var operationType = isOperationTypeMult ? CostModifierDefinition.OperationTypes.Mult : CostModifierDefinition.OperationTypes.Add;
             ResearchCostModifierDefinition orderInstance =
                 ScriptableObject.CreateInstance<ResearchCostModifierDefinition>();
 
@@ -110,8 +111,9 @@ namespace Modding.Humankind.DevTools.Core
         }
         
         protected ConstructibleCostModifierDefinition AddConstructibleCostModifier(float costModifierValue,
-            CostModifierDefinition.OperationTypes operationType)
+            bool isOperationTypeMult)
         {
+            var operationType = isOperationTypeMult ? CostModifierDefinition.OperationTypes.Mult : CostModifierDefinition.OperationTypes.Add;
             ConstructibleCostModifierDefinition orderInstance =
                 ScriptableObject.CreateInstance<ConstructibleCostModifierDefinition>();
 

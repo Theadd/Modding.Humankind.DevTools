@@ -33,6 +33,9 @@ namespace Modding.Humankind.DevTools
         /// </summary>
         public bool IsOutpost => SettlementEntity.SettlementStatus == SettlementStatuses.Camp;
 
+        /// <summary>
+        ///     EmpireIndex of <c>Empire</c> controlling this <c>Settlement</c>.
+        /// </summary>
         public new int EmpireIndex => base.EmpireIndex;
 
         /// <summary>
@@ -69,18 +72,12 @@ namespace Modding.Humankind.DevTools
 
         /// <summary>
         ///     Center main camera view to this <c>Settlement</c>'s TileIndex. 
-        /// 
-        /// <see cref="Territories">Territories</see> ___
-        /// <see langword="string"/> ___
-        /// <see langword="SimulationEntityGUID"/> ___
-        /// <see cref="EmpireIndex">EmpireIndex</see> ___
-        /// <see cref="HumankindSettlement.EmpireIndex">EmpireIndex</see> ___
-        /// <see cref="HumankindEmpire.EmpireIndex">EmpireIndex</see> ___
-        /// <see cref="HumankindSettlement">HumankindSettlement</see> ___
-        /// <see cref="HumankindEmpire">HumankindEmpire</see> ___
         /// </summary>
         public void CenterToCamera() => HumankindGame.CenterCameraAt(WorldPosition.ToTileIndex());
         
+        public Settlement Entity => base.SettlementEntity;
+        public Amplitude.Mercury.Simulation.Settlement Simulation => base.SettlementSimulation;
+
         public static HumankindSettlement Create(Settlement settlementEntity, Amplitude.Mercury.Simulation.Settlement settlement) =>
             new HumankindSettlement { SettlementEntity = settlementEntity, SettlementSimulation = settlement };
 

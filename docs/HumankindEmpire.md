@@ -123,18 +123,6 @@ void EnableFogOfWar(bool enable)
 Enable or disable this empire's FogOfWar. This action may take several seconds to apply effects.<details><summary><code>PARAMETERS</code></summary><ul><li>
 <kbd>enable</kbd> → Whether to enable or disable it.</li>
 </ul></details></td></tr>
-<tr><td align="left" valign="top">
-
-```csharp
-void RemoveConstructibleCostModifier(ConstructibleCostModifierDefinition modifier)
-```
-</td><td align="left" valign="top">
-
-### RemoveConstructibleCostModifier
-<img src="./resources/method.svg" alt="Method" height="16px"/><br/>
-Removes a `ConstructibleCostModifierDefinition` from this empire, see [AddConstructibleCostModifier](#Modding.Humankind.DevTools.HumankindEmpire.AddConstructibleCostModifier#Modding_Humankind_DevTools_HumankindEmpire_AddConstructibleCostModifier_System_Single,Amplitude_Mercury_Data_Simulation_CostModifierDefinition_OperationTypes_ 'Modding.Humankind.DevTools.HumankindEmpire.AddConstructibleCostModifier(System.Single,Amplitude.Mercury.Data.Simulation.CostModifierDefinition.OperationTypes)').<details><summary><code>PARAMETERS</code></summary><ul><li>
-<kbd>modifier</kbd> → The `ConstructibleCostModifierDefinition` to remove.</li>
-</ul></details></td></tr>
 </tbody></table>
 
 <table width="100%"><caption>
@@ -386,7 +374,7 @@ void RemoveResearchCostModifier(ResearchCostModifierDefinition modifier)
 
 ### RemoveResearchCostModifier
 <img src="./resources/method.svg" alt="Method" height="16px"/><br/>
-Removes a `ResearchCostModifierDefinition` from this empire, see [AddResearchCostModifier](#Modding.Humankind.DevTools.HumankindEmpire.AddConstructibleCostModifier#Modding_Humankind_DevTools_HumankindEmpire_AddConstructibleCostModifier_System_Single,Amplitude_Mercury_Data_Simulation_CostModifierDefinition_OperationTypes_ 'Modding.Humankind.DevTools.HumankindEmpire.AddConstructibleCostModifier(System.Single,Amplitude.Mercury.Data.Simulation.CostModifierDefinition.OperationTypes)').<details><summary><code>PARAMETERS</code></summary><ul><li>
+Removes a `ResearchCostModifierDefinition` from this empire, see [AddResearchCostModifier](HumankindEmpire.md#AddConstructibleCostModifier(float_bool) 'Modding.Humankind.DevTools.HumankindEmpire.AddConstructibleCostModifier(float, bool)').<details><summary><code>PARAMETERS</code></summary><ul><li>
 <kbd>modifier</kbd> → The `ResearchCostModifierDefinition` to remove.</li>
 </ul></details></td></tr>
 </tbody></table>
@@ -553,6 +541,37 @@ public int TradeNodesCount
 ### TradeNodesCount
 <img src="./resources/getter.svg" alt="Getter" height="16px"/><br/>
 Sum of trade nodes.</td></tr>
+<tr><td align="left" valign="top">
+
+```csharp
+ConstructibleCostModifierDefinition AddConstructibleCostModifier(float value, bool isOperationTypeMult)
+```
+</td><td align="left" valign="top">
+
+### AddConstructibleCostModifier
+<img src="./resources/method.svg" alt="Method" height="16px"/><br/>
+Adds a `ConstructibleCostModifierDefinition` to this empire based on provided parameters and returns it for later removing it with [RemoveConstructibleCostModifier](HumankindEmpire.md#RemoveConstructibleCostModifier(ConstructibleCostModifierDefinition) 'Modding.Humankind.DevTools.HumankindEmpire.RemoveConstructibleCostModifier(ConstructibleCostModifierDefinition)').<details open><summary><code>REMARKS</code></summary><ul>
+<li>
+
+If user saves the game while one or more CostModifierDefinition is still active, that saved game file will fail to load, throwing an Exception. Make sure to remove them using [RemoveConstructibleCostModifier](HumankindEmpire.md#RemoveConstructibleCostModifier(ConstructibleCostModifierDefinition) 'Modding.Humankind.DevTools.HumankindEmpire.RemoveConstructibleCostModifier(ConstructibleCostModifierDefinition)') before saving the game.</li>
+</ul></details>
+<details><summary><code>PARAMETERS</code></summary><ul><li>
+<kbd>value</kbd> → Value modifier.</li>
+<li>
+<kbd>isOperationTypeMult</kbd> → If true, refers to `Mult` from `CostModifierDefinition.OperationTypes` enum in namespace `Amplitude.Mercury.Data.Simulation`, otherwise `Add`.</li>
+</ul></details></td></tr>
+<tr><td align="left" valign="top">
+
+```csharp
+void RemoveConstructibleCostModifier(ConstructibleCostModifierDefinition modifier)
+```
+</td><td align="left" valign="top">
+
+### RemoveConstructibleCostModifier
+<img src="./resources/method.svg" alt="Method" height="16px"/><br/>
+Removes a `ConstructibleCostModifierDefinition` from this empire, see [AddConstructibleCostModifier](HumankindEmpire.md#AddConstructibleCostModifier(float_bool) 'Modding.Humankind.DevTools.HumankindEmpire.AddConstructibleCostModifier(float, bool)').<details><summary><code>PARAMETERS</code></summary><ul><li>
+<kbd>modifier</kbd> → The `ConstructibleCostModifierDefinition` to remove.</li>
+</ul></details></td></tr>
 </tbody></table>
 
 <table width="100%"><caption>

@@ -6,10 +6,10 @@
   "compilationOptions": {},
   "targets": {
     ".NETCoreApp,Version=v5.0": {
-      "DefaultDocumentation.Console/0-local20211211032804": {
+      "DefaultDocumentation.Console/0-local20211211062743": {
         "dependencies": {
           "CommandLineParser": "2.8.0",
-          "DefaultDocumentation.Common": "0.0.0-local20211211032803",
+          "DefaultDocumentation.Common": "0.0.0-local20211211062742",
           "Microsoft.CodeAnalysis.NetAnalyzers": "5.0.3",
           "Roslynator.Analyzers": "3.2.2",
           "Roslynator.CodeAnalysis.Analyzers": "1.1.1"
@@ -59,7 +59,7 @@
       "Roslynator.CodeAnalysis.Analyzers/1.1.1": {},
       "System.Collections.Immutable/5.0.0": {},
       "System.Reflection.Metadata/5.0.0": {},
-      "DefaultDocumentation.Api/0.0.0-local20211211032803": {
+      "DefaultDocumentation.Api/0.0.0-local20211211062742": {
         "dependencies": {
           "ICSharpCode.Decompiler": "7.1.0.6543",
           "NLog": "4.7.12",
@@ -69,17 +69,17 @@
           "DefaultDocumentation.Api.dll": {}
         }
       },
-      "DefaultDocumentation.Common/0.0.0-local20211211032803": {
+      "DefaultDocumentation.Common/0.0.0-local20211211062742": {
         "dependencies": {
-          "DefaultDocumentation.Markdown": "0.0.0-local20211211032803"
+          "DefaultDocumentation.Markdown": "0.0.0-local20211211062742"
         },
         "runtime": {
           "DefaultDocumentation.Common.dll": {}
         }
       },
-      "DefaultDocumentation.Markdown/0.0.0-local20211211032803": {
+      "DefaultDocumentation.Markdown/0.0.0-local20211211062742": {
         "dependencies": {
-          "DefaultDocumentation.Api": "0.0.0-local20211211032803"
+          "DefaultDocumentation.Api": "0.0.0-local20211211062742"
         },
         "runtime": {
           "DefaultDocumentation.Markdown.dll": {}
@@ -88,7 +88,7 @@
     }
   },
   "libraries": {
-    "DefaultDocumentation.Console/0-local20211211032804": {
+    "DefaultDocumentation.Console/0-local20211211062743": {
       "type": "project",
       "serviceable": false,
       "sha512": ""
@@ -156,17 +156,17 @@
       "path": "system.reflection.metadata/5.0.0",
       "hashPath": "system.reflection.metadata.5.0.0.nupkg.sha512"
     },
-    "DefaultDocumentation.Api/0.0.0-local20211211032803": {
+    "DefaultDocumentation.Api/0.0.0-local20211211062742": {
       "type": "project",
       "serviceable": false,
       "sha512": ""
     },
-    "DefaultDocumentation.Common/0.0.0-local20211211032803": {
+    "DefaultDocumentation.Common/0.0.0-local20211211062742": {
       "type": "project",
       "serviceable": false,
       "sha512": ""
     },
-    "DefaultDocumentation.Markdown/0.0.0-local20211211032803": {
+    "DefaultDocumentation.Markdown/0.0.0-local20211211062742": {
       "type": "project",
       "serviceable": false,
       "sha512": ""
