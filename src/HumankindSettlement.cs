@@ -68,7 +68,16 @@ namespace Modding.Humankind.DevTools
         public new Unit BuildUnit(UnitDefinition unitDefinition) => base.BuildUnit(unitDefinition);
 
         /// <summary>
-        ///     Center main camera view to this <c>Settlement</c>'s TileIndex.
+        ///     Center main camera view to this <c>Settlement</c>'s TileIndex. 
+        /// 
+        /// <see cref="Territories">Territories</see> ___
+        /// <see langword="string"/> ___
+        /// <see langword="SimulationEntityGUID"/> ___
+        /// <see cref="EmpireIndex">EmpireIndex</see> ___
+        /// <see cref="HumankindSettlement.EmpireIndex">EmpireIndex</see> ___
+        /// <see cref="HumankindEmpire.EmpireIndex">EmpireIndex</see> ___
+        /// <see cref="HumankindSettlement">HumankindSettlement</see> ___
+        /// <see cref="HumankindEmpire">HumankindEmpire</see> ___
         /// </summary>
         public void CenterToCamera() => HumankindGame.CenterCameraAt(WorldPosition.ToTileIndex());
         

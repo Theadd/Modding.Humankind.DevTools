@@ -34,6 +34,9 @@ namespace Modding.Humankind.DevTools
                 ModuleHelper.LoadModule(moduleType);
         }
         
+        /// <summary>
+        ///     
+        /// </summary>
         public static event Action OnIterateNext
         {
             add => AddOnIterateNextAction(value);

@@ -45,4 +45,13 @@ void UnloadModule(Type moduleType)
 Unregisters all members of a class Type after invoking any method with `[OnGameHasUnloaded]` attribute.<details><summary><code>PARAMETERS</code></summary><ul><li>
 <kbd>moduleType</kbd> →</li>
 </ul></details></td></tr>
+<tr><td align="left" valign="top">
+
+```csharp
+public static event Action OnIterateNext;
+```
+</td><td align="left" valign="top">
+
+### OnIterateNext
+<img src="./resources/event.svg" alt="Event" height="16px"/></td></tr>
 </tbody></table>

@@ -132,7 +132,7 @@ void RemoveConstructibleCostModifier(ConstructibleCostModifierDefinition modifie
 
 ### RemoveConstructibleCostModifier
 <img src="./resources/method.svg" alt="Method" height="16px"/><br/>
-Removes a `ConstructibleCostModifierDefinition` from this empire, see [AddConstructibleCostModifier](https://docs.microsoft.com/en-us/dotnet/api/Modding.Humankind.DevTools.HumankindEmpire.AddConstructibleCostModifier#Modding_Humankind_DevTools_HumankindEmpire_AddConstructibleCostModifier_System_Single,Amplitude_Mercury_Data_Simulation_CostModifierDefinition_OperationTypes_ 'Modding.Humankind.DevTools.HumankindEmpire.AddConstructibleCostModifier(System.Single,Amplitude.Mercury.Data.Simulation.CostModifierDefinition.OperationTypes)').<details><summary><code>PARAMETERS</code></summary><ul><li>
+Removes a `ConstructibleCostModifierDefinition` from this empire, see [AddConstructibleCostModifier](#Modding.Humankind.DevTools.HumankindEmpire.AddConstructibleCostModifier#Modding_Humankind_DevTools_HumankindEmpire_AddConstructibleCostModifier_System_Single,Amplitude_Mercury_Data_Simulation_CostModifierDefinition_OperationTypes_ 'Modding.Humankind.DevTools.HumankindEmpire.AddConstructibleCostModifier(System.Single,Amplitude.Mercury.Data.Simulation.CostModifierDefinition.OperationTypes)').<details><summary><code>PARAMETERS</code></summary><ul><li>
 <kbd>modifier</kbd> → The `ConstructibleCostModifierDefinition` to remove.</li>
 </ul></details></td></tr>
 </tbody></table>
@@ -386,7 +386,7 @@ void RemoveResearchCostModifier(ResearchCostModifierDefinition modifier)
 
 ### RemoveResearchCostModifier
 <img src="./resources/method.svg" alt="Method" height="16px"/><br/>
-Removes a `ResearchCostModifierDefinition` from this empire, see [AddResearchCostModifier](https://docs.microsoft.com/en-us/dotnet/api/Modding.Humankind.DevTools.HumankindEmpire.AddConstructibleCostModifier#Modding_Humankind_DevTools_HumankindEmpire_AddConstructibleCostModifier_System_Single,Amplitude_Mercury_Data_Simulation_CostModifierDefinition_OperationTypes_ 'Modding.Humankind.DevTools.HumankindEmpire.AddConstructibleCostModifier(System.Single,Amplitude.Mercury.Data.Simulation.CostModifierDefinition.OperationTypes)').<details><summary><code>PARAMETERS</code></summary><ul><li>
+Removes a `ResearchCostModifierDefinition` from this empire, see [AddResearchCostModifier](#Modding.Humankind.DevTools.HumankindEmpire.AddConstructibleCostModifier#Modding_Humankind_DevTools_HumankindEmpire_AddConstructibleCostModifier_System_Single,Amplitude_Mercury_Data_Simulation_CostModifierDefinition_OperationTypes_ 'Modding.Humankind.DevTools.HumankindEmpire.AddConstructibleCostModifier(System.Single,Amplitude.Mercury.Data.Simulation.CostModifierDefinition.OperationTypes)').<details><summary><code>PARAMETERS</code></summary><ul><li>
 <kbd>modifier</kbd> → The `ResearchCostModifierDefinition` to remove.</li>
 </ul></details></td></tr>
 </tbody></table>
@@ -517,7 +517,7 @@ public int MoneyNet
 
 ### MoneyNet
 <img src="./resources/getter.svg" alt="Getter" height="16px"/><br/>
-Money net income per turn which is added to [MoneyStock](HumankindEmpire_MoneyStock.md 'Modding.Humankind.DevTools.HumankindEmpire.MoneyStock') at the end of turn phase.</td></tr>
+Money net income per turn which is added to [MoneyStock](HumankindEmpire.md#MoneyStock 'Modding.Humankind.DevTools.HumankindEmpire.MoneyStock') at the end of turn phase.</td></tr>
 <tr><td align="left" valign="top">
 
 ```csharp

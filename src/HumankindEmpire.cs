@@ -194,7 +194,7 @@ namespace Modding.Humankind.DevTools
         public int StrategicResourcesAccessCount => (int) MajorEmpireSimulation.SumOfStrategicResourceAccessCount.Value;
 
         /// <summary>
-        ///     Money net income per turn which is added to <see cref="MoneyStock">MoneyStock</see> at the end of turn phase.
+        ///     Money net income per turn which is added to <see cref="HumankindEmpire.MoneyStock">MoneyStock</see> at the end of turn phase.
         /// </summary>
         public int MoneyNet => (int) MajorEmpireSimulation.MoneyNet.Value;
 

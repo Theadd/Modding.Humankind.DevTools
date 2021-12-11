@@ -29,7 +29,7 @@
     </PropertyGroup>
     <ItemGroup>
       <TargetBinFiles Include="$(TargetBinPath)\*.*" />
-      <GeneratedDocsFiles Include="./gen-docs/generated-allpages/GameSpeedLevel.md;./gen-docs/generated/InGameKeyboardShortcutAttribute.md;./gen-docs/generated/DevToolsModuleAttribute.md;./gen-docs/generated/OnGameHasLoadedAttribute.md;./gen-docs/generated/OnGameHasUnloadedAttribute.md;./gen-docs/generated-allpages/HumankindEmpire.md;./gen-docs/generated-allpages/HumankindSettlement.md;./gen-docs/generated-allpages/HumankindDevTools.md;./gen-docs/generated-allpages/HumankindGame.md" />
+      <GeneratedDocsFiles Include="./gen-docs/generated-allpages/GameSpeedLevel.md;./gen-docs/generated/InGameKeyboardShortcutAttribute.md;./gen-docs/generated/DevToolsModuleAttribute.md;./gen-docs/generated/OnGameHasLoadedAttribute.md;./gen-docs/generated/OnGameHasUnloadedAttribute.md;./gen-docs/generated/HumankindEmpire.md;./gen-docs/generated/HumankindSettlement.md;./gen-docs/generated/HumankindDevTools.md;./gen-docs/generated/HumankindGame.md" />
       <DevToolsBinary Include="$(TargetBinPath)Modding.Humankind.DevTools.dll" />
     </ItemGroup>
     <MakeDir Directories="$(GenDocsDir)" />

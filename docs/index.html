@@ -40,6 +40,9 @@
       position: absolute;
       opacity: 0;
     }
+    td > h3:first-child > a {
+      pointer-events: none;
+    }
     .sidebar ul.app-sub-sidebar > li {
       margin: 0;
     }
@@ -120,16 +123,44 @@
       },
       markdown: {
         smartypants: false,
-        renderer: {},
+        renderer: {
+          // link: renderer.link
+        },
         sanitize: false,
         sanitizer: str => str,
         silent: false,
         gfm: true
-      }
+      },
+      plugins: [
+        function(hook, vm) {
+
+          hook.mounted(function() {
+            // Called after initial completion. Only trigger once, no arguments.
+            const linkRef = window.$docsify.markdown.renderer.link;
+
+            const renderer = {
+              link: (href, title, text) => {
+
+                if (href.length > 0 && href[0] == '#') {
+                  if (href.substring(0, 28) == "#Modding.Humankind.DevTools.") {
+                    return linkRef(href.substring(28).replace('.', '#'), title, text);
+                  }
+                }
+
+                return linkRef(href, title, text);
+              }
+            };
+
+            window.marked.use({ renderer });
+          });
+        }
+      ]
     }
+
+
   </script>
   <!-- Docsify v4 -->
-  <script src="//cdn.jsdelivr.net/npm/docsify/lib/docsify.min.js"></script>
+  <script src="//cdn.jsdelivr.net/npm/docsify/lib/docsify.js"></script>
   <script src="//cdn.jsdelivr.net/npm/docsify/lib/plugins/search.min.js"></script>
   <script src="//unpkg.com/prismjs/components/prism-bash.min.js"></script>
   <script src="//unpkg.com/prismjs/components/prism-csharp.min.js"></script>
