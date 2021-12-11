@@ -368,6 +368,25 @@ Unlocked technologies.</td></tr>
 <tr><td align="left" valign="top">
 
 ```csharp
+ResearchCostModifierDefinition AddResearchCostModifier(float value, bool isOperationTypeMult)
+```
+</td><td align="left" valign="top">
+
+### AddResearchCostModifier
+<img src="./resources/method.svg" alt="Method" height="16px"/><br/>
+Adds a `ResearchCostModifierDefinition` to this empire based on provided parameters and returns it for later removing it with [RemoveResearchCostModifier](HumankindEmpire.md#RemoveResearchCostModifier(ResearchCostModifierDefinition) 'Modding.Humankind.DevTools.HumankindEmpire.RemoveResearchCostModifier(ResearchCostModifierDefinition)').<details open><summary><code>REMARKS</code></summary><ul>
+<li>
+
+If user saves the game while one or more CostModifierDefinition is still active, that saved game file will fail to load, throwing an Exception. Make sure to remove them using [RemoveResearchCostModifier](HumankindEmpire.md#RemoveResearchCostModifier(ResearchCostModifierDefinition) 'Modding.Humankind.DevTools.HumankindEmpire.RemoveResearchCostModifier(ResearchCostModifierDefinition)') before saving the game.</li>
+</ul></details>
+<details><summary><code>PARAMETERS</code></summary><ul><li>
+<kbd>value</kbd> → Value modifier.</li>
+<li>
+<kbd>isOperationTypeMult</kbd> → If true, refers to `Mult` from `CostModifierDefinition.OperationTypes` enum in namespace `Amplitude.Mercury.Data.Simulation`, otherwise `Add`.</li>
+</ul></details></td></tr>
+<tr><td align="left" valign="top">
+
+```csharp
 void RemoveResearchCostModifier(ResearchCostModifierDefinition modifier)
 ```
 </td><td align="left" valign="top">

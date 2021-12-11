@@ -17,3 +17,6 @@
   - [InGameKeyboardShortcut](InGameKeyboardShortcutAttribute.md)
   - [OnGameHasLoaded](OnGameHasLoadedAttribute.md)
   - [OnGameHasUnloaded](OnGameHasUnloadedAttribute.md)
+  - <small>LINQ EXTENSIONS</small>
+  - [HumankindEmpireExtensions](HumankindEmpireExtensions.md)
+  - [HumankindSettlementExtensions](HumankindSettlementExtensions.md)
