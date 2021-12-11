@@ -6,7 +6,7 @@ using Modding.Humankind.DevTools.Core;
 namespace Modding.Humankind.DevTools
 {
 
-    [BepInPlugin(PLUGIN_GUID, "DevTools", "1.3.0.0")]
+    [BepInPlugin(PLUGIN_GUID, "DevTools", "1.4.0.0")]
     [BepInIncompatibility("AOM.Humankind.Teams")]
     internal class DevTools : BaseUnityPlugin
     {

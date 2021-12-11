@@ -102,6 +102,16 @@ Returns a string that represents the current HumankindGame in a formatted table 
 <tr><td align="left" valign="top">
 
 ```csharp
+void Update()
+```
+</td><td align="left" valign="top">
+
+### Update
+<img src="./resources/method.svg" alt="Method" height="16px"/><br/>
+Updates game's UI to reflect any changes made with this API.</td></tr>
+<tr><td align="left" valign="top">
+
+```csharp
 public static event Action OnNewTurnStart;
 ```
 </td><td align="left" valign="top">

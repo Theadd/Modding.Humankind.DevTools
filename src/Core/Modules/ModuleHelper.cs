@@ -37,13 +37,28 @@ namespace Modding.Humankind.DevTools.Core
 
             if (DevTools.IncludeExternalModules)
             {
-                var allAIStrategyModules =
-                    from assembly in AppDomain.CurrentDomain.GetAssemblies().AsParallel()
-                    from type in assembly.GetTypes()
-                    where type.IsDefined(typeof(DevToolsModuleAttribute), false)
-                    select type;
+                // TODO: [Error  : Unity Log] ReflectionTypeLoadException: Exception of type 'System.Reflection.ReflectionTypeLoadException' was thrown.
+                try
+                {
+                    var allAIStrategyModules =
+                        from assembly in AppDomain.CurrentDomain.GetAssemblies()    // .AsParallel()
+                        from type in assembly.GetTypes()
+                        where type.IsDefined(typeof(DevToolsModuleAttribute), false)
+                        select type;
 
-                allAIStrategyModules.ForAll(RegisterModule);
+                    // allAIStrategyModules.ForAll(RegisterModule);
+                    foreach (var aiStrategyModule in allAIStrategyModules) RegisterModule(aiStrategyModule);
+                }
+                catch (ReflectionTypeLoadException e)
+                {
+                    Loggr.LogError(
+                        "ReflectionTypeLoadException thrown in DevTools.Code.ModuleHelper.FindAllAndRegister method." + 
+                        "\n\tMESSAGE: " + e.Message + 
+                        "\n\tSOURCE: " + e.Source + 
+                        "\n\tINNER EXCEPTION: " + e.InnerException + 
+                        "\n\tSTACK TRACE: " + e.StackTrace
+                        );
+                }
             }
             else
             {

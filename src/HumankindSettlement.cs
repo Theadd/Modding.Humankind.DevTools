@@ -66,6 +66,11 @@ namespace Modding.Humankind.DevTools
         /// <param name="unitDefinition">The <c>UnitDefinition</c> to spawn a <c>Unit</c> from.</param>
         /// <returns><c>Unit</c></returns>
         public new Unit BuildUnit(UnitDefinition unitDefinition) => base.BuildUnit(unitDefinition);
+
+        /// <summary>
+        ///     Center main camera view to this <c>Settlement</c>'s TileIndex.
+        /// </summary>
+        public void CenterToCamera() => HumankindGame.CenterCameraAt(WorldPosition.ToTileIndex());
         
         public static HumankindSettlement Create(Settlement settlementEntity, Amplitude.Mercury.Simulation.Settlement settlement) =>
             new HumankindSettlement { SettlementEntity = settlementEntity, SettlementSimulation = settlement };

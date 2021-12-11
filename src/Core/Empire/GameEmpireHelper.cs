@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using Amplitude.Mercury.Data.AI;
 
@@ -50,12 +51,17 @@ namespace Modding.Humankind.DevTools.Core
         {
             const int size = -CellSize;
 
-            return ToStringArray(empire).Select(item => $"{item[1],size}").ToArray();
+            string[] result = ToStringArray(empire).Select(item => $"{item[1],size}").ToArray();
+            var parts = result[0].Split(':');
+
+            result[0] = "%Red%" + parts[0] + ":" + "%Yellow%" + parts[1];
+
+            return result;
         }
 
         public static string[] ToFieldNameStringArray(HumankindEmpire empire)
         {
-            return ToStringArray(empire).Select(item => $"{item[0],HeaderCellSize}").ToArray();
+            return ToStringArray(empire).Select(item => (item[0][0] == '[' ? "%Red%" : "%Yellow%") + $"{item[0],HeaderCellSize}").ToArray();
         }
         
         public static string[][] ToStringArray(HumankindEmpire empire)
@@ -65,7 +71,7 @@ namespace Modding.Humankind.DevTools.Core
             return new[]
             {
                 new[] {$"TURN {HumankindGame.Turn} #", empire.EmpireIndex + ": " + empire.PersonaName},
-                new[] {new string('=', HeaderCellSize), new string('=', CellSize)},
+                new[] {"%White%" + (new string('=', HeaderCellSize)) + "%Default%", "%White%" + (new string('=', CellSize)) + "%Default%"},
                 new[] {"Territories (Cities)", $"{empire.TerritoryCount} ({empire.CityCount}/{empire.CityCap})"},
                 new[] {"Stability", $"{empire.Stability}"},
                 new[] {"EraLevel (SumOfEraStars)", $"{empire.EraLevel} ({empire.SumOfEraStars})"},

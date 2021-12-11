@@ -123,6 +123,18 @@ void EnableFogOfWar(bool enable)
 Enable or disable this empire's FogOfWar. This action may take several seconds to apply effects.<details><summary><code>PARAMETERS</code></summary><ul><li>
 <kbd>enable</kbd> → Whether to enable or disable it.</li>
 </ul></details></td></tr>
+<tr><td align="left" valign="top">
+
+```csharp
+void RemoveConstructibleCostModifier(ConstructibleCostModifierDefinition modifier)
+```
+</td><td align="left" valign="top">
+
+### RemoveConstructibleCostModifier
+<img src="./resources/method.svg" alt="Method" height="16px"/><br/>
+Removes a `ConstructibleCostModifierDefinition` from this empire, see [AddConstructibleCostModifier](https://docs.microsoft.com/en-us/dotnet/api/Modding.Humankind.DevTools.HumankindEmpire.AddConstructibleCostModifier#Modding_Humankind_DevTools_HumankindEmpire_AddConstructibleCostModifier_System_Single,Amplitude_Mercury_Data_Simulation_CostModifierDefinition_OperationTypes_ 'Modding.Humankind.DevTools.HumankindEmpire.AddConstructibleCostModifier(System.Single,Amplitude.Mercury.Data.Simulation.CostModifierDefinition.OperationTypes)').<details><summary><code>PARAMETERS</code></summary><ul><li>
+<kbd>modifier</kbd> → The `ConstructibleCostModifierDefinition` to remove.</li>
+</ul></details></td></tr>
 </tbody></table>
 
 <table width="100%"><caption>
@@ -365,6 +377,18 @@ public int UnlockedTechnologiesCount
 ### UnlockedTechnologiesCount
 <img src="./resources/getter.svg" alt="Getter" height="16px"/><br/>
 Unlocked technologies.</td></tr>
+<tr><td align="left" valign="top">
+
+```csharp
+void RemoveResearchCostModifier(ResearchCostModifierDefinition modifier)
+```
+</td><td align="left" valign="top">
+
+### RemoveResearchCostModifier
+<img src="./resources/method.svg" alt="Method" height="16px"/><br/>
+Removes a `ResearchCostModifierDefinition` from this empire, see [AddResearchCostModifier](https://docs.microsoft.com/en-us/dotnet/api/Modding.Humankind.DevTools.HumankindEmpire.AddConstructibleCostModifier#Modding_Humankind_DevTools_HumankindEmpire_AddConstructibleCostModifier_System_Single,Amplitude_Mercury_Data_Simulation_CostModifierDefinition_OperationTypes_ 'Modding.Humankind.DevTools.HumankindEmpire.AddConstructibleCostModifier(System.Single,Amplitude.Mercury.Data.Simulation.CostModifierDefinition.OperationTypes)').<details><summary><code>PARAMETERS</code></summary><ul><li>
+<kbd>modifier</kbd> → The `ResearchCostModifierDefinition` to remove.</li>
+</ul></details></td></tr>
 </tbody></table>
 
 <table width="100%"><caption>

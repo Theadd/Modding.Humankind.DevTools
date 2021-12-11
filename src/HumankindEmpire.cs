@@ -451,22 +451,44 @@ namespace Modding.Humankind.DevTools
         public new void EnableFogOfWar(bool enable) => base.EnableFogOfWar(enable);
 
         /// <summary>
-        ///     TODO: Add XML comments for AddResearchCostModifier
+        ///     Adds a <c>ResearchCostModifierDefinition</c> to this empire based on provided parameters and returns it for later removing it with <see cref="RemoveResearchCostModifier">RemoveResearchCostModifier</see>.
         /// </summary>
-        /// <param name="costModifierValue"></param>
-        /// <param name="operationType"></param>
-        public new void AddResearchCostModifier(float costModifierValue,
+        /// <remarks>
+        ///     If user saves the game while one or more *CostModifierDefinition is still active, that saved game file will fail to load, throwing an Exception. Make sure to remove them using <see cref="RemoveResearchCostModifier">RemoveResearchCostModifier</see> before saving the game.
+        /// </remarks>
+        /// <param name="costModifierValue">Value modifier.</param>
+        /// <param name="operationType">Can be <c>Add</c> or <c>Mult</c> from <c>CostModifierDefinition.OperationTypes</c> enum in namespace <c>Amplitude.Mercury.Data.Simulation</c>.</param>
+        /// <returns>The <c>ResearchCostModifierDefinition</c> added so you can remove it later.</returns>
+        public new ResearchCostModifierDefinition AddResearchCostModifier(float costModifierValue,
             CostModifierDefinition.OperationTypes operationType) =>
             base.AddResearchCostModifier(costModifierValue, operationType);
+
+        /// <summary>
+        ///     Removes a <c>ResearchCostModifierDefinition</c> from this empire, see <see cref="AddConstructibleCostModifier">AddResearchCostModifier</see>.
+        /// </summary>
+        /// <param name="modifier">The <c>ResearchCostModifierDefinition</c> to remove.</param>
+        public new void RemoveResearchCostModifier(ResearchCostModifierDefinition modifier) =>
+            base.RemoveResearchCostModifier(modifier);
         
         /// <summary>
-        ///     TODO: Add XML comments for AddConstructibleCostModifier
+        ///     Adds a <c>ConstructibleCostModifierDefinition</c> to this empire based on provided parameters and returns it for later removing it with <see cref="RemoveConstructibleCostModifier">RemoveConstructibleCostModifier</see>.
         /// </summary>
-        /// <param name="costModifierValue"></param>
-        /// <param name="operationType"></param>
-        public new void AddConstructibleCostModifier(float costModifierValue,
+        /// <remarks>
+        ///     If user saves the game while one or more *CostModifierDefinition is still active, that saved game file will fail to load, throwing an Exception. Make sure to remove them using <see cref="RemoveConstructibleCostModifier">RemoveConstructibleCostModifier</see> before saving the game.
+        /// </remarks>
+        /// <param name="costModifierValue">Value modifier.</param>
+        /// <param name="operationType">Can be <c>Add</c> or <c>Mult</c> from <c>CostModifierDefinition.OperationTypes</c> enum in namespace <c>Amplitude.Mercury.Data.Simulation</c>.</param>
+        /// <returns>The <c>ConstructibleCostModifierDefinition</c> added so you can remove it later.</returns>
+        public new ConstructibleCostModifierDefinition AddConstructibleCostModifier(float costModifierValue,
             CostModifierDefinition.OperationTypes operationType) =>
             base.AddConstructibleCostModifier(costModifierValue, operationType);
+        
+        /// <summary>
+        ///     Removes a <c>ConstructibleCostModifierDefinition</c> from this empire, see <see cref="AddConstructibleCostModifier">AddConstructibleCostModifier</see>.
+        /// </summary>
+        /// <param name="modifier">The <c>ConstructibleCostModifierDefinition</c> to remove.</param>
+        public new void RemoveConstructibleCostModifier(ConstructibleCostModifierDefinition modifier) =>
+            base.RemoveConstructibleCostModifier(modifier);
         
         // TODO: What is this for?
         public int IndustryWorkplaceBonusGain
@@ -476,10 +498,7 @@ namespace Modding.Humankind.DevTools
             set => R.Fields.FixedPointRawValueField.SetValue(MajorEmpireSimulation.IndustryWorkplaceBonusGain,
                 value * 1000);
         }
-
-        // TODO
-        public void SetControlledByHuman(bool IsControlledByHuman) => MajorEmpireSimulation.SetControlledByHuman(IsControlledByHuman, true);
-
+        
         public MajorEmpire Entity => base.MajorEmpireEntity;
         public Amplitude.Mercury.Simulation.MajorEmpire Simulation => base.MajorEmpireSimulation;
         public new DepartmentOfTheTreasury DepartmentOfTheTreasury => base.DepartmentOfTheTreasury;
@@ -489,6 +508,7 @@ namespace Modding.Humankind.DevTools
         public new DepartmentOfDevelopment DepartmentOfDevelopment => base.DepartmentOfDevelopment;
         public new DepartmentOfTheInterior DepartmentOfTheInterior => base.DepartmentOfTheInterior;
         public new DepartmentOfDefense DepartmentOfDefense => base.DepartmentOfDefense;
+        public new DepartmentOfTransportation DepartmentOfTransportation => base.DepartmentOfTransportation;
         
         public static HumankindEmpire Create(MajorEmpire fromMajorEmpire)
         {

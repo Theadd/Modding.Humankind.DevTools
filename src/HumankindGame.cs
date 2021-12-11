@@ -37,6 +37,11 @@ namespace Modding.Humankind.DevTools
         public static int GameID => GameController.GameID;
 
         /// <summary>
+        ///     Updates game's UI to reflect any changes made with this API.
+        /// </summary>
+        public static void Update() => GameUtils.UpdateGameUI();
+
+        /// <summary>
         ///     Gets current game's <c>GameSpeedDefinition</c> declared in <c>Amplitude.Mercury.Data.Simulation</c> namespace.
         /// </summary>
         public static GameSpeedDefinition GameSpeedDefinition => GameUtils.GameSpeed();
@@ -48,6 +53,8 @@ namespace Modding.Humankind.DevTools
         ///     See <see href="GameSpeedLevel.md">GameSpeedLevel</see>.
         /// </summary>
         public static int GameSpeedLevel => GameUtils.GetGameSpeedLevel();
+
+        public static void CenterCameraAt(int tileIndex) => GameUtils.CenterCameraAt(tileIndex);
 
         /// <summary>
         ///     Returns a string that represents the current HumankindGame in a formatted table with all empires and

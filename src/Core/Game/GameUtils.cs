@@ -3,9 +3,13 @@ using System.Linq;
 using Amplitude.Mercury.AI;
 using Amplitude.Mercury.AI.Brain;
 using Amplitude.Mercury.Data.Simulation;
+using Amplitude.Mercury.Interop;
 using Amplitude.Mercury.Interop.AI;
-using Amplitude.Mercury.Interop.AI.Entities;
+using Amplitude.Mercury.Presentation;
 using Amplitude.Mercury.Sandbox;
+using Amplitude.Mercury.Simulation;
+using Empire = Amplitude.Mercury.Interop.AI.Entities.Empire;
+using MajorEmpire = Amplitude.Mercury.Interop.AI.Entities.MajorEmpire;
 
 namespace Modding.Humankind.DevTools.Core
 {
@@ -56,7 +60,7 @@ namespace Modding.Humankind.DevTools.Core
         public static string[] GetGameStatistics(HumankindEmpire[] gameEmpires)
         {
             var lines = GameEmpireHelper.ToFieldNameStringArray(gameEmpires[0]);
-            const string separator = " | ";
+            const string separator = " %White%|%Default% ";
 
             foreach (var gameEmpire in gameEmpires)
                 lines = GameEmpireHelper.ToFormattedStringArray(gameEmpire)
@@ -97,6 +101,30 @@ namespace Modding.Humankind.DevTools.Core
                 return GameSpeedLevel.Endless;
 
             return GameSpeedLevel.Slowest;
+        }
+
+        public static void UpdateGameUI()
+        {
+            if (!HumankindGame.IsGameLoaded)
+                return;
+            
+            Amplitude.Mercury.Interop.AI.Entities.Army aiArmy = HumankindGame.Empires[0].Armies.FirstOrDefault();
+
+            if (aiArmy == null)
+                return;
+            
+            SimulationEntityGUID entityGUID = new SimulationEntityGUID(aiArmy.EntityGUID);
+            
+            SandboxManager.PostOrder(new OrderToggleAutoExplore
+            {
+                EntityGUID = entityGUID,
+                AutoExplore = aiArmy.AutoExplore
+            });
+        }
+
+        public static void CenterCameraAt(int tileIndex)
+        {
+            Presentation.PresentationCameraController.CenterCameraAt(tileIndex);
         }
     }
 }

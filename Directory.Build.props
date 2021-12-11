@@ -7,7 +7,7 @@
     <!-- 
       Full path to Humankind installation directory, ex: C:\Games\Humankind
     -->
-    <HUMANKIND_GAME_PATH>S:\Games\HUMANKINDv2</HUMANKIND_GAME_PATH>
+    <HUMANKIND_GAME_PATH>S:\Program Files\Steam\steamapps\common\Humankind</HUMANKIND_GAME_PATH>
     <!-- 
       Where to place compiled DLL, added at the end of HUMANKIND_GAME_PATH.
       If not specified, defaults to \BepInEx\scripts when building Configuration is set
