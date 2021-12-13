@@ -14,7 +14,7 @@ namespace Modding.Humankind.DevTools
         /// <summary>
         ///     Returns a new sequence of <c>HumankindSettlement</c>s containing only the capital cities from the given sequence.
         /// Set <c>isCapital</c> to false to invert the results. 
-        /// See also: <see cref="HumankindSettlement.IsCapital">HumankindSettlement.IsCapital</c>.
+        /// See also: <see cref="HumankindSettlement.IsCapital">HumankindSettlement.IsCapital</see>.
         /// </summary>
         /// <param name="sequence">this</param>
         /// <param name="isCapital">Set to false in order to get only those <c>HumankindSettlement</c>s which are not a capital, defaults to true.</param>
@@ -24,7 +24,7 @@ namespace Modding.Humankind.DevTools
         
         /// <summary>
         ///     Returns a new sequence that only contain settlements evolved to city. Set <c>isCity</c> to false to get the opposite results.
-        /// See also: <see cref="HumankindSettlement.IsCity">HumankindSettlement.IsCity</c>.
+        /// See also: <see cref="HumankindSettlement.IsCity">HumankindSettlement.IsCity</see>.
         /// </summary>
         /// <param name="sequence">this</param>
         /// <param name="isCity">When false, returns a sequence containing those <c>HumankindSettlement</c> that were not cities, defaults to true.</param>
