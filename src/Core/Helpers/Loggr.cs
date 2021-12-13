@@ -4,7 +4,7 @@ using System.Reflection;
 using BepInEx;
 using Modding.Humankind.DevTools.DeveloperTools;
 
-namespace Modding.Humankind.DevTools.Core
+namespace Modding.Humankind.DevTools
 {
     /// <summary>
     ///     A static logger with color support, only for printing to BepInEx's console window.

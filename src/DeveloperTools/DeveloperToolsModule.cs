@@ -1,7 +1,7 @@
 ﻿using System;
 using UnityEngine;
 
-namespace Modding.Humankind.DevTools.Core
+namespace Modding.Humankind.DevTools.DeveloperTools
 {
     [DevToolsModule]
     public class DeveloperToolsModule
