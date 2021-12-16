@@ -66,6 +66,34 @@ This extension provides an easy way to iterate the sequence of `HumankindSettlem
 <tr><td align="left" valign="top">
 
 ```csharp
+IEnumerable<HumankindSettlement> IsCapital(this IEnumerable<HumankindSettlement> sequence, bool isCapital)
+```
+</td><td align="left" valign="top">
+
+### IsCapital
+<img src="./resources/method.svg" alt="Method" height="16px"/><br/>
+Returns a new sequence of `HumankindSettlement`s containing only the capital cities from the given sequence. `isCapital` to false to invert the results.  also: [HumankindSettlement.IsCapital](HumankindSettlement.md#IsCapital 'Modding.Humankind.DevTools.HumankindSettlement.IsCapital').<details><summary><code>PARAMETERS</code></summary><ul><li>
+<kbd>sequence</kbd> → this</li>
+<li>
+<kbd>isCapital</kbd> → Set to false in order to get only those `HumankindSettlement`s which are not a capital, defaults to true.</li>
+</ul></details></td></tr>
+<tr><td align="left" valign="top">
+
+```csharp
+IEnumerable<HumankindSettlement> IsCity(this IEnumerable<HumankindSettlement> sequence, bool isCity)
+```
+</td><td align="left" valign="top">
+
+### IsCity
+<img src="./resources/method.svg" alt="Method" height="16px"/><br/>
+Returns a new sequence that only contain settlements evolved to city. Set `isCity` to false to get the opposite results. also: [HumankindSettlement.IsCity](HumankindSettlement.md#IsCity 'Modding.Humankind.DevTools.HumankindSettlement.IsCity').<details><summary><code>PARAMETERS</code></summary><ul><li>
+<kbd>sequence</kbd> → this</li>
+<li>
+<kbd>isCity</kbd> → When false, returns a sequence containing those `HumankindSettlement` that were not cities, defaults to true.</li>
+</ul></details></td></tr>
+<tr><td align="left" valign="top">
+
+```csharp
 IEnumerable<HumankindSettlement> IsOutpost(this IEnumerable<HumankindSettlement> sequence, bool isOutpost)
 ```
 </td><td align="left" valign="top">

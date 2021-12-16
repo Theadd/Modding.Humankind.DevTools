@@ -40,7 +40,7 @@ namespace Modding.Humankind.DevTools
             if (__instance != Sandbox.AIController) Loggr.LogError(" ERROR! __instance != Sandbox.AIController");
             GameController.Instance.Setup((int) R.Fields.LastRunTurnField.GetValue(__instance), __instance,
                 Sandbox.GameID, false);
-            Loggr.Log("Setup was triggered from AIController.OnNewTurnStarted()", ConsoleColor.Red);
+            // Loggr.Log("Setup was triggered from AIController.OnNewTurnStarted()", ConsoleColor.Red);
 
             return true;
         }
