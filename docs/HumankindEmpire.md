@@ -74,16 +74,6 @@ Whether this empire is being controlled by a human player or by the AI.</td></tr
 <tr><td align="left" valign="top">
 
 ```csharp
-public bool IsInBattle
-```
-</td><td align="left" valign="top">
-
-### IsInBattle
-<img src="./resources/getter.svg" alt="Getter" height="16px"/><br/>
-Whether this empire has an ongoing battle active.</td></tr>
-<tr><td align="left" valign="top">
-
-```csharp
 public IEnumerable<HumankindSettlement> Settlements
 ```
 </td><td align="left" valign="top">

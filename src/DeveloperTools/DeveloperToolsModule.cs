@@ -9,6 +9,12 @@ namespace Modding.Humankind.DevTools.DeveloperTools
         public static string Name => "DeveloperTools";
 
         [OnGameHasLoaded]
+        private static void OnGameHasLoaded()
+        {
+            Reset();
+            ShowUIToolbar();
+        }
+
         [OnGameHasUnloaded]
         private static void Reset()
         {
@@ -47,6 +53,12 @@ namespace Modding.Humankind.DevTools.DeveloperTools
         public static void RemoveAllOnIterateNextActions()
         {
             Reset();
+        }
+        
+        [InGameKeyboardShortcut("Developer Tools UI - Toolbar", KeyCode.T, KeyCode.LeftControl, KeyCode.LeftShift)]
+        public static void ShowUIToolbar()
+        {
+            UIManager.Initialize();
         }
     }
 }

@@ -121,10 +121,12 @@ namespace Modding.Humankind.DevTools
         /// </summary>
         public int SettlementsPopulation => (int) MajorEmpireSimulation.SumOfPopulation.Value;
 
+        /*
         /// <summary>
         ///     Whether this empire has an ongoing battle active.
         /// </summary>
         public bool IsInBattle => MajorEmpireSimulation.IsInBattle;
+        */
 
         /// <summary>
         ///     Whether this empire is being controlled by the AI or by a human player.
@@ -493,7 +495,7 @@ namespace Modding.Humankind.DevTools
 
 
         // TODO: What is this for?
-        public int IndustryWorkplaceBonusGain
+        internal int IndustryWorkplaceBonusGain
         {
             get => (int) R.Fields.FixedPointRawValueField.GetValue(MajorEmpireSimulation.IndustryWorkplaceBonusGain) /
                    1000;

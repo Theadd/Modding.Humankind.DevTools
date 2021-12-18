@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using Amplitude.Mercury.Presentation;
 using System;
+using Amplitude.Mercury.Interop.AI.Entities;
 
 namespace Modding.Humankind.DevTools
 {
@@ -10,7 +11,7 @@ namespace Modding.Humankind.DevTools
         /// <summary>
         ///     This extension provides an easy way to iterate any sequence of <c>IEnumerable</c> collections one by one when pressing <c>[F3]</c> key within the game.
         /// </summary>
-        /// <param name="sequence"></param>
+        /// <param name="sequence">this</param>
         /// <param name="action">The Action&lt;T&gt; to be executed each iteration.</param>
         /// <typeparam name="T"></typeparam>
         /// <returns></returns>
@@ -48,20 +49,53 @@ namespace Modding.Humankind.DevTools
 
             return sequence;
         }
-        
-        public static void SelectUnit(Amplitude.Mercury.Simulation.SimulationEntityGUID unitGUID, bool selected)
+
+        /// <summary>
+        ///     Executes an action for each element in the sequence.
+        /// </summary>
+        /// <param name="sequence">this</param>
+        /// <param name="action">The Action&lt;T&gt; to be executed for each element in the sequence.</param>
+        /// <typeparam name="T"></typeparam>
+        /// <returns></returns>
+        public static IEnumerable<T> Execute<T>(this IEnumerable<T> sequence,
+            Action<T> action)
         {
-            BaseArmyCursor baseArmyCursor = Presentation.PresentationCursorController.CurrentCursor as BaseArmyCursor;
-            if (baseArmyCursor == null)
+            foreach (var element in sequence)
             {
-                return;
+                action(element);
             }
-            if (selected)
-            {
-                baseArmyCursor.SelectUnit(unitGUID);
-                return;
-            }
-            baseArmyCursor.UnselectUnit(unitGUID);
+
+            return sequence;
+        }
+
+        /// <summary>
+        ///     Simulate user click on an army.
+        /// </summary>
+        /// <param name="army">this</param>
+        /// <returns></returns>
+        public static Army SelectArmy(this Army army)
+        {
+            Amplitude.Mercury.Simulation.SimulationEntityGUID entityGUID =
+                new Amplitude.Mercury.Simulation.SimulationEntityGUID(army.EntityGUID);
+            
+            if (Presentation.PresentationCursorController.CurrentCursor is ArmyCursor armyCursor)
+                armyCursor.ChangeEntity(entityGUID);
+            else
+                Presentation.PresentationCursorController.ChangeToArmyCursor(entityGUID);
+            
+            return army;
+        }
+        
+        /// <summary>
+        ///     Center main camera view to this <c>Army</c>'s TileIndex. 
+        /// </summary>
+        /// <param name="army">this</param>
+        /// <returns></returns>
+        public static Army CenterToCamera(this Army army)
+        {
+            HumankindGame.CenterCameraAt(army.TileIndex);
+            
+            return army;
         }
     }
 }

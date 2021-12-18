@@ -19,7 +19,7 @@ IEnumerable<Army> Armies(this IEnumerable<HumankindSettlement> sequence)
 ### Armies
 <img src="./resources/method.svg" alt="Method" height="16px"/><br/>
 Aggregates the Armies of each `HumankindSettlement` in the sequence into a new sequence of armies. also: [HumankindSettlement.Armies](HumankindSettlement.md#Armies 'Modding.Humankind.DevTools.HumankindSettlement.Armies').<details><summary><code>PARAMETERS</code></summary><ul><li>
-<kbd>sequence</kbd> →</li>
+<kbd>sequence</kbd> → this</li>
 </ul></details></td></tr>
 <tr><td align="left" valign="top">
 
@@ -31,7 +31,7 @@ IEnumerable<HumankindSettlement> BuildUnit(this IEnumerable<HumankindSettlement>
 ### BuildUnit
 <img src="./resources/method.svg" alt="Method" height="16px"/><br/>
 Spawns a unit to the `Settlement`'s assigned spawn point for every `HumankindSettlement` in the sequence.<details><summary><code>PARAMETERS</code></summary><ul><li>
-<kbd>sequence</kbd> →</li>
+<kbd>sequence</kbd> → this</li>
 <li>
 <kbd>unitDefinition</kbd> → The `UnitDefinition` to spawn a `Unit` from.</li>
 </ul></details></td></tr>
@@ -45,23 +45,9 @@ IEnumerable<HumankindSettlement> BuildUnitByName(this IEnumerable<HumankindSettl
 ### BuildUnitByName
 <img src="./resources/method.svg" alt="Method" height="16px"/><br/>
 Spawns a unit to the `Settlement`'s assigned spawn point for every `HumankindSettlement` in the sequence.<details><summary><code>PARAMETERS</code></summary><ul><li>
-<kbd>sequence</kbd> →</li>
+<kbd>sequence</kbd> → this</li>
 <li>
 <kbd>unitDefinitionName</kbd> → The name of the `UnitDefinition` to spawn a `Unit` from.</li>
-</ul></details></td></tr>
-<tr><td align="left" valign="top">
-
-```csharp
-IEnumerable<HumankindSettlement> Interactive(this IEnumerable<HumankindSettlement> sequence, Action<HumankindSettlement> action)
-```
-</td><td align="left" valign="top">
-
-### Interactive
-<img src="./resources/method.svg" alt="Method" height="16px"/><br/>
-This extension provides an easy way to iterate the sequence of `HumankindSettlements` one by one when pressing `[F3]` key while in-game.<details><summary><code>PARAMETERS</code></summary><ul><li>
-<kbd>sequence</kbd> →</li>
-<li>
-<kbd>action</kbd> → The action to be executed in every iteration, having `HumankindSettlement` as first parameter.</li>
 </ul></details></td></tr>
 <tr><td align="left" valign="top">
 

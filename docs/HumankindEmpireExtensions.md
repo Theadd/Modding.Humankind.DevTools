@@ -12,30 +12,14 @@ public static class HumankindEmpireExtensions
 <tr><td align="left" valign="top">
 
 ```csharp
-IEnumerable<HumankindEmpire> Execute(this IEnumerable<HumankindEmpire> sequence, Action<HumankindEmpire> action)
+IEnumerable<Army> Armies(this IEnumerable<HumankindEmpire> sequence)
 ```
 </td><td align="left" valign="top">
 
-### Execute
+### Armies
 <img src="./resources/method.svg" alt="Method" height="16px"/><br/>
-Executes an action for each `HumankindEmpire` in the sequence.<details><summary><code>PARAMETERS</code></summary><ul><li>
+Aggregates the Armies of each `HumankindEmpire` in the sequence into a new sequence of armies. also: [HumankindEmpire.Armies](HumankindEmpire.md#Armies 'Modding.Humankind.DevTools.HumankindEmpire.Armies').<details><summary><code>PARAMETERS</code></summary><ul><li>
 <kbd>sequence</kbd> → this</li>
-<li>
-<kbd>action</kbd> → Action to execute, where first parameter is each `HumankindEmpire`.</li>
-</ul></details></td></tr>
-<tr><td align="left" valign="top">
-
-```csharp
-IEnumerable<HumankindEmpire> Interactive(this IEnumerable<HumankindEmpire> sequence, Action<HumankindEmpire> action)
-```
-</td><td align="left" valign="top">
-
-### Interactive
-<img src="./resources/method.svg" alt="Method" height="16px"/><br/>
-This extension provides an easy way to iterate the sequence of `HumankindEmpire` one by one when pressing `[F3]` key while in-game.<details><summary><code>PARAMETERS</code></summary><ul><li>
-<kbd>sequence</kbd> → this</li>
-<li>
-<kbd>action</kbd> → The action to be executed in every iteration, having `HumankindEmpire` as first parameter.</li>
 </ul></details></td></tr>
 <tr><td align="left" valign="top">
 

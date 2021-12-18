@@ -56,7 +56,7 @@ namespace Modding.Humankind.DevTools
         ///     Aggregates the Armies of each <c>HumankindSettlement</c> in the sequence into a new sequence of armies.
         /// See also: <see cref="HumankindSettlement.Armies">HumankindSettlement.Armies</see>.
         /// </summary>
-        /// <param name="sequence"></param>
+        /// <param name="sequence">this</param>
         /// <returns></returns>
         public static IEnumerable<Army> Armies(this IEnumerable<HumankindSettlement> sequence) =>
             sequence.SelectMany(settlement => settlement.Armies);
@@ -66,7 +66,7 @@ namespace Modding.Humankind.DevTools
         /// </summary>
         /// <seealso cref="QuickAccess.UnitDefinitions"/>
         /// <seealso cref="HumankindSettlement.BuildUnit"/>
-        /// <param name="sequence"></param>
+        /// <param name="sequence">this</param>
         /// <param name="unitDefinition">The <c>UnitDefinition</c> to spawn a <c>Unit</c> from.</param>
         public static IEnumerable<HumankindSettlement> BuildUnit(this IEnumerable<HumankindSettlement> sequence, UnitDefinition unitDefinition)
         {
@@ -81,52 +81,10 @@ namespace Modding.Humankind.DevTools
         /// </summary>
         /// <seealso cref="QuickAccess.UnitDefinitions"/>
         /// <seealso cref="HumankindSettlement.BuildUnit"/>
-        /// <param name="sequence"></param>
+        /// <param name="sequence">this</param>
         /// <param name="unitDefinitionName">The name of the <c>UnitDefinition</c> to spawn a <c>Unit</c> from.</param>
         public static IEnumerable<HumankindSettlement> BuildUnitByName(this IEnumerable<HumankindSettlement> sequence,
             string unitDefinitionName) => sequence.BuildUnit(QuickAccess.UnitDefinitions
             .Where(unit => unit.name == unitDefinitionName).ElementAtOrDefault(0));
-        
-
-        /// <summary>
-        ///     This extension provides an easy way to iterate the sequence of <c>HumankindSettlements</c> one by one when pressing <c>[F3]</c> key while in-game.
-        /// </summary>
-        /// <param name="sequence"></param>
-        /// <param name="action">The action to be executed in every iteration, having <c>HumankindSettlement</c> as first parameter.</param>
-        /// <returns></returns>
-        public static IEnumerable<HumankindSettlement> Interactive(this IEnumerable<HumankindSettlement> sequence, Action<HumankindSettlement> action)
-        {
-            IEnumerator<HumankindSettlement> allSettlementsEnumerator = sequence.GetEnumerator();
-            Action wrappedAction = null;
-            
-            wrappedAction = () =>
-            {
-                if (allSettlementsEnumerator.MoveNext())
-                {
-                    if (allSettlementsEnumerator.Current != null)
-                    {
-                        try
-                        {
-                            action(allSettlementsEnumerator.Current);
-                        }
-                        catch (Exception e)
-                        {
-                            Loggr.LogError(e.ToString());
-                        }
-                    }
-                    else
-                        Loggr.LogWarning("IEnumerator<HumankindSettlement>.Current is null in IEnumerable<HumankindSettlement> .Interactive(Action<HumankindSettlement> action)");
-                }
-                else
-                {
-                    HumankindDevTools.OnIterateNext -= wrappedAction;
-                }
-            };
-
-            HumankindDevTools.OnIterateNext -= wrappedAction;
-            HumankindDevTools.OnIterateNext += wrappedAction;
-
-            return sequence;
-        }
     }
 }

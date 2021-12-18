@@ -1,70 +1,14 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
-<Project InitialTargets="SetupFirst" DefaultTargets="Rebuild" Sdk="Microsoft.NET.Sdk" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
-  <Target Name="SetupFirst">
-    <Message Text="Configuration is $(Configuration)" />
-    <PropertyGroup>
-      <DefaultRelativeOutputPath>\BepInEx\plugins</DefaultRelativeOutputPath>
-      <DefaultRelativeOutputPath Condition=" '$(Configuration)' == 'Debug' ">\BepInEx\scripts</DefaultRelativeOutputPath>
-      <RELATIVE_OUTPUT_PATH Condition=" '$(RELATIVE_OUTPUT_PATH)' == '' ">$(DefaultRelativeOutputPath)</RELATIVE_OUTPUT_PATH>
-      <OUTPUT_PATH>$(HUMANKIND_GAME_PATH)$(RELATIVE_OUTPUT_PATH)</OUTPUT_PATH>
-    </PropertyGroup>
-    <Error Condition="!Exists('$(OUTPUT_PATH)')" Text="Are the environment variables required for this build correctly set? Target output path, which should point to ...\BepInEx\plugins or ...\BepInEx\scripts folder within your game installation path does NOT exists: $(OUTPUT_PATH)" />
-    <Message Text="MSBuildToolsPath is $(MSBuildToolsPath)" />
-    <Message Text="MSBuildProjectDefaultTargets is $(MSBuildProjectDefaultTargets)" />
-    <Message Text="RELATIVE_OUTPUT_PATH is $(RELATIVE_OUTPUT_PATH)" />
-    <Message Text="HUMANKIND_GAME_PATH is $(HUMANKIND_GAME_PATH)" />
-    <Message Text="HUMANKIND_REFERENCED_LIBRARIES_PATH is $(HUMANKIND_REFERENCED_LIBRARIES_PATH)" />
-    <Message Text="Compile item type contains @(Compile, '%0A%0D')" />
-  </Target>
-  <Target Name="CustomAfterRebuild" AfterTargets="Rebuild" Condition=" '$(Configuration)' == 'Debug' ">
-    <PropertyGroup>
-      <GenDocsDir>.\gen-docs\</GenDocsDir>
-      <GenDocsResourcesDir>.\gen-docs\resources\</GenDocsResourcesDir>
-      <GeneratedDocsDir>.\gen-docs\generated\</GeneratedDocsDir>
-      <GeneratedAllPagesDocsDir>.\gen-docs\generated-allpages\</GeneratedAllPagesDocsDir>
-      <TargetBinPath>.\bin\Debug\</TargetBinPath>
-      <TargetBinPath Condition=" '$(Configuration)' == 'Release' ">.\bin\Release\</TargetBinPath>
-      <CustomDocumentationTool>.\bin\GenerateDocsTool\DefaultDocumentation.Console.exe</CustomDocumentationTool>
-      <DocsPagesDir>.\docs\</DocsPagesDir>
-    </PropertyGroup>
-    <ItemGroup>
-      <TargetBinFiles Include="$(TargetBinPath)\*.*" />
-      <GeneratedDocsFiles Include="./gen-docs/generated-allpages/GameSpeedLevel.md;./gen-docs/generated/InGameKeyboardShortcutAttribute.md;./gen-docs/generated/DevToolsModuleAttribute.md;./gen-docs/generated/OnGameHasLoadedAttribute.md;./gen-docs/generated/OnGameHasUnloadedAttribute.md;./gen-docs/generated/HumankindEmpire.md;./gen-docs/generated/HumankindSettlement.md;./gen-docs/generated/HumankindDevTools.md;./gen-docs/generated/HumankindGame.md;./gen-docs/generated/HumankindEmpireExtensions.md;./gen-docs/generated/HumankindSettlementExtensions.md" />
-      <DevToolsBinary Include="$(TargetBinPath)Modding.Humankind.DevTools.dll;$(TargetBinPath)Modding.Humankind.DevTools.pdb;$(TargetBinPath)Modding.Humankind.DevTools.xml" />
-    </ItemGroup>
-    <MakeDir Directories="$(GenDocsDir)" />
-    <MakeDir Directories="$(GenDocsResourcesDir)" />
-    <RemoveDir Directories="$(GeneratedDocsDir);$(GeneratedAllPagesDocsDir)" />
-    <MakeDir Directories="$(GeneratedDocsDir);$(GeneratedAllPagesDocsDir)" />
-    <Copy SourceFiles="@(TargetBinFiles)" DestinationFolder="$(GenDocsResourcesDir)" />
-    <Exec Command="$(CustomDocumentationTool) -a ./gen-docs/resources/Modding.Humankind.DevTools.dll --FileNameFactory Name -g Types -n DevTools -o ./gen-docs/generated/ -p ./" />
-    <Exec Command="$(CustomDocumentationTool) -a ./gen-docs/resources/Modding.Humankind.DevTools.dll --FileNameFactory Name -n DevTools -o ./gen-docs/generated-allpages/ -p ./" />
-    <Copy SourceFiles="@(GeneratedDocsFiles)" DestinationFolder="$(DocsPagesDir)" />
-    <Copy SourceFiles="@(DevToolsBinary)" DestinationFolder="$(OUTPUT_PATH)\" />
-  </Target>
-  <PropertyGroup>
-    <HUMANKIND_GAME_PATH Condition=" '$(HUMANKIND_GAME_PATH)' == '' ">S:\Games\HUMANKIND</HUMANKIND_GAME_PATH>
-    <HUMANKIND_REFERENCED_LIBRARIES_PATH Condition=" '$(HUMANKIND_REFERENCED_LIBRARIES_PATH)' == '' ">..\..\References</HUMANKIND_REFERENCED_LIBRARIES_PATH>
-    <HUMANKIND_REFERENCED_LIBRARIES_PATH Condition="!Exists('$(HUMANKIND_REFERENCED_LIBRARIES_PATH)')">$(USERPROFILE)\Documents\Humankind Mod Tool\References</HUMANKIND_REFERENCED_LIBRARIES_PATH>
-  </PropertyGroup>
-  <PropertyGroup>
-    <NoWarn>$(NoWarn);CS1591</NoWarn>
-  </PropertyGroup>
-  <PropertyGroup>
-    <ResolveAssemblyWarnOrErrorOnTargetArchitectureMismatch>None</ResolveAssemblyWarnOrErrorOnTargetArchitectureMismatch>
-  </PropertyGroup>
+<Project Sdk="Microsoft.NET.Sdk" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <PropertyGroup>
     <TargetFramework>net471</TargetFramework>
-    <Platforms>AnyCPU</Platforms>
-    <PreserveCompilationContext>false</PreserveCompilationContext>
     <AppendTargetFrameworkToOutputPath>false</AppendTargetFrameworkToOutputPath>
-    <OutputPath>$(OUTPUT_PATH)</OutputPath>
-    <DebugType>portable</DebugType>
-    <DebugSymbols>false</DebugSymbols>
-    <DebugSymbols Condition=" '$(Configuration)' == 'Debug' ">true</DebugSymbols>
+    <ImplicitUsings>enable</ImplicitUsings>
   </PropertyGroup>
-  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
-    <DocumentationFile>.\Modding.Humankind.DevTools.xml</DocumentationFile>
+  <PropertyGroup>
+    <HUMANKIND_GAME_PATH>..</HUMANKIND_GAME_PATH>
+    <HUMANKIND_REFERENCED_LIBRARIES_PATH>..\Humankind_Data\Managed</HUMANKIND_REFERENCED_LIBRARIES_PATH>
+    <DevToolsPATH>..\BepInEx\scripts\Modding.Humankind.DevTools.dll</DevToolsPATH>
+    <DevToolsPATH Condition="!Exists('$(DevToolsPATH)')">..\BepInEx\plugins\Modding.Humankind.DevTools.dll</DevToolsPATH>
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="BepInEx">
@@ -451,8 +395,9 @@
       <HintPath>$(HUMANKIND_REFERENCED_LIBRARIES_PATH)\UnityEngine.XRModule.dll</HintPath>
       <Private>false</Private>
     </Reference>
-  </ItemGroup>
-  <ItemGroup>
-    <EmbeddedResource Include="Resources\*" />
+    <Reference Include="Modding.Humankind.DevTools">
+      <HintPath>$(DevToolsPATH)</HintPath>
+      <Private>false</Private>
+    </Reference>
   </ItemGroup>
 </Project>
