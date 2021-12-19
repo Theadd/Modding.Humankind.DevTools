@@ -14,5 +14,7 @@ namespace Modding.Humankind.DevTools.Core
                 .GetDatabase<ConstructibleDefinition>(false)
                 .OfType<UnitDefinition>()
                 .ToArray());
+        
+        // UITooltipClassDefinition
     }
 }

@@ -1,0 +1,29 @@
+ManifestFileVersion: 0
+CRC: 3212656075
+Hashes:
+  AssetFileHash:
+    serializedVersion: 2
+    Hash: 73146808a8bb69687315787d207389bd
+  TypeTreeHash:
+    serializedVersion: 2
+    Hash: bf72de8b06938aa7913d599dc2f25361
+HashAppended: 0
+ClassTypes:
+- Class: 21
+  Script: {instanceID: 0}
+- Class: 28
+  Script: {instanceID: 0}
+- Class: 48
+  Script: {instanceID: 0}
+- Class: 114
+  Script: {fileID: 12001, guid: 0000000000000000e000000000000000, type: 0}
+- Class: 115
+  Script: {instanceID: 0}
+- Class: 128
+  Script: {instanceID: 0}
+SerializeReferenceClassIdentifiers: []
+Assets:
+- Assets/DevToolsAssets/GUISkins/GenericUISkin.guiskin
+- Assets/DevToolsAssets/Skin/SourceCodePro-Light.otf
+- Assets/DevToolsAssets/Skin/SourceCodePro-Regular.otf
+Dependencies: []

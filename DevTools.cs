@@ -28,7 +28,7 @@ namespace Modding.Humankind.DevTools
             _assets ?? (_assets = new AssetLoader()
             {
                 Assembly = typeof(DevTools).Assembly,
-                ManifestResourceName = PLUGIN_GUID + ".Resources.resources"
+                ManifestResourceName = PLUGIN_GUID + ".Resources.devtools-resources"
             });
 
         private void Awake()

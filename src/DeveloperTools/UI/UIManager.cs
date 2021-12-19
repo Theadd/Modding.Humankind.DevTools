@@ -1,10 +1,9 @@
 ﻿using Amplitude.Framework.Overlay;
-using Modding.Humankind.DevTools.DeveloperTools.UI;
 using UnityEngine;
 
-namespace Modding.Humankind.DevTools.DeveloperTools
+namespace Modding.Humankind.DevTools.DeveloperTools.UI
 {
-    public class UIManager
+    public static class UIManager
     {
         public static GUISkin GameSkin { get; set; }
         
