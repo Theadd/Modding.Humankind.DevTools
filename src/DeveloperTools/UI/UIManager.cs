@@ -85,6 +85,11 @@ namespace Modding.Humankind.DevTools.DeveloperTools
             CloseWindow<TechnologyUtilsWindow>();
             CloseWindow<FramerateWindow>();
             CloseWindow<ResourcesUtilsWindow>();
+            CloseWindow<AffinityUtilsWindow>();
+            CloseWindow<AIWindow>();
+            CloseWindow<AICursorWindow>();
+            CloseWindow<ArchetypesWindow>();
+            CloseWindow<AutoTurnWindow>();
         }
     }
 }
