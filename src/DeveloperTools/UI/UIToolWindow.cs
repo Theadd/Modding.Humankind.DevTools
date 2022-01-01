@@ -7,12 +7,11 @@ using UnityEngine;
 namespace Modding.Humankind.DevTools.DeveloperTools.UI
 {
 
-    public abstract class UIToolWindow : FloatingWindow, IGetWindowRect
+    public abstract class UIToolWindow : FloatingToolWindow
     {
         public abstract string WindowTitle { get; set; }
         public virtual Rect WindowRect { get; set; } = new Rect (300, 300, 300, 300);
         public virtual string WindowGUIStyle { get; set; } = "PopupWindow.Sidebar";
-        public virtual bool ShouldBeVisible { get; set; } = true;
         public int WindowID => Math.Abs(GetInstanceID());
 
         public virtual void OnGUIStyling()
@@ -62,13 +61,12 @@ namespace Modding.Humankind.DevTools.DeveloperTools.UI
 
             GUI.DragWindow (new Rect (0,0,10000,10000));
         }
-        
-        protected override void OnDrawWindowClientArea(int instanceId) {}
-        
+
         protected override void OnBecomeVisible() => this.SyncUIOverlay(base.OnBecomeVisible);
         protected override void OnBecomeInvisible() => this.SyncUIOverlay(base.OnBecomeInvisible);
-        public Rect GetWindowRect() => WindowRect;
-        
+        public override Rect GetWindowRect() => WindowRect;
+        public override void SetWindowRect(Rect rect) => WindowRect = rect;
+
         #endregion PRIVATE
     }
 }

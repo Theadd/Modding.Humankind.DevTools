@@ -6,7 +6,7 @@ using UnityEngine;
 namespace Modding.Humankind.DevTools.DeveloperTools.UI
 {
 
-    public class DeveloperToolsUIToolbar : FloatingWindow, IPopupWindowWithAdjustableWindowHeight, IGetWindowRect
+    public class DeveloperToolsUIToolbar : FloatingWindow, IPopupWindowWithAdjustableWindowHeight, IToolWindow
     {
         protected Rect windowRect = new Rect (30, 290, 170, 600);
         
@@ -65,18 +65,18 @@ namespace Modding.Humankind.DevTools.DeveloperTools.UI
             GUI.DragWindow (new Rect (0,0,10000,10000));
         }
 
-        protected void OnDrawTool<T>(string tool) where T : FloatingWindow
+        protected void OnDrawTool<T>(string tool) where T : PopupWindow
         {
             var window = UIManager.GetWindow<T>(false);
             var created = window != null;
             var visible = created && window.IsVisible;
 
-            GUILayout.BeginHorizontal(Array.Empty<GUILayoutOption>());
+            GUILayout.BeginHorizontal();
                 // The close tool button (Object.Destroy)
                 GUI.enabled = created;
                 GUI.color = created ? Color.white : Color.clear;
                 if (GUILayout.Button("x", "PopupWindow.Sidebar.InlineButton", new GUILayoutOption[] {
-                    GUILayout.Width(28)
+                    GUILayout.Width(28f)
                 })) {
                     UIManager.CloseWindow<T>();
                 }
@@ -97,6 +97,15 @@ namespace Modding.Humankind.DevTools.DeveloperTools.UI
         protected override void OnBecomeVisible() => this.SyncUIOverlay(base.OnBecomeVisible);
         protected override void OnBecomeInvisible() => this.SyncUIOverlay(base.OnBecomeInvisible);
         public Rect GetWindowRect() => windowRect;
+        public void SetWindowRect(Rect rect) => windowRect = rect;
+
         public bool ShouldBeVisible => HumankindGame.IsGameLoaded;
+        public bool ShouldRestoreLastWindowPosition => false;
+        public void OnWritePlayerPreferences() { }
+        public void OnReadPlayerPreferences() { }
+        public void Close()
+        {
+            throw new NotImplementedException();
+        }
     }
 }

@@ -1,12 +1,13 @@
 ﻿using System;
 using Amplitude.Framework.Overlay;
 using UnityEngine;
+using Modding.Humankind.DevTools;
 
 namespace Modding.Humankind.DevTools.DeveloperTools.UI
 {
-    public class WindowUtils
+    public static class WindowUtils
     {
-        public static void DrawWindowTitleBar<T>(T instance) where T : FloatingWindow
+        public static void DrawWindowTitleBar<T>(T instance) where T : PopupWindow
         {
             string title = instance.Title;
             if (instance is UIToolWindow uiToolWindow)

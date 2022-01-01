@@ -42,10 +42,10 @@ namespace Modding.Humankind.DevTools.DeveloperTools.UI
         
         public static T GetWindow<T>(bool createAsFallback = true) where T : PopupWindow
         {
-            var window = DevTools.GetGameObject().GetComponent<T>();
+            var window = DevTools.GetGameObject()?.GetComponent<T>();
 
             if (window == null && createAsFallback)
-                window = DevTools.GetGameObject().AddComponent<T>();
+                window = DevTools.GetGameObject()?.AddComponent<T>();
 
             return (T) window;
         }

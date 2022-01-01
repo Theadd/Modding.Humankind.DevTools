@@ -197,5 +197,8 @@ namespace Modding.Humankind.DevTools.DeveloperTools.UI
                 }
             }
         }
+
+        public override bool ShouldBeVisible { get; } = HumankindGame.IsGameLoaded;
+        public override bool ShouldRestoreLastWindowPosition => true;
     }
 }

@@ -42,6 +42,9 @@ namespace Modding.Humankind.DevTools.DeveloperTools
             if (TryGetFromTypeName(objectValue, objectType, out result, out fullType, out lenMod))
                 return MergeValueAndType(result, fullType, lenMod);
             
+            if (TryGetFromEnumType(objectValue, objectType, out result, out fullType, out lenMod))
+                return MergeValueAndType(result, fullType, lenMod);
+
             return ColorType.NotFound + objectType.Name;
         }
 
@@ -178,5 +181,39 @@ namespace Modding.Humankind.DevTools.DeveloperTools
 
             return true;
         }
+
+        private static bool TryGetFromEnumType(object objectValue, Type objectType, out string result,
+            out string fullType, out int lenMod)
+        {
+            fullType = objectType.FullName;
+            lenMod = 0;
+
+            if (objectType.IsEnum)
+            {
+                result = Enum.GetName(objectType, objectValue);
+                fullType += " Enum";
+                
+            }
+            else
+            {
+                result = null;
+                return false;
+            }
+
+            return true;
+        }
     }
+    
+    /*internal static class ObjectExtensions
+    {
+        public static T CastTo<T>(this object o) => (T)o;
+
+        public static dynamic CastToReflected(this object o, Type type)
+        {
+            var methodInfo = typeof(ObjectExtensions).GetMethod(nameof(CastTo), BindingFlags.Static | BindingFlags.Public);
+            var genericArguments = new[] { type };
+            var genericMethodInfo = methodInfo?.MakeGenericMethod(genericArguments);
+            return genericMethodInfo?.Invoke(null, new[] { o });
+        }
+    }*/
 }

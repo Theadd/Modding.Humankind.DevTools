@@ -78,9 +78,9 @@ namespace Modding.Humankind.DevTools.Core
             public static Amplitude.Mercury.UI.Helpers.DataUtils DataUtils =>
                 ((Amplitude.Mercury.UI.Helpers.DataUtils) R.Fields.DataUtilsField.GetValue(null));
 
-            public static string GetLocalizedTitle(Amplitude.StaticString uiMapperName) => DataUtils.GetLocalizedTitle(uiMapperName);
+            public static string GetLocalizedTitle(Amplitude.StaticString uiMapperName) => DataUtils?.GetLocalizedTitle(uiMapperName) ?? uiMapperName.ToString();
             
-            public static string GetLocalizedDescription(Amplitude.StaticString uiMapperName) => DataUtils.GetLocalizedDescription(uiMapperName);
+            public static string GetLocalizedDescription(Amplitude.StaticString uiMapperName) => DataUtils?.GetLocalizedDescription(uiMapperName) ?? uiMapperName.ToString();
         }
     }
 }

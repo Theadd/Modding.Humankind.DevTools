@@ -20,7 +20,7 @@ namespace Modding.Humankind.DevTools.DeveloperTools.UI
 
         public PopupWindow Target { get; set; }
 
-        public static bool DEBUG_DRAW_OVERLAY { get; set; } = false;
+        public static bool DEBUG_DRAW_OVERLAY { get; set; } = true;
         
         private IEnumerator _resync;
         private float _syncInterval = 0.1f;
@@ -64,14 +64,20 @@ namespace Modding.Humankind.DevTools.DeveloperTools.UI
 
         public void Sync(PopupWindow target)
         {
-            this.Target = target;
+            Target = target;
 
-            if (this.Target == null || !Target.IsVisible)
+            if (Target == null || !Target.IsVisible)
             {
                 _syncInterval = -1f;
-                StopCoroutine(_resync);
-                gameObject.transform.parent = null;
+                
+                if (_resync != null)
+                    StopCoroutine(_resync);
+                
+                if (gameObject != null && gameObject.transform != null)
+                    gameObject.transform.parent = null;
+                
                 Destroy(gameObject);
+                
                 return;
             }
 
@@ -157,10 +163,10 @@ namespace Modding.Humankind.DevTools.DeveloperTools.UI
 
         public void OnMouseEventHandler(IUIControl control, Vector2 coords) 
         {
-            if (this.Target != null)
+            if (Target != null)
             {
                 _syncInterval = 0.1f;
-                Sync(this.Target);
+                Sync(Target);
             }
         }
 
@@ -187,13 +193,20 @@ namespace Modding.Humankind.DevTools.DeveloperTools.UI
     {
         public static void SyncUIOverlay(this PopupWindow target, Action priorAction = null)
         {
-            priorAction?.Invoke();
-            UIOverlay.Find("UIOverlay" + target.GetInstanceID().ToString()).Sync(target);
+            try
+            {
+                priorAction?.Invoke();
+                UIOverlay.Find("UIOverlay" + target.GetInstanceID().ToString()).Sync(target);
+            }
+            catch (Exception ex)
+            {
+                Loggr.Log(ex);
+            }
         }
 
         public static Rect GetWindowPosition(this PopupWindow target)
         {
-            if (target is IGetWindowRect customTarget)
+            if (target is IToolWindow customTarget)
             {
                 return customTarget.GetWindowRect();
             }
@@ -203,7 +216,7 @@ namespace Modding.Humankind.DevTools.DeveloperTools.UI
         
         public static bool IsWindowVisible(this PopupWindow target)
         {
-            if (target is IGetWindowRect customTarget)
+            if (target is IToolWindow customTarget)
             {
                 return customTarget.ShouldBeVisible && target.IsVisible;
             }
