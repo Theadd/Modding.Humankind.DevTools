@@ -6,10 +6,9 @@ using UnityEngine;
 namespace Modding.Humankind.DevTools.DeveloperTools.UI
 {
 
-    public class DeveloperToolsUIToolbar : FloatingWindow, IPopupWindowWithAdjustableWindowHeight
+    public class DeveloperToolsUIToolbar : FloatingWindow, IPopupWindowWithAdjustableWindowHeight, IGetWindowRect
     {
-        public static GUISkin Skin = null;
-        Rect windowRect = new Rect (30, 290, 170, 600);
+        protected Rect windowRect = new Rect (30, 290, 170, 600);
         
         protected override void Awake()
         {
@@ -19,7 +18,7 @@ namespace Modding.Humankind.DevTools.DeveloperTools.UI
             this.Width = 200f;
         }
         
-        void OnGUI () {
+        protected void OnGUI () {
             if (IsVisible)
             {
                 GUI.skin = UIManager.DefaultSkin;
@@ -30,13 +29,14 @@ namespace Modding.Humankind.DevTools.DeveloperTools.UI
             }
         }
 
-        void OnDrawToolbarWindow(int windowID) {
+        protected void OnDrawToolbarWindow(int windowID) {
             GUILayout.BeginArea(new Rect(0f, 0f, windowRect.width, windowRect.height));
             GUILayout.BeginVertical((GUIStyle) "Widget.ClientArea");
         
             GUILayout.Label("<color=#000000AA>C H E A T I N G</color>   T O O L S", "PopupWindow.Sidebar.Heading");
             OnDrawTool<MilitaryCheatsWindow>("Military");
             OnDrawTool<TechnologyUtilsWindow>("Technologies");
+            OnDrawTool<TechnologiesWindow>("Technologies v2.0");
             OnDrawTool<ResourcesUtilsWindow>("Resources");
             OnDrawTool<AffinityUtilsWindow>("Cultural Affinity");
             GUILayout.Label("<color=#000000AA>P R O F I L I N G</color>   T O O L S", "PopupWindow.Sidebar.Heading");
@@ -49,12 +49,23 @@ namespace Modding.Humankind.DevTools.DeveloperTools.UI
             OnDrawTool<AIWindow>("AI");
                 
             GUILayout.EndVertical();
+            
+            if (Event.current.type == EventType.Repaint)
+            {
+                Rect lastRect = GUILayoutUtility.GetLastRect();
+                if ((double) lastRect.height > (double) this.Height || (double) lastRect.height < (double) this.Height)
+                {
+                    this.Height = lastRect.height;
+                    windowRect.height = lastRect.height;
+                }
+            }
+            
             GUILayout.EndArea();
 
             GUI.DragWindow (new Rect (0,0,10000,10000));
         }
 
-        void OnDrawTool<T>(string tool) where T : FloatingWindow
+        protected void OnDrawTool<T>(string tool) where T : FloatingWindow
         {
             var window = UIManager.GetWindow<T>(false);
             var created = window != null;
@@ -81,9 +92,11 @@ namespace Modding.Humankind.DevTools.DeveloperTools.UI
             GUILayout.EndHorizontal();
         }
         
-        protected override void OnDrawWindowClientArea(int instanceId)
-        {
-            
-        }
+        protected override void OnDrawWindowClientArea(int instanceId) { }
+        
+        protected override void OnBecomeVisible() => this.SyncUIOverlay(base.OnBecomeVisible);
+        protected override void OnBecomeInvisible() => this.SyncUIOverlay(base.OnBecomeInvisible);
+        public Rect GetWindowRect() => windowRect;
+        public bool ShouldBeVisible => HumankindGame.IsGameLoaded;
     }
 }

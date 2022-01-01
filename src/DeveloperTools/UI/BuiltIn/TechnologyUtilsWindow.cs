@@ -25,6 +25,9 @@ namespace Modding.Humankind.DevTools.DeveloperTools.UI
         }
 
         protected override void OnDrawWindowTitle(int instanceId) =>
-            WindowUtils.DrawWindowHeader(this);
+            WindowUtils.DrawWindowTitleBar(this);
+
+        protected override void OnBecomeVisible() => this.SyncUIOverlay(base.OnBecomeVisible);
+        protected override void OnBecomeInvisible() => this.SyncUIOverlay(base.OnBecomeInvisible);
     }
 }

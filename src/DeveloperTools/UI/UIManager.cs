@@ -1,10 +1,16 @@
-﻿using Amplitude.Framework.Overlay;
+﻿using System;
+using Amplitude.Framework.Overlay;
 using UnityEngine;
+using Object = UnityEngine.Object;
 
 namespace Modding.Humankind.DevTools.DeveloperTools.UI
 {
-    public static class UIManager
+    public class UIManager
     {
+        public static event Action OnGUIHasLoaded;
+
+        public static bool IsGUILoaded { get; protected set; } = false;
+        
         public static GUISkin GameSkin { get; set; }
         
         public static GUISkin Skin { get; set; }
@@ -13,22 +19,25 @@ namespace Modding.Humankind.DevTools.DeveloperTools.UI
         
         public static GUISkin DefaultSkin { get; set; }
         
-        public static DeveloperToolsUIToolbar Toolbar { get; protected set; }
+        public static DeveloperToolsUIToolbar Toolbar
+        {
+            get => _toolbar == null ? (_toolbar = CreateDefaultToolbar()) : _toolbar;
+            set => _toolbar = value;
+        }
+
+        private static DeveloperToolsUIToolbar _toolbar;
+        protected static DeveloperToolsUIToolbar CreateDefaultToolbar() => DevTools.GetGameObject().AddComponent<DeveloperToolsUIToolbar>();
 
         public static void Initialize()
         {
-            var go = DevTools.GetGameObject();
-            
             FindGUISkinResources();
             DefaultSkin = DevTools.Assets.Load<GUISkin>("GenericUISkin");
-
-            Loggr.Log(DefaultSkin);
-
+            
             if (Toolbar != null)
                 Unload();
 
-            Toolbar = DevTools.GetGameObject().AddComponent<DeveloperToolsUIToolbar>();
-            Toolbar.ShowWindow(true);
+            // Toolbar = DevTools.GetGameObject().AddComponent<DeveloperToolsUIToolbar>();
+            InvokeOnGUIHasLoaded();
         }
         
         public static T GetWindow<T>(bool createAsFallback = true) where T : PopupWindow
@@ -74,6 +83,17 @@ namespace Modding.Humankind.DevTools.DeveloperTools.UI
             }
         }
 
+        protected static void InvokeOnGUIHasLoaded()
+        {
+            IsGUILoaded = true;
+            OnGUIHasLoaded += Dummy;
+            if (!BepInEx.Utility.TryDo(OnGUIHasLoaded, out Exception ex))
+                Loggr.Log(ex);
+            OnGUIHasLoaded -= Dummy;
+        }
+        
+        private static void Dummy() { }
+
         private static void Unload()
         {
             Toolbar.ShowWindow(false);
@@ -89,6 +109,7 @@ namespace Modding.Humankind.DevTools.DeveloperTools.UI
             CloseWindow<AICursorWindow>();
             CloseWindow<ArchetypesWindow>();
             CloseWindow<AutoTurnWindow>();
+            UIOverlay.Unload();
         }
     }
 }

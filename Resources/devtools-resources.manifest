@@ -1,12 +1,12 @@
 ManifestFileVersion: 0
-CRC: 3212656075
+CRC: 2162999863
 Hashes:
   AssetFileHash:
     serializedVersion: 2
-    Hash: 73146808a8bb69687315787d207389bd
+    Hash: cebc3b29a99be4b806b9bc4ec356e96c
   TypeTreeHash:
     serializedVersion: 2
-    Hash: bf72de8b06938aa7913d599dc2f25361
+    Hash: 931e2f8058cfc418f2e1a18239c7b7c5
 HashAppended: 0
 ClassTypes:
 - Class: 21
@@ -21,9 +21,12 @@ ClassTypes:
   Script: {instanceID: 0}
 - Class: 128
   Script: {instanceID: 0}
+- Class: 213
+  Script: {instanceID: 0}
 SerializeReferenceClassIdentifiers: []
 Assets:
 - Assets/DevToolsAssets/GUISkins/GenericUISkin.guiskin
 - Assets/DevToolsAssets/Skin/SourceCodePro-Light.otf
+- Assets/DevToolsAssets/UITextures/GameplayOrientation_Warmonger.png
 - Assets/DevToolsAssets/Skin/SourceCodePro-Regular.otf
 Dependencies: []

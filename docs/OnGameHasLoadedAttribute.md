@@ -11,5 +11,8 @@ public class OnGameHasLoadedAttribute : Attribute
 <li>
 
 The method's class must be annotated with `DevToolsModule` for this to work.</li>
+<li>
+
+Method's signature must be: public static void</li>
 </ul>
 

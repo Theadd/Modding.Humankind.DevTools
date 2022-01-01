@@ -10,14 +10,16 @@ namespace Modding.Humankind.DevTools.DeveloperTools
         public static string Name => "DeveloperTools";
 
         [OnGameHasLoaded]
-        private static void OnGameHasLoaded()
+        public static void OnGameHasLoaded()
         {
+            Loggr.Log("Calling member annotated with [OnGameHasLoaded] from DeveloperTools module.", ConsoleColor.DarkRed);
             Reset();
-            ShowUIToolbar();
+            Loggr.Log("Showing UI Toolbar...", ConsoleColor.DarkRed);
+            UIManager.Toolbar.ShowWindow(true);
         }
 
         [OnGameHasUnloaded]
-        private static void Reset()
+        public static void Reset()
         {
             HumankindDevTools.RemoveAllOnIterateNextAction();
             HumankindDevTools.AddOnIterateNextAction(Dummy);
@@ -56,10 +58,10 @@ namespace Modding.Humankind.DevTools.DeveloperTools
             Reset();
         }
         
-        [InGameKeyboardShortcut("Developer Tools UI - Toolbar", KeyCode.T, KeyCode.LeftControl, KeyCode.LeftShift)]
-        public static void ShowUIToolbar()
+        [InGameKeyboardShortcut("Toggle Developer Tools UI Toolbar", KeyCode.T, KeyCode.LeftControl, KeyCode.LeftShift)]
+        public static void ToggleUIToolbar()
         {
-            UIManager.Initialize();
+            UIManager.Toolbar.ShowWindow(!UIManager.Toolbar.IsVisible);
         }
     }
 }

@@ -85,6 +85,8 @@ namespace Modding.Humankind.DevTools
         ///     Maximum number of cities this empire can currently control without negative effects.
         /// </summary>
         public int CityCap => (int) MajorEmpireSimulation.CityCap.Value;
+        
+        public string PrimaryColor => MajorEmpireEntity.PrimaryColor;
 
         /// <summary>
         ///     Empire's number of occupied cities.

@@ -1,6 +1,7 @@
 ﻿using System;
 using Amplitude.Mercury.Data.Simulation;
 using Modding.Humankind.DevTools.Core;
+using Amplitude.Mercury.Interop.AI.Entities;
 
 namespace Modding.Humankind.DevTools
 {
@@ -19,7 +20,7 @@ namespace Modding.Humankind.DevTools
         /// <summary>
         ///     Whether a game is fully loaded and ready to play with.
         /// </summary>
-        public static bool IsGameLoaded => GameController.IsGameLoaded && GameController.IsReady;
+        public static bool IsGameLoaded => GameController.IsGameLoaded && GameController.IsReady && Amplitude.Mercury.Presentation.Presentation.HasBeenStarted;
         
         /// <summary>
         ///     Current game's turn,
@@ -55,6 +56,14 @@ namespace Modding.Humankind.DevTools
         public static int GameSpeedLevel => GameUtils.GetGameSpeedLevel();
 
         public static void CenterCameraAt(int tileIndex) => GameUtils.CenterCameraAt(tileIndex);
+
+        public static Empire GetEmpireEntityAt(int empireIndex) => GameUtils.GetEmpireEntityAt(empireIndex);
+        
+        public static Amplitude.Mercury.Simulation.Empire GetEmpireSimulationAt(int empireIndex) => GameUtils.GetEmpireSimulationAt(empireIndex);
+        
+        public static Empire[] GetAllEmpireEntities() => GameUtils.GetAllEmpireEntities();
+        
+        public static Amplitude.Mercury.Simulation.Empire[] GetAllEmpireSimulations() => GameUtils.GetAllEmpireSimulations();
 
         /// <summary>
         ///     Returns a string that represents the current HumankindGame in a formatted table with all empires and

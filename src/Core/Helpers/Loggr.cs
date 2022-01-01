@@ -1,6 +1,7 @@
 ﻿using System;
 using System.IO;
 using System.Reflection;
+using System.Runtime.CompilerServices;
 using BepInEx;
 using Modding.Humankind.DevTools.DeveloperTools;
 
@@ -82,6 +83,14 @@ namespace Modding.Humankind.DevTools
             _LogEx(message, defaultColor, appendNewLine);
         }
 
+        public static void Log(Exception ex, 
+            [CallerLineNumber] int lineNumber = 0,
+            [CallerMemberName] string caller = null)
+        {
+            _LogEx(ex.ToString(), ConsoleColor.Red, true);
+            _LogEx("[IN " + caller + " @ " + lineNumber + "]", ConsoleColor.Red, true);
+        }
+        
         public static void Log(string message) => Log(message, ConsoleColor.White);
         
         public static void Log(object obj) => Log(obj, ConsoleColor.White);

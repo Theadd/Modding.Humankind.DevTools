@@ -6,17 +6,21 @@ namespace Modding.Humankind.DevTools.DeveloperTools.UI
 {
     public class WindowUtils
     {
-        public static void DrawWindowHeader<T>(T instance) where T : FloatingWindow
+        public static void DrawWindowTitleBar<T>(T instance) where T : FloatingWindow
         {
-            GUILayout.BeginHorizontal("PopupWindow.Title.Banner", Array.Empty<GUILayoutOption>());
-            GUILayout.Label(instance.Title, "PopupWindow.Title", Array.Empty<GUILayoutOption>());
+            string title = instance.Title;
+            if (instance is UIToolWindow uiToolWindow)
+                title = uiToolWindow.WindowTitle;
+            
+            GUILayout.BeginHorizontal("PopupWindow.Title.Banner");
+            GUILayout.Label(title, "PopupWindow.Title");
             GUILayout.FlexibleSpace();
 
-                if (GUILayout.Button("_", "PopupWindow.Title.Button", Array.Empty<GUILayoutOption>()))
+                if (GUILayout.Button("_", "PopupWindow.Title.Button"))
                 {
                     UIManager.HideWindow<T>();
                 }
-                if (GUILayout.Button("X", "PopupWindow.Title.Button", Array.Empty<GUILayoutOption>()))
+                if (GUILayout.Button("X", "PopupWindow.Title.Button"))
                 {
                     UIManager.CloseWindow<T>();
                 }

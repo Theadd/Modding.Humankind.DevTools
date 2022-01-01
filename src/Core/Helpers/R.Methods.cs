@@ -58,7 +58,6 @@ namespace Modding.Humankind.DevTools.Core
             public static readonly MethodInfo BuildUnitAtMethod = 
                 GetMethod<DepartmentOfDefense>("BuildUnitAt", NonPublicInstance,
                     new[] {typeof(UnitDefinition), typeof(Settlement)});
-
         }
     }
 }

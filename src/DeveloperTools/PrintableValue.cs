@@ -7,6 +7,7 @@ using Amplitude;
 using Amplitude.Framework.Simulation;
 using Amplitude.Mercury;
 using Modding.Humankind.DevTools.Core;
+using UnityEngine;
 
 namespace Modding.Humankind.DevTools.DeveloperTools
 {
@@ -165,6 +166,10 @@ namespace Modding.Humankind.DevTools.DeveloperTools
                 case "ArmyActionFailureFlags":
                     result = ((Amplitude.Mercury.Interop.ArmyActionFailureFlags) objectValue).ToString();
                     fullType += " Struct";
+                    break;
+                case "RectOffset":
+                    result = ((RectOffset) objectValue).ToString();
+                    fullType = "RectOffset";
                     break;
                 default:
                     result = null;

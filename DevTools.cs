@@ -1,14 +1,16 @@
+using System;
 using BepInEx;
 using BepInEx.Logging;
 using HarmonyLib;
 using Modding.Humankind.DevTools.Core;
 using Modding.Humankind.DevTools.DeveloperTools;
+using Modding.Humankind.DevTools.DeveloperTools.UI;
 using UnityEngine;
 
 namespace Modding.Humankind.DevTools
 {
 
-    [BepInPlugin(PLUGIN_GUID, "DevTools", "1.4.0.0")]
+    [BepInPlugin(PLUGIN_GUID, "DevTools", "1.5.0.0")]
     [BepInIncompatibility("AOM.Humankind.Teams")]
     public class DevTools : BaseUnityPlugin
     {
@@ -23,6 +25,8 @@ namespace Modding.Humankind.DevTools
         private Harmony _harmony;
 
         private static AssetLoader _assets;
+
+        private static bool _uiReady = false;
 
         public static AssetLoader Assets =>
             _assets ?? (_assets = new AssetLoader()
@@ -44,16 +48,30 @@ namespace Modding.Humankind.DevTools
         private void FixedUpdate()
         {
             ActionManager.Run();
+            if (!_uiReady) TryToInitializeUI();
+        }
+
+        private void Start()
+        {
+            Loggr.Log("STARTING HUMANKIND DEVTOOLS...", ConsoleColor.Green);
+            // UIManager.Initialize();
         }
 
         void OnGUI () {
             // -
         }
 
-        public static GameObject GetGameObject()
+        private void TryToInitializeUI()
         {
-            return Instance?.gameObject;
+            if (GameObject.Find("/WindowsRoot/SystemOverlays") != null)
+            {
+                _uiReady = true;
+                UIManager.Initialize();
+                Loggr.Log("HUMANKIND DEVTOOLS UI LOADED SUCCESSFULLY.", ConsoleColor.Green);
+            }
         }
+
+        public static GameObject GetGameObject() => Instance?.gameObject;
 
         private void OnDestroy()
         {
@@ -61,6 +79,7 @@ namespace Modding.Humankind.DevTools
             GameController.Unload();
             ActionManager.Unload();
             Assets.Unload(true);
+            Destroy(gameObject);
             Loggr.Debug("Unloaded DevTools Framework.");
         }
     }

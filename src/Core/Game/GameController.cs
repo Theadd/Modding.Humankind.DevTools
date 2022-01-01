@@ -58,7 +58,7 @@ namespace Modding.Humankind.DevTools.Core
 
         public static void SynchronizeGameState()
         {
-            if (_hasPendingInvoke && SandboxManager.IsStarted)
+            if (_hasPendingInvoke && (SandboxManager.IsStarted && Amplitude.Mercury.Presentation.Presentation.HasBeenStarted))
                 if (GameUtils.IsInValidGameState(Sandbox.AIController))
                 {
                     _hasPendingInvoke = false;
@@ -75,7 +75,7 @@ namespace Modding.Humankind.DevTools.Core
                     SynchronizationRate = 1.0f;
                 }
 
-            if (!_hasPendingInvoke && IsGameLoaded != SandboxManager.IsStarted)
+            if (!_hasPendingInvoke && IsGameLoaded != (SandboxManager.IsStarted && Amplitude.Mercury.Presentation.Presentation.HasBeenStarted))
             {
                 IsGameLoaded = !IsGameLoaded;
 
