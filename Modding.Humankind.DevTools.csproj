@@ -31,6 +31,7 @@
       <TargetBinFiles Include="$(TargetBinPath)\*.*" />
       <GeneratedDocsFiles Include="./gen-docs/generated-allpages/GameSpeedLevel.md;./gen-docs/generated/InGameKeyboardShortcutAttribute.md;./gen-docs/generated/DevToolsModuleAttribute.md;./gen-docs/generated/OnGameHasLoadedAttribute.md;./gen-docs/generated/OnGameHasUnloadedAttribute.md;./gen-docs/generated/HumankindEmpire.md;./gen-docs/generated/HumankindSettlement.md;./gen-docs/generated/HumankindDevTools.md;./gen-docs/generated/HumankindGame.md;./gen-docs/generated/HumankindEmpireExtensions.md;./gen-docs/generated/HumankindSettlementExtensions.md" />
       <DevToolsBinary Include="$(TargetBinPath)Modding.Humankind.DevTools.dll;$(TargetBinPath)Modding.Humankind.DevTools.pdb;$(TargetBinPath)Modding.Humankind.DevTools.xml" />
+      <!--<DevToolsBinary Include="$(TargetBinPath)Modding.Humankind.DevTools.dll" />-->
     </ItemGroup>
     <MakeDir Directories="$(GenDocsDir)" />
     <MakeDir Directories="$(GenDocsResourcesDir)" />
@@ -59,6 +60,8 @@
     <PreserveCompilationContext>false</PreserveCompilationContext>
     <AppendTargetFrameworkToOutputPath>false</AppendTargetFrameworkToOutputPath>
     <OutputPath>$(OUTPUT_PATH)</OutputPath>
+    <!--<DebugType>embedded</DebugType>
+    <DebugSymbols>true</DebugSymbols>-->
     <DebugType>portable</DebugType>
     <DebugSymbols>false</DebugSymbols>
     <DebugSymbols Condition=" '$(Configuration)' == 'Debug' ">true</DebugSymbols>

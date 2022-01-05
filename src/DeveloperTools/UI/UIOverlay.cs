@@ -20,7 +20,7 @@ namespace Modding.Humankind.DevTools.DeveloperTools.UI
 
         public PopupWindow Target { get; set; }
 
-        public static bool DEBUG_DRAW_OVERLAY { get; set; } = true;
+        public static bool DEBUG_DRAW_OVERLAY { get; set; } = false;
         
         private IEnumerator _resync;
         private float _syncInterval = 0.1f;
@@ -62,6 +62,18 @@ namespace Modding.Humankind.DevTools.DeveloperTools.UI
             return (t == null) ? Create(uuid) : t.GetComponent<UIOverlay>();
         }
 
+        public Rect ApplyRelativeResolution(Rect rect)
+        {
+            Rect uiRect = this.UITransform.Parent.Parent.GlobalRect;
+
+            return new Rect(
+                (uiRect.width * rect.x) / Screen.width,
+                (uiRect.height * rect.y) / Screen.height,
+                (uiRect.width * rect.width) / Screen.width,
+                (uiRect.height * rect.height) / Screen.height
+            );
+        }
+
         public void Sync(PopupWindow target)
         {
             Target = target;
@@ -81,7 +93,7 @@ namespace Modding.Humankind.DevTools.DeveloperTools.UI
                 return;
             }
 
-            var rect = target.GetWindowPosition();
+            var rect = ApplyRelativeResolution(target.GetWindowPosition());
             _lastRect = rect;
             this.UITransform.X = rect.x;
             this.UITransform.Y = rect.y;
@@ -101,7 +113,7 @@ namespace Modding.Humankind.DevTools.DeveloperTools.UI
                     
                     if (targetVisible)
                     {
-                        if (!Target.GetWindowPosition().Equals(_lastRect))
+                        if (!ApplyRelativeResolution(Target.GetWindowPosition()).Equals(_lastRect))
                         {
                             _syncInterval = 0.1f;
                             Sync(this.Target);
@@ -218,7 +230,7 @@ namespace Modding.Humankind.DevTools.DeveloperTools.UI
         {
             if (target is IToolWindow customTarget)
             {
-                return customTarget.ShouldBeVisible && target.IsVisible;
+                return customTarget.ShouldBeVisible && target.IsVisible && !FloatingToolWindow.HideAllGUITools;
             }
 
             return target.IsVisible;

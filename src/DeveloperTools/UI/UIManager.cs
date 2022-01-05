@@ -18,25 +18,15 @@ namespace Modding.Humankind.DevTools.DeveloperTools.UI
         public static GUISkin PinnedSkin { get; set; }
         
         public static GUISkin DefaultSkin { get; set; }
-        
-        public static DeveloperToolsUIToolbar Toolbar
-        {
-            get => _toolbar == null ? (_toolbar = CreateDefaultToolbar()) : _toolbar;
-            set => _toolbar = value;
-        }
-
-        private static DeveloperToolsUIToolbar _toolbar;
-        protected static DeveloperToolsUIToolbar CreateDefaultToolbar() => DevTools.GetGameObject().AddComponent<DeveloperToolsUIToolbar>();
 
         public static void Initialize()
         {
             FindGUISkinResources();
             DefaultSkin = DevTools.Assets.Load<GUISkin>("GenericUISkin");
             
-            if (Toolbar != null)
-                Unload();
-
-            // Toolbar = DevTools.GetGameObject().AddComponent<DeveloperToolsUIToolbar>();
+            // Unload any previous UIOverlay remaining on scene
+            Unload();
+            
             InvokeOnGUIHasLoaded();
         }
         
@@ -96,19 +86,6 @@ namespace Modding.Humankind.DevTools.DeveloperTools.UI
 
         private static void Unload()
         {
-            Toolbar.ShowWindow(false);
-            Object.Destroy(Toolbar);
-            Toolbar = null;
-
-            CloseWindow<MilitaryCheatsWindow>();
-            CloseWindow<TechnologyUtilsWindow>();
-            CloseWindow<FramerateWindow>();
-            CloseWindow<ResourcesUtilsWindow>();
-            CloseWindow<AffinityUtilsWindow>();
-            CloseWindow<AIWindow>();
-            CloseWindow<AICursorWindow>();
-            CloseWindow<ArchetypesWindow>();
-            CloseWindow<AutoTurnWindow>();
             UIOverlay.Unload();
         }
     }

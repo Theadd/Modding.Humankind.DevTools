@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using BepInEx.Configuration;
 using Modding.Humankind.DevTools.Core;
 
 namespace Modding.Humankind.DevTools
@@ -33,6 +34,16 @@ namespace Modding.Humankind.DevTools
             if (HumankindGame.IsGameLoaded)
                 ModuleHelper.LoadModule(moduleType);
         }
+
+        /// <summary>
+        ///     
+        /// </summary>
+        /// <param name="key"></param>
+        /// <param name="actionName"></param>
+        /// <param name="action"></param>
+        /// <returns>True if the action was successfully registered, otherwise, false.</returns>
+        public static bool RegisterAction(KeyboardShortcut key, string actionName, Action action) =>
+            RuntimeActionMapper.RegisterRuntimeAction(key, actionName, action);
         
         /// <summary>
         ///     
@@ -75,5 +86,6 @@ namespace Modding.Humankind.DevTools
             }
             _onIterateNextActions.Clear();
         }
+        
     }
 }

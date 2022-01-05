@@ -6,9 +6,9 @@ using Modding.Humankind.DevTools;
 
 namespace Modding.Humankind.DevTools.DeveloperTools.UI
 {
-    public abstract class FloatingToolWindow : PopupWindow, IToolWindow
+    public abstract class PopupToolWindow : PopupWindow, IToolWindow
     {
-        public FloatingToolWindow() => IsDraggable = true;
+        public PopupToolWindow() => IsDraggable = true;
 
         public string TypeName { get; set; } = null;
 
@@ -41,12 +41,12 @@ namespace Modding.Humankind.DevTools.DeveloperTools.UI
         
         protected override IEnumerator Start()
         {
-            FloatingToolWindow floatingWindow = this;
+            PopupToolWindow popupWindow = this;
             
             yield return (object) base.Start();
-            string playerPrefKey = floatingWindow.GetPlayerPrefKey("IsVisible");
+            string playerPrefKey = popupWindow.GetPlayerPrefKey("IsVisible");
             if (PlayerPrefs.HasKey(playerPrefKey) && PlayerPrefs.GetInt(playerPrefKey) != 0)
-                floatingWindow.ShowWindow(true);
+                popupWindow.ShowWindow(true);
         }
 
         public virtual string GetPlayerPrefKey(string key)
@@ -54,7 +54,7 @@ namespace Modding.Humankind.DevTools.DeveloperTools.UI
             if (TypeName == null)
                 TypeName = GetType().Name;
 
-            return "FloatingToolWindow." + TypeName + "." + key;
+            return "ToolWindow." + TypeName + "." + key;
         }
 
         public virtual void OnWritePlayerPreferences()
@@ -78,7 +78,7 @@ namespace Modding.Humankind.DevTools.DeveloperTools.UI
         public abstract bool ShouldBeVisible { get; }
         public abstract bool ShouldRestoreLastWindowPosition { get; }
         
-        private static T Open<T>() where T : FloatingToolWindow
+        private static T Open<T>() where T : PopupToolWindow
         {
             var window = DevTools.GetGameObject()?.GetComponent<T>() ?? DevTools.GetGameObject()?.AddComponent<T>();
             
@@ -88,7 +88,7 @@ namespace Modding.Humankind.DevTools.DeveloperTools.UI
             return (T) window;
         }
         
-        public static void Open<T>(Action<T> callback) where T : FloatingToolWindow
+        public static void Open<T>(Action<T> callback) where T : PopupToolWindow
         {
             if (!UIManager.IsGUILoaded)
                 UIManager.OnGUIHasLoaded += () => callback.Invoke(Open<T>());

@@ -20,6 +20,8 @@ namespace Modding.Humankind.DevTools
 
         public static bool IncludeExternalModules = true;
 
+        public static bool QuietMode { get; set; } = true;
+
         public static DevTools Instance { get; private set; }
 
         private Harmony _harmony;

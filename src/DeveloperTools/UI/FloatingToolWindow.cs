@@ -7,11 +7,12 @@ using UnityEngine;
 namespace Modding.Humankind.DevTools.DeveloperTools.UI
 {
 
-    public abstract class UIToolWindow : PopupToolWindow
+    public abstract class FloatingToolWindow : PopupToolWindow
     {
         public abstract string WindowTitle { get; set; }
         public virtual Rect WindowRect { get; set; } = new Rect (300, 300, 300, 300);
         public virtual string WindowGUIStyle { get; set; } = "PopupWindow.Sidebar";
+        public static bool HideAllGUITools { get; set; } = false;
         public int WindowID => Math.Abs(GetInstanceID());
 
         public virtual void OnGUIStyling()
@@ -35,7 +36,7 @@ namespace Modding.Humankind.DevTools.DeveloperTools.UI
         }
         
         void OnGUI () {
-            if (IsVisible && ShouldBeVisible)
+            if (IsVisible && ShouldBeVisible && !HideAllGUITools)
             {
                 OnGUIStyling();
                 WindowRect = GUI.Window (WindowID, WindowRect, OnDrawUIToolWindow, string.Empty, WindowGUIStyle);

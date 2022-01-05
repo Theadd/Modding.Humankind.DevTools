@@ -2,6 +2,7 @@
 using Amplitude.Mercury.Data.Simulation;
 using Modding.Humankind.DevTools.Core;
 using Amplitude.Mercury.Interop.AI.Entities;
+using Amplitude.Framework;
 
 namespace Modding.Humankind.DevTools
 {
@@ -21,6 +22,11 @@ namespace Modding.Humankind.DevTools
         ///     Whether a game is fully loaded and ready to play with.
         /// </summary>
         public static bool IsGameLoaded => GameController.IsGameLoaded && GameController.IsReady && Amplitude.Mercury.Presentation.Presentation.HasBeenStarted;
+
+        /// <summary>
+        ///     Validations done in <see href="IsGameLoaded">IsGameLoaded</see> were sufficient to avoid errors while loading the game, but they are not so aware of whether the user is quitting the game or not.
+        /// </summary>
+        public static bool IsGameUnloading => Application.isQuitting || Application.isShuttingDown;
         
         /// <summary>
         ///     Current game's turn,

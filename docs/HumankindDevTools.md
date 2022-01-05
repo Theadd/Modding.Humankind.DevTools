@@ -26,6 +26,21 @@ Registers all members of a class Type with DevTool's attribute annotations.<deta
 <tr><td align="left" valign="top">
 
 ```csharp
+bool RegisterAction(KeyboardShortcut key, string actionName, Action action)
+```
+</td><td align="left" valign="top">
+
+### RegisterAction
+<img src="./resources/method.svg" alt="Method" height="16px"/><details><summary><code>PARAMETERS</code></summary><ul><li>
+<kbd>key</kbd> →</li>
+<li>
+<kbd>actionName</kbd> →</li>
+<li>
+<kbd>action</kbd> →</li>
+</ul></details></td></tr>
+<tr><td align="left" valign="top">
+
+```csharp
 void ReloadAllModules()
 ```
 </td><td align="left" valign="top">

@@ -33,7 +33,7 @@ namespace Modding.Humankind.DevTools.Core
         {
             Initialize();
             
-            Loggr.Log("The following actions will be available while [Listening to Keyboard Shortcuts] is enabled, use [LeftControl + K] to enable/disable it.", ConsoleColor.DarkGreen);
+            // Loggr.Log("The following actions will be available while [Listening to Keyboard Shortcuts] is enabled, use [LeftControl + K] to enable/disable it.", ConsoleColor.DarkGreen);
 
             if (DevTools.IncludeExternalModules)
             {
@@ -51,13 +51,7 @@ namespace Modding.Humankind.DevTools.Core
                 }
                 catch (ReflectionTypeLoadException e)
                 {
-                    Loggr.LogError(
-                        "ReflectionTypeLoadException thrown in DevTools.Code.ModuleHelper.FindAllAndRegister method." + 
-                        "\n\tMESSAGE: " + e.Message + 
-                        "\n\tSOURCE: " + e.Source + 
-                        "\n\tINNER EXCEPTION: " + e.InnerException + 
-                        "\n\tSTACK TRACE: " + e.StackTrace
-                        );
+                    Loggr.Log(e);
                 }
             }
             else
@@ -73,7 +67,9 @@ namespace Modding.Humankind.DevTools.Core
 
         public static void LoadModule(Type moduleType)
         {
-            Log("Loading " + GetDevToolsModuleName(moduleType) + " DevTool's module...");
+            if (!DevTools.QuietMode)
+                Log("Loading " + GetDevToolsModuleName(moduleType) + " DevTool's module...");
+            
             RegisterModule(moduleType);
         }
 
@@ -81,7 +77,8 @@ namespace Modding.Humankind.DevTools.Core
         {
             var moduleName = GetDevToolsModuleName(moduleType);
             var methodsToRemove = new List<MethodInfo>();
-            Log("Unloading DevTool's module: " + moduleName + " (" + moduleType.FullName + ")");
+            if (!DevTools.QuietMode)
+                Log("Unloading DevTool's module: " + moduleName + " (" + moduleType.FullName + ")");
             
             // Call all OnGameHasUnloaded methods from the type and remove registered methods.
             foreach (var method in _onGameHasUnloadedMethods)
@@ -137,7 +134,8 @@ namespace Modding.Humankind.DevTools.Core
             // Map keyboard shortcuts declared with InGameKeyboardShortcut attribute
             var keyboardShortcutMethods = GetMethodsWithAttribute(typeof(InGameKeyboardShortcutAttribute), moduleType);
             
-            Loggr.Log("[" + moduleName + "]", ConsoleColor.Gray);
+            if (!DevTools.QuietMode)
+                Loggr.Log("[" + moduleName + "]", ConsoleColor.Gray);
             
             foreach (var method in keyboardShortcutMethods)
             {
