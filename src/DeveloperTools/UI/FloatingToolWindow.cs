@@ -1,105 +1,72 @@
-﻿using System;
-using System.Collections;
-using UnityEngine;
+using System;
 using Amplitude.Framework.Overlay;
-using Modding.Humankind.DevTools;
+using Amplitude.Mercury.Overlay;
+using Amplitude.UI;
+using UnityEngine;
 
 namespace Modding.Humankind.DevTools.DeveloperTools.UI
 {
-    public abstract class FloatingToolWindow : PopupWindow, IToolWindow
+
+    public abstract class UIToolWindow : PopupToolWindow
     {
-        public FloatingToolWindow() => IsDraggable = true;
+        public abstract string WindowTitle { get; set; }
+        public virtual Rect WindowRect { get; set; } = new Rect (300, 300, 300, 300);
+        public virtual string WindowGUIStyle { get; set; } = "PopupWindow.Sidebar";
+        public int WindowID => Math.Abs(GetInstanceID());
 
-        public string TypeName { get; set; } = null;
-
-        protected virtual void OnApplicationQuit() => OnWritePlayerPreferences();
-
-        protected override void OnBecomeInvisible()
+        public virtual void OnGUIStyling()
         {
-            base.OnBecomeInvisible();
-            OnWritePlayerPreferences();
+            GUI.skin = UIManager.DefaultSkin;
+            GUI.color = Color.white;
+            GUI.backgroundColor = Color.white;
+            GUI.enabled = true;
         }
 
-        public virtual void SetWindowPosition(float x, float y)
-        {
-            float posX = Math.Min(x, Screen.width - 50f);
-            float posY = Math.Min(y, Screen.height - 50f);
-
-            var r = GetWindowRect();
-            SetWindowRect(new Rect(posX, posY, r.width, r.height));
-        }
-
-        protected override void OnBecomeVisible()
-        {
-            OnReadPlayerPreferences();
-            
-            PlayerPrefs.SetInt(GetPlayerPrefKey("IsVisible"), 1);
-            base.OnBecomeVisible();
-        }
-
-        protected override void OnDrawWindowClientArea(int instanceId) { }
+        public abstract void OnDrawUI();
         
-        protected override IEnumerator Start()
+        // Private members //
+        #region PRIVATE
+        protected override void Awake()
         {
-            FloatingToolWindow floatingWindow = this;
-            
-            yield return (object) base.Start();
-            string playerPrefKey = floatingWindow.GetPlayerPrefKey("IsVisible");
-            if (PlayerPrefs.HasKey(playerPrefKey) && PlayerPrefs.GetInt(playerPrefKey) != 0)
-                floatingWindow.ShowWindow(true);
-        }
-
-        public virtual string GetPlayerPrefKey(string key)
-        {
-            if (TypeName == null)
-                TypeName = GetType().Name;
-
-            return "FloatingToolWindow." + TypeName + "." + key;
-        }
-
-        public virtual void OnWritePlayerPreferences()
-        {
-            PlayerPrefs.SetInt(GetPlayerPrefKey("IsVisible"), IsVisible ? 1 : 0);
-            PlayerPrefs.SetFloat(GetPlayerPrefKey("X"), GetWindowRect().x);
-            PlayerPrefs.SetFloat(GetPlayerPrefKey("Y"), GetWindowRect().y);
-        }
-
-        public virtual void OnReadPlayerPreferences()
-        {
-            string prefKeyX = GetPlayerPrefKey("X");
-            string prefKeyY = GetPlayerPrefKey("Y");
-            
-            if (ShouldRestoreLastWindowPosition && PlayerPrefs.HasKey(prefKeyX) && PlayerPrefs.HasKey(prefKeyY))
-                SetWindowPosition(PlayerPrefs.GetFloat(prefKeyX), PlayerPrefs.GetFloat(prefKeyY));
+            WindowStartupLocation = new Vector2(WindowRect.x, WindowRect.y);
+            Title = string.IsNullOrEmpty(Title) ? "UI TOOL WINDOW" : Title;
+            base.Awake();
+            Width = WindowRect.width;
         }
         
-        public abstract Rect GetWindowRect();
-        public abstract void SetWindowRect(Rect rect);
-        public abstract bool ShouldBeVisible { get; }
-        public abstract bool ShouldRestoreLastWindowPosition { get; }
-        
-        private static T Open<T>() where T : FloatingToolWindow
-        {
-            var window = DevTools.GetGameObject()?.GetComponent<T>() ?? DevTools.GetGameObject()?.AddComponent<T>();
-            
-            if (window != null)
-                window.ShowWindow(true);
-            
-            return (T) window;
-        }
-        
-        public static void Open<T>(Action<T> callback) where T : FloatingToolWindow
-        {
-            if (!UIManager.IsGUILoaded)
-                UIManager.OnGUIHasLoaded += () => callback.Invoke(Open<T>());
-            else
-                callback.Invoke(Open<T>());
+        void OnGUI () {
+            if (IsVisible && ShouldBeVisible)
+            {
+                OnGUIStyling();
+                WindowRect = GUI.Window (WindowID, WindowRect, OnDrawUIToolWindow, string.Empty, WindowGUIStyle);
+            }
         }
 
-        public virtual void Close()
-        {
-            ShowWindow(false);
-            Destroy(this);
+        void OnDrawUIToolWindow(int windowID) {
+            GUILayout.BeginArea(new Rect(0f, 0f, WindowRect.width, WindowRect.height));
+
+            OnDrawUI();
+            
+            if (Event.current.type == EventType.Repaint)
+            {
+                Rect lastRect = GUILayoutUtility.GetLastRect();
+                if (((int)lastRect.height + (int)lastRect.y) != (int)WindowRect.height)
+                {
+                    Height = lastRect.height + lastRect.y;
+                    WindowRect = new Rect(WindowRect.x, WindowRect.y, WindowRect.width, lastRect.height + lastRect.y);
+                }
+            }
+            
+            GUILayout.EndArea();
+
+            GUI.DragWindow (new Rect (0,0,10000,10000));
         }
+
+        protected override void OnBecomeVisible() => this.SyncUIOverlay(base.OnBecomeVisible);
+        protected override void OnBecomeInvisible() => this.SyncUIOverlay(base.OnBecomeInvisible);
+        public override Rect GetWindowRect() => WindowRect;
+        public override void SetWindowRect(Rect rect) => WindowRect = rect;
+
+        #endregion PRIVATE
     }
 }
