@@ -12,6 +12,8 @@ namespace Modding.Humankind.DevTools.DeveloperTools.UI
 
         public string TypeName { get; set; } = null;
 
+        private bool ForceWriteAsVisible = false;
+
         protected virtual void OnApplicationQuit() => OnWritePlayerPreferences();
 
         protected override void OnBecomeInvisible()
@@ -57,9 +59,20 @@ namespace Modding.Humankind.DevTools.DeveloperTools.UI
             return "ToolWindow." + TypeName + "." + key;
         }
 
+        // TODO: REMOVE
+        public static string GetDerivedTypeName<T>() where T : PopupToolWindow
+        {
+            return typeof(T).Name;
+        }
+
+        public static bool WasVisible<T>() where T : PopupToolWindow
+        {
+            return PlayerPrefs.GetInt("ToolWindow." + typeof(T).Name + ".IsVisible", 0) == 1;
+        }
+
         public virtual void OnWritePlayerPreferences()
         {
-            PlayerPrefs.SetInt(GetPlayerPrefKey("IsVisible"), IsVisible ? 1 : 0);
+            PlayerPrefs.SetInt(GetPlayerPrefKey("IsVisible"), ForceWriteAsVisible || IsVisible ? 1 : 0);
             PlayerPrefs.SetFloat(GetPlayerPrefKey("X"), GetWindowRect().x);
             PlayerPrefs.SetFloat(GetPlayerPrefKey("Y"), GetWindowRect().y);
         }
@@ -96,8 +109,11 @@ namespace Modding.Humankind.DevTools.DeveloperTools.UI
                 callback.Invoke(Open<T>());
         }
 
-        public virtual void Close()
+        public virtual void Close(bool saveVisibilityStateBeforeClosing = false)
         {
+            if (saveVisibilityStateBeforeClosing && IsVisible)
+                ForceWriteAsVisible = true;
+            
             ShowWindow(false);
             Destroy(this);
         }

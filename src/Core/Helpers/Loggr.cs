@@ -134,6 +134,7 @@ namespace Modding.Humankind.DevTools
             ConsoleColor color;
             bool lastWasMatch = true;
             bool match = false;
+            int ignore;
             
             _setConsoleColor.Invoke(null, new object[] {defaultColor});
 
@@ -143,7 +144,7 @@ namespace Modding.Humankind.DevTools
             {
                 match = false;
 
-                if (text.Length < 12)
+                if (text.Length < 12 && !int.TryParse(text, out ignore))
                 {
                     if (ConsoleColor.TryParse(text, true, out color))
                     {

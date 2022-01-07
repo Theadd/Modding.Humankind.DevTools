@@ -167,10 +167,10 @@ namespace Modding.Humankind.DevTools.DeveloperTools.UI
                 canvas.CornerRadius = 0f;
             }
             
-            this.Control.MouseEnter -= OnMouseEventHandler;
-            this.Control.MouseEnter += OnMouseEventHandler;
-            this.Control.MouseLeave -= OnMouseEventHandler;
-            this.Control.MouseLeave += OnMouseEventHandler;
+            // this.Control.MouseEnter -= OnMouseEventHandler;
+            // this.Control.MouseEnter += OnMouseEventHandler;
+            // this.Control.MouseLeave -= OnMouseEventHandler;
+            // this.Control.MouseLeave += OnMouseEventHandler;
         }
 
         public void OnMouseEventHandler(IUIControl control, Vector2 coords) 

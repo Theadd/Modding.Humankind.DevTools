@@ -11,6 +11,6 @@ namespace Modding.Humankind.DevTools.DeveloperTools.UI
         bool ShouldRestoreLastWindowPosition { get; }
         void OnWritePlayerPreferences();
         void OnReadPlayerPreferences();
-        void Close();
+        void Close(bool saveVisibilityStateBeforeClosing = false);
     }
 }
