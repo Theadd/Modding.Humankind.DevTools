@@ -72,6 +72,16 @@ Whether a game is fully loaded and ready to play with.</td></tr>
 <tr><td align="left" valign="top">
 
 ```csharp
+public static bool IsGameUnloading
+```
+</td><td align="left" valign="top">
+
+### IsGameUnloading
+<img src="./resources/getter.svg" alt="Getter" height="16px"/><br/>
+Validations done in [IsGameLoaded](IsGameLoaded 'IsGameLoaded') were sufficient to avoid errors while loading the game, but they are not so aware of whether the user is quitting the game or not.</td></tr>
+<tr><td align="left" valign="top">
+
+```csharp
 public static bool IsNewGame
 ```
 </td><td align="left" valign="top">

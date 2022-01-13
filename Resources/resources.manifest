@@ -1,0 +1,7 @@
+ManifestFileVersion: 0
+CRC: 3332730710
+AssetBundleManifest:
+  AssetBundleInfos:
+    Info_0:
+      Name: devtools-resources
+      Dependencies: {}

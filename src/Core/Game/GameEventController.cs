@@ -39,26 +39,19 @@ namespace Modding.Humankind.DevTools.Core
         protected static void InvokeOnGameHasLoaded()
         {
             if (!BepInEx.Utility.TryDo(OnGameHasLoaded, out Exception ex))
-            {
-                Loggr.LogError(ex.ToString());
-            }
+                Loggr.Log(ex);
         }
         
         protected static void InvokeOnNewTurnStart()
         {
             if (!BepInEx.Utility.TryDo(OnNewTurnStarts, out Exception ex))
-            {
-                Loggr.LogError(ex.ToString());
-                Loggr.LogError(ex.StackTrace);
-            }
+                Loggr.Log(ex);
         }
         
         protected static void InvokeOnGameHasUnloaded()
         {
             if (!BepInEx.Utility.TryDo(OnGameHasUnloaded, out Exception ex))
-            {
-                Loggr.LogError(ex.ToString());
-            }
+                Loggr.Log(ex);
 
             RemoveAllOnNewTurnActions();
 

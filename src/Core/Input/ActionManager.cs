@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Reflection;
 using Amplitude.Framework;
 using Amplitude.Framework.Input;
@@ -15,13 +16,13 @@ namespace Modding.Humankind.DevTools.Core
         private static int _runsToEnable = 20;
         private static bool _active;
         private static IInputService _service;
-        private static Dictionary<KeyboardShortcut, string> _mappedActions;
-        private static Dictionary<string, MethodInfo> _mappedMethods;
+        internal static Dictionary<KeyboardShortcut, string> _mappedActions;
+        internal static Dictionary<string, MethodInfo> _mappedMethods;
         private static string _currentActionType = "";
         private static KeyboardShortcut _currentKeyboardShortcut = KeyboardShortcut.Empty;
         private static bool _hasActiveAction;
-        private static bool _isListening;
-        private static bool _iLSA;  // Short name for _isListeningShortcutActive
+        // private static bool _isListening = true;
+        // private static bool _iLSA;  // Short name for _isListeningShortcutActive
 
         private static int _counter;
 
@@ -79,7 +80,7 @@ namespace Modding.Humankind.DevTools.Core
                 ResetSyncSpeedValues();
             }
 
-            if (!SandboxManager.IsStarted)
+            /*if (!SandboxManager.IsStarted)
                 return;
             
             if (_service.GetKey(KeyCode.LeftControl) && _service.GetKey(KeyCode.K))
@@ -95,8 +96,8 @@ namespace Modding.Humankind.DevTools.Core
             {
                 if (_iLSA)
                     _iLSA = false;
-            }
-            if (_isListening)
+            }*/
+            if (/*_isListening*/ true)
             {
                 if (_hasActiveAction)
                 {
@@ -108,34 +109,54 @@ namespace Modding.Humankind.DevTools.Core
                     _currentActionType = "";
                 }
 
-                foreach (var action in _mappedActions)
-                    if (action.Key.IsDown())
-                    {
-                        _hasActiveAction = true;
-                        _currentKeyboardShortcut = action.Key;
-                        _currentActionType = action.Value;
-
-                        Execute(_currentActionType);
-                        break;
-                    }
+                if (RuntimeActionMapper.GetFirstShortcutMatching(out string actionName, out KeyboardShortcut key))
+                {
+                    _hasActiveAction = true;
+                    _currentKeyboardShortcut = key;
+                    _currentActionType = actionName;
+                    
+                    RuntimeActionMapper.InvokeAction(_currentActionType);
+                }
             }
         }
 
-        public static void RegisterAction(KeyboardShortcut key, string actionName, MethodInfo staticMethodInfo)
+        public static bool RegisterAction(KeyboardShortcut key, string actionName, MethodInfo staticMethodInfo)
         {
             if (actionName == "")
-                return;
+                return false;
 
             if (_mappedActions.ContainsKey(key))
             {
-                Loggr.LogError("Unable to register key [" + key + "] since it's already registered.");
-                return;
+                if (_mappedActions[key] != actionName)
+                {
+                    Loggr.LogError("Unable to register key [" + key +
+                                   "] since it's already registered to a different action name.");
+                    return false;
+                }
+
+                _mappedMethods[actionName] = staticMethodInfo;
+            }
+            else
+            {
+                if (_mappedMethods.ContainsKey(actionName))
+                {
+                    var prevKey = _mappedActions.FirstOrDefault(x => x.Value == actionName).Key;
+                    _mappedActions.Remove(prevKey);
+                    _mappedActions.Add(key, actionName);
+                    _mappedMethods[actionName] = staticMethodInfo;
+
+                }
+                else
+                {
+                    _mappedActions.Add(key, actionName);
+                    _mappedMethods.Add(actionName, staticMethodInfo);
+                }
             }
 
-            _mappedActions.Add(key, actionName);
-            _mappedMethods.Add(actionName, staticMethodInfo);
+            if (!DevTools.QuietMode)
+                Loggr.Log("\t%Green%[" + key + "]%Gray% => %Default%" + actionName, ConsoleColor.White);
 
-            Loggr.Log("\t%Green%[" + key + "]%Gray% => %Default%" + actionName, ConsoleColor.White);
+            return true;
         }
         
         public static void UnregisterAction(KeyboardShortcut key, string actionName)
@@ -162,7 +183,6 @@ namespace Modding.Humankind.DevTools.Core
 
         private static void Initialize()
         {
-            Loggr.Debug("Initializing ActionManager...");
             Reset();
         }
 
@@ -172,17 +192,6 @@ namespace Modding.Humankind.DevTools.Core
             _mappedMethods = new Dictionary<string, MethodInfo>();
         }
 
-        public static void Execute(string actionType)
-        {
-            if (_mappedMethods.TryGetValue(actionType, out var method))
-            {
-                method.Invoke(null, null);
-                Loggr.Announce("Action " + actionType + " executed.");
-            }
-            else
-            {
-                Loggr.LogError("Action " + actionType + " NOT Found.");
-            }
-        }
+        
     }
 }

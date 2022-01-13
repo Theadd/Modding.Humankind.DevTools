@@ -1,10 +1,11 @@
 ﻿using System;
 using System.IO;
 using System.Reflection;
+using System.Runtime.CompilerServices;
 using BepInEx;
 using Modding.Humankind.DevTools.DeveloperTools;
 
-namespace Modding.Humankind.DevTools.Core
+namespace Modding.Humankind.DevTools
 {
     /// <summary>
     ///     A static logger with color support, only for printing to BepInEx's console window.
@@ -82,6 +83,14 @@ namespace Modding.Humankind.DevTools.Core
             _LogEx(message, defaultColor, appendNewLine);
         }
 
+        public static void Log(Exception ex, 
+            [CallerLineNumber] int lineNumber = 0,
+            [CallerMemberName] string caller = null)
+        {
+            _LogEx(ex.ToString(), ConsoleColor.Red, true);
+            _LogEx("[IN " + caller + " @ " + lineNumber + "]", ConsoleColor.Red, true);
+        }
+        
         public static void Log(string message) => Log(message, ConsoleColor.White);
         
         public static void Log(object obj) => Log(obj, ConsoleColor.White);
@@ -125,6 +134,7 @@ namespace Modding.Humankind.DevTools.Core
             ConsoleColor color;
             bool lastWasMatch = true;
             bool match = false;
+            int ignore;
             
             _setConsoleColor.Invoke(null, new object[] {defaultColor});
 
@@ -134,7 +144,7 @@ namespace Modding.Humankind.DevTools.Core
             {
                 match = false;
 
-                if (text.Length < 12)
+                if (text.Length < 12 && !int.TryParse(text, out ignore))
                 {
                     if (ConsoleColor.TryParse(text, true, out color))
                     {

@@ -58,7 +58,7 @@ namespace Modding.Humankind.DevTools.Core
 
         public static void SynchronizeGameState()
         {
-            if (_hasPendingInvoke && SandboxManager.IsStarted)
+            if (_hasPendingInvoke && (SandboxManager.IsStarted && Amplitude.Mercury.Presentation.Presentation.HasBeenStarted))
                 if (GameUtils.IsInValidGameState(Sandbox.AIController))
                 {
                     _hasPendingInvoke = false;
@@ -69,13 +69,13 @@ namespace Modding.Humankind.DevTools.Core
                     Instance.Setup((int) R.Fields.LastRunTurnField.GetValue(Sandbox.AIController), Sandbox.AIController,
                         Sandbox.GameID, true);
 
-                    Loggr.Debug("[@GameController.SynchronizeGameState] Invoking all OnGameHasLoaded actions.");
+                    // Loggr.Debug("[@GameController.SynchronizeGameState] Invoking all OnGameHasLoaded actions.");
                     InvokeOnGameHasLoaded();
 
                     SynchronizationRate = 1.0f;
                 }
 
-            if (!_hasPendingInvoke && IsGameLoaded != SandboxManager.IsStarted)
+            if (!_hasPendingInvoke && IsGameLoaded != (SandboxManager.IsStarted && Amplitude.Mercury.Presentation.Presentation.HasBeenStarted))
             {
                 IsGameLoaded = !IsGameLoaded;
 
@@ -104,7 +104,7 @@ namespace Modding.Humankind.DevTools.Core
 
             if (!isFirstRun)
             {
-                Loggr.Debug("[@GameController.Setup] Invoking all OnNewTurnStarts actions.");
+                // Loggr.Debug("[@GameController.Setup] Invoking all OnNewTurnStarts actions.");
                 InvokeOnNewTurnStart();
             }
         }
@@ -118,7 +118,7 @@ namespace Modding.Humankind.DevTools.Core
 
         public static void Unload()
         {
-            Loggr.Debug("[@GameController.Unload] Invoking all OnGameHasUnloaded actions.");
+            // Loggr.Debug("[@GameController.Unload] Invoking all OnGameHasUnloaded actions.");
             InvokeOnGameHasUnloaded();
             ModuleHelper.Reset();
 
@@ -130,7 +130,7 @@ namespace Modding.Humankind.DevTools.Core
             CurrentTurn = 0;
 
             _instance = null;
-            Loggr.Debug("[@GameController.Unload] GameController fully unloaded.");
+            // Loggr.Debug("[@GameController.Unload] GameController fully unloaded.");
         }
     }
 }

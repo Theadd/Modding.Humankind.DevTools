@@ -57,6 +57,21 @@ namespace Modding.Humankind.DevTools.Core
             return gameEmpires.ToArray();
         }
 
+        public static IAIPlayer[] GetIAIPlayers() => 
+            (IAIPlayer[]) R.Fields.AIPlayerByEmpireIndexField.GetValue(Sandbox.AIController);
+        
+        public static Empire GetEmpireEntityAt(int empireIndex) => (Empire) R.Fields.ControlledEmpireField.GetValue(
+                (AIPlayer) GetIAIPlayers()[empireIndex]);
+        
+        public static Empire[] GetAllEmpireEntities() => GetIAIPlayers().Select(player => 
+            (Empire) R.Fields.ControlledEmpireField.GetValue((AIPlayer) player)).ToArray();
+
+        public static Amplitude.Mercury.Simulation.Empire GetEmpireSimulationAt(int empireIndex) =>
+            Sandbox.Empires[empireIndex];
+        
+        public static Amplitude.Mercury.Simulation.Empire[] GetAllEmpireSimulations() =>
+            Sandbox.Empires;
+
         public static string[] GetGameStatistics(HumankindEmpire[] gameEmpires)
         {
             var lines = GameEmpireHelper.ToFieldNameStringArray(gameEmpires[0]);

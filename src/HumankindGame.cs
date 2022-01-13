@@ -1,6 +1,8 @@
 ﻿using System;
 using Amplitude.Mercury.Data.Simulation;
 using Modding.Humankind.DevTools.Core;
+using Amplitude.Mercury.Interop.AI.Entities;
+using Amplitude.Framework;
 
 namespace Modding.Humankind.DevTools
 {
@@ -19,7 +21,12 @@ namespace Modding.Humankind.DevTools
         /// <summary>
         ///     Whether a game is fully loaded and ready to play with.
         /// </summary>
-        public static bool IsGameLoaded => GameController.IsGameLoaded && GameController.IsReady;
+        public static bool IsGameLoaded => GameController.IsGameLoaded && GameController.IsReady && Amplitude.Mercury.Presentation.Presentation.HasBeenStarted;
+
+        /// <summary>
+        ///     Validations done in <see href="IsGameLoaded">IsGameLoaded</see> were sufficient to avoid errors while loading the game, but they are not so aware of whether the user is quitting the game or not.
+        /// </summary>
+        public static bool IsGameUnloading => Application.isQuitting || Application.isShuttingDown;
         
         /// <summary>
         ///     Current game's turn,
@@ -55,6 +62,14 @@ namespace Modding.Humankind.DevTools
         public static int GameSpeedLevel => GameUtils.GetGameSpeedLevel();
 
         public static void CenterCameraAt(int tileIndex) => GameUtils.CenterCameraAt(tileIndex);
+
+        public static Empire GetEmpireEntityAt(int empireIndex) => GameUtils.GetEmpireEntityAt(empireIndex);
+        
+        public static Amplitude.Mercury.Simulation.Empire GetEmpireSimulationAt(int empireIndex) => GameUtils.GetEmpireSimulationAt(empireIndex);
+        
+        public static Empire[] GetAllEmpireEntities() => GameUtils.GetAllEmpireEntities();
+        
+        public static Amplitude.Mercury.Simulation.Empire[] GetAllEmpireSimulations() => GameUtils.GetAllEmpireSimulations();
 
         /// <summary>
         ///     Returns a string that represents the current HumankindGame in a formatted table with all empires and

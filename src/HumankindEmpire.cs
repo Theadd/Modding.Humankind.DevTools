@@ -85,6 +85,8 @@ namespace Modding.Humankind.DevTools
         ///     Maximum number of cities this empire can currently control without negative effects.
         /// </summary>
         public int CityCap => (int) MajorEmpireSimulation.CityCap.Value;
+        
+        public string PrimaryColor => MajorEmpireEntity.PrimaryColor;
 
         /// <summary>
         ///     Empire's number of occupied cities.
@@ -121,10 +123,12 @@ namespace Modding.Humankind.DevTools
         /// </summary>
         public int SettlementsPopulation => (int) MajorEmpireSimulation.SumOfPopulation.Value;
 
+        /*
         /// <summary>
         ///     Whether this empire has an ongoing battle active.
         /// </summary>
         public bool IsInBattle => MajorEmpireSimulation.IsInBattle;
+        */
 
         /// <summary>
         ///     Whether this empire is being controlled by the AI or by a human player.
@@ -194,7 +198,7 @@ namespace Modding.Humankind.DevTools
         public int StrategicResourcesAccessCount => (int) MajorEmpireSimulation.SumOfStrategicResourceAccessCount.Value;
 
         /// <summary>
-        ///     Money net income per turn which is added to <see cref="MoneyStock">MoneyStock</see> at the end of turn phase.
+        ///     Money net income per turn which is added to <see cref="HumankindEmpire.MoneyStock">MoneyStock</see> at the end of turn phase.
         /// </summary>
         public int MoneyNet => (int) MajorEmpireSimulation.MoneyNet.Value;
 
@@ -450,18 +454,19 @@ namespace Modding.Humankind.DevTools
         /// <param name="enable">Whether to enable or disable it.</param>
         public new void EnableFogOfWar(bool enable) => base.EnableFogOfWar(enable);
 
+
         /// <summary>
         ///     Adds a <c>ResearchCostModifierDefinition</c> to this empire based on provided parameters and returns it for later removing it with <see cref="RemoveResearchCostModifier">RemoveResearchCostModifier</see>.
         /// </summary>
         /// <remarks>
-        ///     If user saves the game while one or more *CostModifierDefinition is still active, that saved game file will fail to load, throwing an Exception. Make sure to remove them using <see cref="RemoveResearchCostModifier">RemoveResearchCostModifier</see> before saving the game.
+        ///     If user saves the game while one or more CostModifierDefinition is still active, that saved game file will fail to load, throwing an Exception. Make sure to remove them using <see cref="RemoveResearchCostModifier">RemoveResearchCostModifier</see> before saving the game.
         /// </remarks>
-        /// <param name="costModifierValue">Value modifier.</param>
-        /// <param name="operationType">Can be <c>Add</c> or <c>Mult</c> from <c>CostModifierDefinition.OperationTypes</c> enum in namespace <c>Amplitude.Mercury.Data.Simulation</c>.</param>
+        /// <param name="value">Value modifier.</param>
+        /// <param name="isOperationTypeMult">If true, refers to <c>Mult</c> from <c>CostModifierDefinition.OperationTypes</c> enum in namespace <c>Amplitude.Mercury.Data.Simulation</c>, otherwise <c>Add</c>.</param>
         /// <returns>The <c>ResearchCostModifierDefinition</c> added so you can remove it later.</returns>
-        public new ResearchCostModifierDefinition AddResearchCostModifier(float costModifierValue,
-            CostModifierDefinition.OperationTypes operationType) =>
-            base.AddResearchCostModifier(costModifierValue, operationType);
+        public new ResearchCostModifierDefinition AddResearchCostModifier(float value,
+            bool isOperationTypeMult) =>
+            base.AddResearchCostModifier(value, isOperationTypeMult);
 
         /// <summary>
         ///     Removes a <c>ResearchCostModifierDefinition</c> from this empire, see <see cref="AddConstructibleCostModifier">AddResearchCostModifier</see>.
@@ -474,14 +479,14 @@ namespace Modding.Humankind.DevTools
         ///     Adds a <c>ConstructibleCostModifierDefinition</c> to this empire based on provided parameters and returns it for later removing it with <see cref="RemoveConstructibleCostModifier">RemoveConstructibleCostModifier</see>.
         /// </summary>
         /// <remarks>
-        ///     If user saves the game while one or more *CostModifierDefinition is still active, that saved game file will fail to load, throwing an Exception. Make sure to remove them using <see cref="RemoveConstructibleCostModifier">RemoveConstructibleCostModifier</see> before saving the game.
+        ///     If user saves the game while one or more CostModifierDefinition is still active, that saved game file will fail to load, throwing an Exception. Make sure to remove them using <see cref="RemoveConstructibleCostModifier">RemoveConstructibleCostModifier</see> before saving the game.
         /// </remarks>
-        /// <param name="costModifierValue">Value modifier.</param>
-        /// <param name="operationType">Can be <c>Add</c> or <c>Mult</c> from <c>CostModifierDefinition.OperationTypes</c> enum in namespace <c>Amplitude.Mercury.Data.Simulation</c>.</param>
+        /// <param name="value">Value modifier.</param>
+        /// <param name="isOperationTypeMult">If true, refers to <c>Mult</c> from <c>CostModifierDefinition.OperationTypes</c> enum in namespace <c>Amplitude.Mercury.Data.Simulation</c>, otherwise <c>Add</c>.</param>
         /// <returns>The <c>ConstructibleCostModifierDefinition</c> added so you can remove it later.</returns>
-        public new ConstructibleCostModifierDefinition AddConstructibleCostModifier(float costModifierValue,
-            CostModifierDefinition.OperationTypes operationType) =>
-            base.AddConstructibleCostModifier(costModifierValue, operationType);
+        public new ConstructibleCostModifierDefinition AddConstructibleCostModifier(float value,
+            bool isOperationTypeMult) =>
+            base.AddConstructibleCostModifier(value, isOperationTypeMult);
         
         /// <summary>
         ///     Removes a <c>ConstructibleCostModifierDefinition</c> from this empire, see <see cref="AddConstructibleCostModifier">AddConstructibleCostModifier</see>.
@@ -489,9 +494,10 @@ namespace Modding.Humankind.DevTools
         /// <param name="modifier">The <c>ConstructibleCostModifierDefinition</c> to remove.</param>
         public new void RemoveConstructibleCostModifier(ConstructibleCostModifierDefinition modifier) =>
             base.RemoveConstructibleCostModifier(modifier);
-        
+
+
         // TODO: What is this for?
-        public int IndustryWorkplaceBonusGain
+        internal int IndustryWorkplaceBonusGain
         {
             get => (int) R.Fields.FixedPointRawValueField.GetValue(MajorEmpireSimulation.IndustryWorkplaceBonusGain) /
                    1000;

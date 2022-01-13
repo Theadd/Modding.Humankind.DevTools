@@ -64,6 +64,9 @@ namespace Modding.Humankind.DevTools.Core
             public static readonly FieldInfo TradeNodesField = GetField<MajorEmpire>("TradeNodes", NonPublicInstance);
 
             public static readonly FieldInfo SettlementsField = GetField<Empire>("Settlements", NonPublicInstance);
+            
+            public static readonly FieldInfo DataUtilsField = 
+                typeof(Amplitude.Mercury.UI.Utils).GetField("DataUtils", NonPublicStatic);
         }
     }
 }

@@ -21,7 +21,7 @@ It is a simplified version of BepInEx's `KeyboardShortcut` which ensures that th
 
 ### Constructors
 
-<a name='Modding_Humankind_DevTools_InGameKeyboardShortcutAttribute_InGameKeyboardShortcutAttribute(string_KeyCode_KeyCode__)'></a>
+<a name='InGameKeyboardShortcutAttribute(string_KeyCode_KeyCode__)'></a>
 
 ## InGameKeyboardShortcutAttribute(string, KeyCode, KeyCode[]) Constructor
 
@@ -32,20 +32,20 @@ public InGameKeyboardShortcutAttribute(string actionName, KeyCode mainKey, param
 ```
 #### Parameters
 
-<a name='Modding_Humankind_DevTools_InGameKeyboardShortcutAttribute_InGameKeyboardShortcutAttribute(string_KeyCode_KeyCode__)_actionName'></a>
+<a name='actionName'></a>
 
-`actionName` [System.String](https://docs.microsoft.com/en-us/dotnet/api/System.String 'System.String')
+`actionName` [System.String](#System.String 'System.String')
 
 Unique string representing this keyboard shortcut.
 
-<a name='Modding_Humankind_DevTools_InGameKeyboardShortcutAttribute_InGameKeyboardShortcutAttribute(string_KeyCode_KeyCode__)_mainKey'></a>
+<a name='mainKey'></a>
 
-`mainKey` [UnityEngine.KeyCode](https://docs.microsoft.com/en-us/dotnet/api/UnityEngine.KeyCode 'UnityEngine.KeyCode')
+`mainKey` [UnityEngine.KeyCode](#UnityEngine.KeyCode 'UnityEngine.KeyCode')
 
 [UnityEngine.KeyCode](https://docs.unity3d.com/ScriptReference/KeyCode.html 'https://docs.unity3d.com/ScriptReference/KeyCode.html')
 
-<a name='Modding_Humankind_DevTools_InGameKeyboardShortcutAttribute_InGameKeyboardShortcutAttribute(string_KeyCode_KeyCode__)_modifierKeys'></a>
+<a name='modifierKeys'></a>
 
-`modifierKeys` [UnityEngine.KeyCode](https://docs.microsoft.com/en-us/dotnet/api/UnityEngine.KeyCode 'UnityEngine.KeyCode')[[]](https://docs.microsoft.com/en-us/dotnet/api/System.Array 'System.Array')
+`modifierKeys` [UnityEngine.KeyCode](#UnityEngine.KeyCode 'UnityEngine.KeyCode')[[]](#System.Array 'System.Array')
 
 `UnityEngine.KeyCode` representing modifier keys.

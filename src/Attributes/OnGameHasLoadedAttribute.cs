@@ -7,6 +7,7 @@ namespace Modding.Humankind.DevTools
     ///     is ready to play.
     /// </summary>
     /// <remarks>The method's class must be annotated with <c>DevToolsModule</c> for this to work.</remarks>
+    /// <remarks>Method's signature must be: public static void</remarks>
     [AttributeUsage(AttributeTargets.Method)]
     public class OnGameHasLoadedAttribute : Attribute
     {

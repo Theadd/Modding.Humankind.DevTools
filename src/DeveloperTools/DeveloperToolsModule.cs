@@ -1,7 +1,7 @@
 ﻿using System;
 using UnityEngine;
 
-namespace Modding.Humankind.DevTools.Core
+namespace Modding.Humankind.DevTools.DeveloperTools
 {
     [DevToolsModule]
     public class DeveloperToolsModule
@@ -9,8 +9,13 @@ namespace Modding.Humankind.DevTools.Core
         public static string Name => "DeveloperTools";
 
         [OnGameHasLoaded]
+        public static void OnGameHasLoaded()
+        {
+            Reset();
+        }
+
         [OnGameHasUnloaded]
-        private static void Reset()
+        public static void Reset()
         {
             HumankindDevTools.RemoveAllOnIterateNextAction();
             HumankindDevTools.AddOnIterateNextAction(Dummy);

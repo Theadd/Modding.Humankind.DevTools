@@ -32,6 +32,16 @@ The [HumankindEmpire](HumankindEmpire.md 'Modding.Humankind.DevTools.HumankindEm
 <tr><td align="left" valign="top">
 
 ```csharp
+public int EmpireIndex
+```
+</td><td align="left" valign="top">
+
+### EmpireIndex
+<img src="./resources/getter.svg" alt="Getter" height="16px"/><br/>
+EmpireIndex of `Empire` controlling this `Settlement`.</td></tr>
+<tr><td align="left" valign="top">
+
+```csharp
 public bool IsCapital
 ```
 </td><td align="left" valign="top">

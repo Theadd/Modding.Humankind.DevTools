@@ -1,0 +1,32 @@
+ManifestFileVersion: 0
+CRC: 1881966896
+Hashes:
+  AssetFileHash:
+    serializedVersion: 2
+    Hash: eef4acfe5dab5a67a0345b323d19b8d5
+  TypeTreeHash:
+    serializedVersion: 2
+    Hash: 931e2f8058cfc418f2e1a18239c7b7c5
+HashAppended: 0
+ClassTypes:
+- Class: 21
+  Script: {instanceID: 0}
+- Class: 28
+  Script: {instanceID: 0}
+- Class: 48
+  Script: {instanceID: 0}
+- Class: 114
+  Script: {fileID: 12001, guid: 0000000000000000e000000000000000, type: 0}
+- Class: 115
+  Script: {instanceID: 0}
+- Class: 128
+  Script: {instanceID: 0}
+- Class: 213
+  Script: {instanceID: 0}
+SerializeReferenceClassIdentifiers: []
+Assets:
+- Assets/DevToolsAssets/GUISkins/GenericUISkin.guiskin
+- Assets/DevToolsAssets/Skin/SourceCodePro-Light.otf
+- Assets/DevToolsAssets/UITextures/GameplayOrientation_Warmonger.png
+- Assets/DevToolsAssets/Skin/SourceCodePro-Regular.otf
+Dependencies: []
