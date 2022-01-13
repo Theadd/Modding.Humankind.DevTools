@@ -1,16 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Reflection;
 using Amplitude.Mercury.Data.Simulation;
-using Amplitude.Mercury.Interop;
-using Amplitude.Mercury.Simulation;
-using BepInEx.Configuration;
-using Modding.Humankind.DevTools.DeveloperTools;
 using UnityEngine;
 
 namespace Modding.Humankind.DevTools.Core
 {
+#if DEBUG
     [DevToolsModule]
     internal class BuiltInModule
     {
@@ -204,4 +200,5 @@ namespace Modding.Humankind.DevTools.Core
             _targetEmpireIndex = empireIndex;
         }
     }
+#endif
 }

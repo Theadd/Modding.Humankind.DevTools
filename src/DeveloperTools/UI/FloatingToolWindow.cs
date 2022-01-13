@@ -36,7 +36,7 @@ namespace Modding.Humankind.DevTools.DeveloperTools.UI
         }
         
         void OnGUI () {
-            if (IsVisible && ShouldBeVisible && !HideAllGUITools)
+            if (ShouldBeVisible && IsVisible && !HideAllGUITools)
             {
                 OnGUIStyling();
                 WindowRect = GUI.Window (WindowID, WindowRect, OnDrawUIToolWindow, string.Empty, WindowGUIStyle);

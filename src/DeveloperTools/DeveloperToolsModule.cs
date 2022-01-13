@@ -1,5 +1,4 @@
 ﻿using System;
-using Modding.Humankind.DevTools.DeveloperTools.UI;
 using UnityEngine;
 
 namespace Modding.Humankind.DevTools.DeveloperTools
@@ -12,10 +11,7 @@ namespace Modding.Humankind.DevTools.DeveloperTools
         [OnGameHasLoaded]
         public static void OnGameHasLoaded()
         {
-            // Loggr.Log("Calling member annotated with [OnGameHasLoaded] from DeveloperTools module.", ConsoleColor.DarkRed);
             Reset();
-            // Loggr.Log("Showing UI Toolbar...", ConsoleColor.DarkRed);
-            // UIManager.Toolbar.ShowWindow(true);
         }
 
         [OnGameHasUnloaded]

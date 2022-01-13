@@ -55,8 +55,8 @@ namespace Modding.Humankind.DevTools
 
         private void Start()
         {
-            Loggr.Log("STARTING HUMANKIND DEVTOOLS...", ConsoleColor.Green);
-            // UIManager.Initialize();
+            if (!QuietMode)
+                Loggr.Log("STARTING HUMANKIND DEVTOOLS...", ConsoleColor.Green);
         }
 
         void OnGUI () {
@@ -69,7 +69,8 @@ namespace Modding.Humankind.DevTools
             {
                 _uiReady = true;
                 UIManager.Initialize();
-                Loggr.Log("HUMANKIND DEVTOOLS UI LOADED SUCCESSFULLY.", ConsoleColor.Green);
+                if (!QuietMode)
+                    Loggr.Log("HUMANKIND DEVTOOLS UI LOADED SUCCESSFULLY.", ConsoleColor.Green);
             }
         }
 
@@ -82,7 +83,8 @@ namespace Modding.Humankind.DevTools
             ActionManager.Unload();
             Assets.Unload(true);
             Destroy(gameObject);
-            Loggr.Debug("Unloaded DevTools Framework.");
+            if (!QuietMode)
+                Loggr.Debug("Unloaded DevTools Framework.");
         }
     }
 }
