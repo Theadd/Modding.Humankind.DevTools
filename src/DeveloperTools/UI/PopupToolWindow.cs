@@ -103,8 +103,8 @@ namespace Modding.Humankind.DevTools.DeveloperTools.UI
         
         public static void Open<T>(Action<T> callback) where T : PopupToolWindow
         {
-            if (!UIManager.IsGUILoaded)
-                UIManager.OnGUIHasLoaded += () => callback.Invoke(Open<T>());
+            if (!UIController.IsGUILoaded)
+                UIController.OnGUIHasLoaded += () => callback.Invoke(Open<T>());
             else
                 callback.Invoke(Open<T>());
         }

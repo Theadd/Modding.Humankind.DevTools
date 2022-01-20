@@ -37,7 +37,6 @@ namespace Modding.Humankind.DevTools.Core
 
             if (DevTools.IncludeExternalModules)
             {
-                // TODO: [Error  : Unity Log] ReflectionTypeLoadException: Exception of type 'System.Reflection.ReflectionTypeLoadException' was thrown.
                 try
                 {
                     var allAIStrategyModules =
@@ -51,17 +50,35 @@ namespace Modding.Humankind.DevTools.Core
                 }
                 catch (ReflectionTypeLoadException e)
                 {
-                    Loggr.Log(e);
+                    if (!DevTools.QuietMode)
+                        Loggr.Log(e);
+                }
+                catch (NullReferenceException ex)
+                {
+                    if (!DevTools.QuietMode)
+                        Loggr.Log(ex);
+                }
+                catch (Exception otherEx)
+                {
+                    Loggr.Log(otherEx);
                 }
             }
             else
             {
-                var ownAIStrategyModules =
-                    from type in Assembly.GetExecutingAssembly().GetTypes()
-                    where type.IsDefined(typeof(DevToolsModuleAttribute), false)
-                    select type;
+                try
+                {
+                    var ownAIStrategyModules =
+                        from type in Assembly.GetExecutingAssembly().GetTypes()
+                        where type.IsDefined(typeof(DevToolsModuleAttribute), false)
+                        select type;
 
-                foreach (var aiStrategyModule in ownAIStrategyModules) RegisterModule(aiStrategyModule);
+                    foreach (var aiStrategyModule in ownAIStrategyModules) RegisterModule(aiStrategyModule);
+                }
+                catch (Exception exc)
+                {
+                    if (!DevTools.QuietMode)
+                        Loggr.Log(exc);
+                }
             }
         }
 

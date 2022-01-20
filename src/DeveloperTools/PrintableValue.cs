@@ -270,6 +270,36 @@ namespace Modding.Humankind.DevTools.DeveloperTools
                     lenMod = ColorType.HeadingType.Length + ColorType.Default.Length;
                     fullType = "PropertyInfo";
                     break;
+                case "Color":
+                    result = ColorType.HeadingType + "Color " + ColorType.Default + ((Color) objectValue).ToString();
+                    lenMod = ColorType.HeadingType.Length + ColorType.Default.Length;
+                    fullType = "Color";
+                    break;
+                case "Color32":
+                    result = ColorType.HeadingType + "Color32 " + ColorType.Default + ((Color32) objectValue).ToString();
+                    lenMod = ColorType.HeadingType.Length + ColorType.Default.Length;
+                    fullType = "Color32";
+                    break;
+                case "GUIStyleState":
+                    result = ColorType.HeadingType + "GUIStyleState " + ColorType.Default + ((GUIStyleState) objectValue).background.name + ", " + ((GUIStyleState) objectValue).textColor.ToString();
+                    lenMod = ColorType.HeadingType.Length + ColorType.Default.Length;
+                    fullType = "GUIStyleState";
+                    break;
+                case "Font":
+                    result = ColorType.HeadingType + "Font " + ColorType.Default + ((Font) objectValue).name;
+                    lenMod = ColorType.HeadingType.Length + ColorType.Default.Length;
+                    fullType = "Font";
+                    break;
+                case "GUIStyle":
+                    result = ColorType.HeadingType + "GUIStyle " + ColorType.Default + ((GUIStyle) objectValue).name;
+                    lenMod = ColorType.HeadingType.Length + ColorType.Default.Length;
+                    fullType = "GUIStyle";
+                    break;
+                case "Material":
+                    result = ColorType.HeadingType + "Material " + ColorType.Default + ((Material) objectValue).name;
+                    lenMod = ColorType.HeadingType.Length + ColorType.Default.Length;
+                    fullType = "Material";
+                    break;
                 default:
                     result = null;
                     return false;
