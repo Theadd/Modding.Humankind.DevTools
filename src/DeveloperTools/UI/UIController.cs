@@ -1,27 +1,57 @@
 ﻿using System;
 using Amplitude.Framework.Overlay;
 using UnityEngine;
-using Object = UnityEngine.Object;
+using Amplitude.Mercury.Presentation;
+using HarmonyLib;
 
 namespace Modding.Humankind.DevTools.DeveloperTools.UI
 {
-    public class UIManager
+    public class UIController
     {
         public static event Action OnGUIHasLoaded;
 
         public static bool IsGUILoaded { get; protected set; } = false;
-        
-        public static GUISkin GameSkin { get; set; }
-        
-        public static GUISkin Skin { get; set; }
-        
-        public static GUISkin PinnedSkin { get; set; }
-        
+
         public static GUISkin DefaultSkin { get; set; }
+
+        public static Amplitude.Mercury.UI.UIManager Service => _service
+            ? _service
+            : (_service =
+                Amplitude.Framework.Services.GetService<Amplitude.Mercury.UI.IUIService>() as
+                    Amplitude.Mercury.UI.UIManager);
+
+        private static Amplitude.Mercury.UI.UIManager _service;
+
+        public static float TooltipDelay
+        {
+            get => Service.TooltipDelay;
+            set => Service.TooltipDelay = value;
+        }
+        
+        public static bool IsAmplitudeUIVisible
+        {
+            get => Service.IsUiVisible;
+            set => Service.IsUiVisible = value;
+        }
+        
+        public static bool AreTooltipsVisible
+        {
+            get => Service.AreTooltipsVisible;
+            set => Service.AreTooltipsVisible = value;
+        }
+        
+        public static bool IsCameraSequenceRunning => Service?.IsCameraSequenceRunning ?? false;
+
+        public static bool AnyPendingSequence => Presentation.PresentationCameraSequenceController?.AnyPendingSequence ?? false;
+        
+        public static bool GodMode
+        {
+            get => Amplitude.Mercury.Presentation.GodMode.Enabled;
+            set => AccessTools.PropertySetter(typeof(GodMode), "Enabled")?.Invoke(null, new object[] { value }); 
+        }
 
         public static void Initialize()
         {
-            FindGUISkinResources();
             DefaultSkin = DevTools.Assets.Load<GUISkin>("GenericUISkin");
             
             // Unload any previous UIOverlay remaining on scene
@@ -51,26 +81,16 @@ namespace Modding.Humankind.DevTools.DeveloperTools.UI
             if (window != null)
             {
                 window.ShowWindow(false);
-                Object.Destroy(window);
+                UnityEngine.Object.Destroy(window);
             }
         }
 
-        private static void FindGUISkinResources()
+        public static void OnceGUIHasLoaded(Action action)
         {
-            foreach(var skin in Resources.FindObjectsOfTypeAll(typeof(GUISkin)) as GUISkin[]) {
-                switch (skin.name)
-                {
-                    case "GameSkin":
-                        GameSkin = skin;
-                        break;
-                    case "PopupWindowStyles":
-                        Skin = skin;
-                        break;
-                    case "PopupWindowStyles+Pinned":
-                        PinnedSkin = skin;
-                        break;
-                }
-            }
+            if (!IsGUILoaded)
+                OnGUIHasLoaded += () => action.Invoke();
+            else
+                action.Invoke();
         }
 
         protected static void InvokeOnGUIHasLoaded()

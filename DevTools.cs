@@ -68,7 +68,7 @@ namespace Modding.Humankind.DevTools
             if (GameObject.Find("/WindowsRoot/SystemOverlays") != null)
             {
                 _uiReady = true;
-                UIManager.Initialize();
+                UIController.Initialize();
                 if (!QuietMode)
                     Loggr.Log("HUMANKIND DEVTOOLS UI LOADED SUCCESSFULLY.", ConsoleColor.Green);
             }

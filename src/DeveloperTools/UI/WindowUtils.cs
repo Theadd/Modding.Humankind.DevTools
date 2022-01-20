@@ -20,11 +20,11 @@ namespace Modding.Humankind.DevTools.DeveloperTools.UI
 
                 if (GUILayout.Button("_", "PopupWindow.Title.Button"))
                 {
-                    UIManager.HideWindow<T>();
+                    UIController.HideWindow<T>();
                 }
                 if (GUILayout.Button("X", "PopupWindow.Title.Button"))
                 {
-                    UIManager.CloseWindow<T>();
+                    UIController.CloseWindow<T>();
                 }
             
             GUILayout.EndHorizontal();

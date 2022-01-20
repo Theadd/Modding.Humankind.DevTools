@@ -9,7 +9,7 @@ namespace Modding.Humankind.DevTools.DeveloperTools.UI
 
     public abstract class FloatingToolWindow : PopupToolWindow
     {
-        public abstract string WindowTitle { get; set; }
+        public virtual string WindowTitle { get; set; } = "WINDOW";
         public virtual Rect WindowRect { get; set; } = new Rect (300, 300, 300, 300);
         public virtual string WindowGUIStyle { get; set; } = "PopupWindow.Sidebar";
         public static bool HideAllGUITools { get; set; } = false;
@@ -17,7 +17,7 @@ namespace Modding.Humankind.DevTools.DeveloperTools.UI
 
         public virtual void OnGUIStyling()
         {
-            GUI.skin = UIManager.DefaultSkin;
+            GUI.skin = UIController.DefaultSkin;
             GUI.color = Color.white;
             GUI.backgroundColor = Color.white;
             GUI.enabled = true;
