@@ -19,6 +19,14 @@ namespace Modding.Humankind.DevTools.DeveloperTools.UI
         
         public static GUISkin DefaultSkin { get; set; }
 
+        public static Amplitude.Mercury.UI.UIManager Service => _service
+            ? _service
+            : (_service =
+                Amplitude.Framework.Services.GetService<Amplitude.Mercury.UI.IUIService>() as
+                    Amplitude.Mercury.UI.UIManager);
+
+        private static Amplitude.Mercury.UI.UIManager _service;
+
         public static void Initialize()
         {
             FindGUISkinResources();
