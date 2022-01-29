@@ -103,6 +103,21 @@ namespace Modding.Humankind.DevTools
             _LogEx((new PrintableObject(obj)).ToString(), defaultColor, true);
         }
         
+        public static void LogAll(object obj) => LogAll(obj, ConsoleColor.White);
+        
+        public static void LogAll(object obj, ConsoleColor defaultColor)
+        {
+            if (!_devlogEnabled)
+                return;
+            
+            _LogEx((new PrintableObject(obj)
+            {
+                NonPublicFields = true,
+                NonPublicProperties = true,
+                Methods = true
+            }).ToString(), defaultColor, true);
+        }
+        
         private static void _Log(string message, ConsoleColor color)
         {
             if (!_initialized)

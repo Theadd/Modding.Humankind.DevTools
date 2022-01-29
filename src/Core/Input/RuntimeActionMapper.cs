@@ -81,6 +81,22 @@ namespace Modding.Humankind.DevTools.Core
             if (actionName == "")
                 return false;
 
+            if (key.Equals(KeyboardShortcut.Empty))
+            {
+                if (runtimeMethodsMap.ContainsKey(actionName))
+                {
+                    // Removing runtime action map
+                    var prevKey = runtimeActionsMap.FirstOrDefault(x => x.Value == actionName).Key;
+                    runtimeActionsMap.Remove(prevKey);
+                    runtimeMethodsMap.Remove(actionName);
+
+                    if (!DevTools.QuietMode)
+                        Loggr.Log("Runtime action removed: " + actionName, ConsoleColor.White);
+                }
+                
+                return true;
+            }
+
             if (ActionManager._mappedActions != null && ActionManager._mappedActions.ContainsKey(key))
             {
                 Loggr.LogWarning("Unable to register key [" + key + "] since it's already registered by " + 

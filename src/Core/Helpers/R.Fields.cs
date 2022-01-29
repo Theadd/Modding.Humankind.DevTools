@@ -67,6 +67,15 @@ namespace Modding.Humankind.DevTools.Core
             
             public static readonly FieldInfo DataUtilsField = 
                 typeof(Amplitude.Mercury.UI.Utils).GetField("DataUtils", NonPublicStatic);
+
+            public static readonly FieldInfo TextUtilsField = 
+                typeof(Amplitude.Mercury.UI.Utils).GetField("TextUtils", NonPublicStatic);
+
+            public static readonly FieldInfo FormatUtilsField = 
+                typeof(Amplitude.Mercury.UI.Utils).GetField("FormatUtils", NonPublicStatic);
+
+            public static readonly FieldInfo GameUtilsField = 
+                typeof(Amplitude.Mercury.UI.Utils).GetField("GameUtils", NonPublicStatic);
         }
     }
 }
