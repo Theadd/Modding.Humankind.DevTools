@@ -39,7 +39,7 @@ namespace Modding.Humankind.DevTools.DeveloperTools
         public override string ToString()
         {
             if (isNull)
-                return "%DarkGray%NULL";
+                return "%DarkGray%null";
 
             if (type.IsArray)
             {
@@ -166,7 +166,7 @@ namespace Modding.Humankind.DevTools.DeveloperTools
 
                 if (getter == null)
                 {
-                    sb.AppendLine("%Red%\tCAN'T GET PROPERTY GETTER OF: " + propInfo.Name);
+                    sb.AppendLine("%Red%\tCAN'T GET PROPERTY GETTER FOR: " + propInfo.Name);
                     continue;
                 }
                 string propValue;

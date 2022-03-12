@@ -58,7 +58,7 @@ namespace Modding.Humankind.DevTools
         {
             if (!BepInEx.Utility.TryDo(onIterateNextAction, out Exception ex))
             {
-                Loggr.LogError(ex.ToString());
+                Loggr.Log(ex);
             }
         }
         

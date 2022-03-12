@@ -212,7 +212,8 @@ namespace Modding.Humankind.DevTools.DeveloperTools.UI
             }
             catch (Exception ex)
             {
-                Loggr.Log(ex);
+                if (!DevTools.QuietMode)
+                    Loggr.Log(ex);
             }
         }
 

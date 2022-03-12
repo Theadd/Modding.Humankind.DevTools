@@ -74,7 +74,9 @@ namespace Modding.Humankind.DevTools.Core
 
             RemoveAllOnNewTurnActions();
             
-            Loggr.Debug("Reloading modules...");
+            if (!DevTools.QuietMode)
+                Loggr.Debug("Reloading modules...");
+                
             ModuleHelper.FindAllAndRegister();
             
             if (invokeOnGameHasLoaded)
