@@ -48,7 +48,7 @@ namespace Modding.Humankind.DevTools.DeveloperTools.UI
         public static bool IsAmplitudeUIVisible
         {
             get => Service.IsUiVisible;
-            set => Service.IsUiVisible = value;
+            set => Service.UpdateUIVisibility(value);
         }
         
         public static bool AreTooltipsVisible

@@ -26,7 +26,7 @@ namespace Modding.Humankind.DevTools
         /// <summary>
         ///     Validations done in <see href="IsGameLoaded">IsGameLoaded</see> were sufficient to avoid errors while loading the game, but they are not so aware of whether the user is quitting the game or not.
         /// </summary>
-        public static bool IsGameUnloading => Application.isQuitting || Application.isShuttingDown;
+        public static bool IsGameUnloading => Application.IsShuttingDownHard || Application.IsShuttingDown;
         
         /// <summary>
         ///     Current game's turn,
