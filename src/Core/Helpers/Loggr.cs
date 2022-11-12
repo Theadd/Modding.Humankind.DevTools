@@ -2,6 +2,7 @@
 using System.IO;
 using System.Reflection;
 using System.Runtime.CompilerServices;
+using System.Linq;
 using BepInEx;
 using Modding.Humankind.DevTools.DeveloperTools;
 
@@ -20,6 +21,8 @@ namespace Modding.Humankind.DevTools
         private static PropertyInfo _consoleStream;
         private static MethodInfo _setConsoleColor;
         private static Type _consoleManager;
+
+        public static bool WriteLogToDisk { get; set; } = false;
 
         /// <summary>
         ///     Sets or gets whether the output to console of internal calls to <c>Loggr.LogInfo</c>, <c>Loggr.LogWarning</c>,
@@ -178,10 +181,14 @@ namespace Modding.Humankind.DevTools
                     if (!lastWasMatch)
                     {
                         writer.Write("%" + text);
+                        if (WriteLogToDisk)
+                            WriteToDisk("%" + text);
                     }
                     else
                     {
                         writer.Write(text);
+                        if (WriteLogToDisk)
+                            WriteToDisk(text);
                     }
                 }
 
@@ -189,9 +196,22 @@ namespace Modding.Humankind.DevTools
             }
             
             if (appendNewLine)
+            {
                 writer.Write(Environment.NewLine);
-            
+                if (WriteLogToDisk)
+                    WriteToDisk(Environment.NewLine);
+            }
             _setConsoleColor.Invoke(null, new object[] {ConsoleColor.Gray});
+        }
+
+        private static void WriteToDisk(string message)
+        {
+            if (BepInEx.Logging.Logger.Listeners.FirstOrDefault(l =>
+                    l is BepInEx.Logging.DiskLogListener) is
+                BepInEx.Logging.DiskLogListener diskLogger)
+            {
+                diskLogger.LogWriter.Write(message);
+            }
         }
     }
 }
