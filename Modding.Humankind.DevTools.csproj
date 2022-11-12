@@ -350,10 +350,10 @@
       <HintPath>$(HUMANKIND_REFERENCED_LIBRARIES_PATH)\UnityEngine.TerrainPhysicsModule.dll</HintPath>
       <Private>false</Private>
     </Reference>
-    <Reference Include="UnityEngine.TextCoreModule">
-      <HintPath>$(HUMANKIND_REFERENCED_LIBRARIES_PATH)\UnityEngine.TextCoreModule.dll</HintPath>
-      <Private>false</Private>
-    </Reference>
+<!--    <Reference Include="UnityEngine.TextCoreModule">-->
+<!--      <HintPath>$(HUMANKIND_REFERENCED_LIBRARIES_PATH)\UnityEngine.TextCoreModule.dll</HintPath>-->
+<!--      <Private>false</Private>-->
+<!--    </Reference>-->
     <Reference Include="UnityEngine.TextRenderingModule">
       <HintPath>$(HUMANKIND_REFERENCED_LIBRARIES_PATH)\UnityEngine.TextRenderingModule.dll</HintPath>
       <Private>false</Private>
