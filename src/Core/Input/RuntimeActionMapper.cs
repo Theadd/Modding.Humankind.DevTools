@@ -48,7 +48,7 @@ namespace Modding.Humankind.DevTools.Core
                 method.Invoke(null, null);
                 
                 if (!DevTools.QuietMode)
-                    Loggr.Announce("Action " + actionName + " executed.");
+                    Loggr.Log("Action " + actionName + " executed.");
             }
             else
             {
@@ -59,7 +59,7 @@ namespace Modding.Humankind.DevTools.Core
                         runtimeMethod.Invoke(null, null);
                         
                         if (!DevTools.QuietMode)
-                            Loggr.Announce("Action " + actionName + " executed.");
+                            Loggr.Log("Action " + actionName + " executed.");
                     }
                     catch (Exception) { /* Ignore exceptions in runtime actions */ }
                 }
