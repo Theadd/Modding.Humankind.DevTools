@@ -17,6 +17,8 @@ namespace Modding.Humankind.DevTools
         private static bool _debuglogEnabled = true;
         private static bool _announceEnabled = true;
         private static bool _initialized;
+        private static bool _isConsoleLoggerEnabled = false;
+        private static bool _isDiskLoggerEnabled = false;
 
         private static PropertyInfo _consoleStream;
         private static MethodInfo _setConsoleColor;
@@ -41,17 +43,46 @@ namespace Modding.Humankind.DevTools
 
         internal static void LogInfo(string message)
         {
-            if (_devlogEnabled) DevTools.Log.LogInfo(message);
+            try
+            {
+                if (_devlogEnabled) DevTools.Log.LogInfo(message);
+            }
+            catch (Exception)
+            {
+                // ignore
+            }
         }
 
         internal static void LogWarning(string message)
         {
-            if (_devlogEnabled) DevTools.Log.LogWarning(message);
+            try
+            {
+                if (_devlogEnabled) 
+                    DevTools.Log.LogWarning(message);
+                
+                if (WriteLogToDisk)
+                    WriteToDisk(message);
+            }
+            catch (Exception)
+            {
+                // ignore
+            }
         }
 
         internal static void LogError(string message)
         {
-            if (_devlogEnabled) DevTools.Log.LogError(message);
+            try
+            {
+                if (_devlogEnabled) 
+                    DevTools.Log.LogError(message);
+                
+                if (WriteLogToDisk)
+                    WriteToDisk(message);
+            }
+            catch (Exception)
+            {
+                // ignore
+            }
         }
 
         public static void Debug(string message)
@@ -61,8 +92,7 @@ namespace Modding.Humankind.DevTools
 
         public static void Announce(string message)
         {
-            if (_announceEnabled)
-                _Log(message, ConsoleColor.White);
+            Announce(message, ConsoleColor.White);
         }
         
         public static void Announce(string message, ConsoleColor color)
@@ -125,7 +155,10 @@ namespace Modding.Humankind.DevTools
         {
             if (!_initialized)
                 Initialize();
-
+            
+            if (!_isConsoleLoggerEnabled)
+                return;
+            
             _setConsoleColor.Invoke(null, new object[] {color});
             ((TextWriter) _consoleStream.GetValue(_consoleManager, null)).Write(message + Environment.NewLine);
             _setConsoleColor.Invoke(null, new object[] {ConsoleColor.Gray});
@@ -134,12 +167,49 @@ namespace Modding.Humankind.DevTools
         private static void Initialize()
         {
             var bepInExAss = Assembly.GetAssembly(typeof(BaseUnityPlugin));
-            var type = bepInExAss.GetType("BepInEx.ConsoleManager");
 
-            _consoleStream = type.GetProperty("ConsoleStream", BindingFlags.Static | BindingFlags.Public);
-            _setConsoleColor = type.GetMethod("SetConsoleColor", BindingFlags.Static | BindingFlags.Public);
-            _consoleManager = type;
+            try
+            {
+                var type = bepInExAss.GetType("BepInEx.ConsoleManager");
 
+                _consoleStream = type.GetProperty("ConsoleStream", BindingFlags.Static | BindingFlags.Public);
+                _setConsoleColor = type.GetMethod("SetConsoleColor", BindingFlags.Static | BindingFlags.Public);
+                _consoleManager = type;
+
+                _setConsoleColor.Invoke(null, new object[] {ConsoleColor.DarkGray});
+                ((TextWriter) _consoleStream.GetValue(_consoleManager, null)).Write("DevTools.Loggr initialized." + Environment.NewLine);
+                _setConsoleColor.Invoke(null, new object[] {ConsoleColor.Gray});
+
+                _isConsoleLoggerEnabled = true;
+            }
+            catch (Exception)
+            {
+                _isConsoleLoggerEnabled = false;
+            }
+
+            try
+            {
+                if (BepInEx.Logging.Logger.Listeners.FirstOrDefault(l =>
+                        l is BepInEx.Logging.DiskLogListener) is
+                    BepInEx.Logging.DiskLogListener diskLogger)
+                {
+                    if (_isConsoleLoggerEnabled)
+                    {
+                        diskLogger.LogWriter.Write("DevTools.Loggr initialized." + Environment.NewLine);
+                    }
+                    else
+                    {
+                        diskLogger.LogWriter.Write("DevTools.Loggr initialized in disk mode only." + Environment.NewLine);
+                    }
+
+                    _isDiskLoggerEnabled = true;
+                }
+            }
+            catch (Exception)
+            {
+                _isDiskLoggerEnabled = false;
+            }
+            
             _initialized = true;
         }
 
@@ -148,7 +218,7 @@ namespace Modding.Humankind.DevTools
             if (!_initialized)
                 Initialize();
 
-            TextWriter writer = (TextWriter) _consoleStream.GetValue(_consoleManager, null);
+            TextWriter writer = (TextWriter) (_isConsoleLoggerEnabled ? _consoleStream.GetValue(_consoleManager, null) : null);
             ConsoleColor color;
             bool lastWasMatch = true;
             bool match = false;
@@ -167,12 +237,14 @@ namespace Modding.Humankind.DevTools
                     if (ConsoleColor.TryParse(text, true, out color))
                     {
                         match = true;
-                        _setConsoleColor.Invoke(null, new object[] {color});
+                        if (_isConsoleLoggerEnabled)
+                            _setConsoleColor.Invoke(null, new object[] {color});
                     }
                     else if (text.ToUpper() == "DEFAULT")
                     {
                         match = true;
-                        _setConsoleColor.Invoke(null, new object[] {defaultColor});
+                        if (_isConsoleLoggerEnabled)
+                            _setConsoleColor.Invoke(null, new object[] {defaultColor});
                     }
                 }
                 
@@ -180,13 +252,15 @@ namespace Modding.Humankind.DevTools
                 {
                     if (!lastWasMatch)
                     {
-                        writer.Write("%" + text);
+                        if (_isConsoleLoggerEnabled)
+                            writer.Write("%" + text);
                         if (WriteLogToDisk)
                             WriteToDisk("%" + text);
                     }
                     else
                     {
-                        writer.Write(text);
+                        if (_isConsoleLoggerEnabled)
+                            writer.Write(text);
                         if (WriteLogToDisk)
                             WriteToDisk(text);
                     }
@@ -197,15 +271,19 @@ namespace Modding.Humankind.DevTools
             
             if (appendNewLine)
             {
-                writer.Write(Environment.NewLine);
+                if (_isConsoleLoggerEnabled)
+                    writer.Write(Environment.NewLine);
                 if (WriteLogToDisk)
                     WriteToDisk(Environment.NewLine);
             }
-            _setConsoleColor.Invoke(null, new object[] {ConsoleColor.Gray});
+            if (_isConsoleLoggerEnabled)
+                _setConsoleColor.Invoke(null, new object[] {ConsoleColor.Gray});
         }
 
         private static void WriteToDisk(string message)
         {
+            if (!_isDiskLoggerEnabled) return;
+            
             if (BepInEx.Logging.Logger.Listeners.FirstOrDefault(l =>
                     l is BepInEx.Logging.DiskLogListener) is
                 BepInEx.Logging.DiskLogListener diskLogger)
