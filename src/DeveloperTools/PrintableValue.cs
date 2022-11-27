@@ -6,23 +6,25 @@ using System.Text;
 using Amplitude;
 using Amplitude.Framework.Simulation;
 using Amplitude.Mercury;
+using Amplitude.UI;
 using Modding.Humankind.DevTools.Core;
 using UnityEngine;
 
 namespace Modding.Humankind.DevTools.DeveloperTools
 {
-
     public static class PrintableValue
     {
         public static class ColorType
         {
             public static string NotFound = "%Red%";
             public static string HeadingType = "%DarkGreen%";
+            public static string EnumType = "%Green%";
             public static string FullType = "%DarkGray%";
             public static string NotImportant = "%DarkGray%";
             public static string Error = "%DarkRed%";
             public static string Default = "%White%";
             public static string String = "%DarkYellow%";
+            public static string AdditionalInfo = "%DarkYellow%";
         }
 
         public static bool UseFullTypeNames { get; set; } = false;
@@ -31,10 +33,10 @@ namespace Modding.Humankind.DevTools.DeveloperTools
         {
             var padRight = lenMod > 0 ? new string(' ', lenMod) : "";
             var realLength = valueString.Length - lenMod;
-            if (realLength >= 63) {
-                valueString = valueString.Substring(0, 60 + lenMod) + "...";
+            if (realLength >= 83) {
+                valueString = valueString.Substring(0, 80 + lenMod) + "...";
             }
-            return $"{valueString,-64}" + padRight + ColorType.FullType + "// " + typeString;
+            return $"{valueString,-84}" + padRight + ColorType.FullType + "// " + typeString;
             // return valueString + "\t\t" + ColorType.FullType + "// " + typeString;
         }
 
@@ -58,7 +60,7 @@ namespace Modding.Humankind.DevTools.DeveloperTools
             if (objectValue == null)
             {
                 return KeepValueOnly(
-                    ColorType.FullType + "NULL",
+                    ColorType.FullType + "null",
                     objectType.FullName,
                     ColorType.FullType.Length
                 );
@@ -82,7 +84,7 @@ namespace Modding.Humankind.DevTools.DeveloperTools
             if (objectValue == null)
             {
                 return MergeValueAndType(
-                    ColorType.FullType + "NULL",
+                    ColorType.FullType + "null",
                     objectType.FullName,
                     ColorType.FullType.Length
                 );
@@ -92,6 +94,9 @@ namespace Modding.Humankind.DevTools.DeveloperTools
                 return MergeValueAndType(result, fullType, lenMod);
 
             if (TryGetFromTypeName(objectValue, objectType, out result, out fullType, out lenMod))
+                return MergeValueAndType(result, fullType, lenMod);
+
+            if (TryGetGameObjectRelatedTypes(objectValue, objectType, out result, out fullType, out lenMod))
                 return MergeValueAndType(result, fullType, lenMod);
 
             return ColorType.NotFound + objectType.Name;
@@ -300,6 +305,11 @@ namespace Modding.Humankind.DevTools.DeveloperTools
                     lenMod = ColorType.HeadingType.Length + ColorType.Default.Length;
                     fullType = "Material";
                     break;
+                case "IndexRange":
+                    result = ColorType.HeadingType + "IndexRange " + ColorType.Default + ((IndexRange) objectValue).ToString();
+                    lenMod = ColorType.HeadingType.Length + ColorType.Default.Length;
+                    fullType = "IndexRange";
+                    break;
                 default:
                     result = null;
                     return false;
@@ -316,7 +326,8 @@ namespace Modding.Humankind.DevTools.DeveloperTools
 
             if (objectType.IsEnum)
             {
-                result = Enum.GetName(objectType, objectValue);
+                lenMod = ColorType.EnumType.Length;
+                result = ColorType.EnumType + objectType.Name + "." + Enum.GetName(objectType, objectValue);
                 fullType += " Enum";
                 
             }
@@ -328,18 +339,95 @@ namespace Modding.Humankind.DevTools.DeveloperTools
 
             return true;
         }
-    }
-    
-    /*internal static class ObjectExtensions
-    {
-        public static T CastTo<T>(this object o) => (T)o;
-
-        public static dynamic CastToReflected(this object o, Type type)
+        
+        private static bool TryGetGameObjectRelatedTypes(object objectValue, Type objectType, out string result,
+            out string fullType, out int lenMod)
         {
-            var methodInfo = typeof(ObjectExtensions).GetMethod(nameof(CastTo), BindingFlags.Static | BindingFlags.Public);
-            var genericArguments = new[] { type };
-            var genericMethodInfo = methodInfo?.MakeGenericMethod(genericArguments);
-            return genericMethodInfo?.Invoke(null, new[] { o });
+            fullType = UseFullTypeNames ? objectType.FullName : objectType.Name;
+            lenMod = 0;
+
+            switch (objectType.Name)
+            {
+                case "UITransform":
+                    var uiT = ((UITransform) objectValue);
+                    lenMod = ColorType.HeadingType.Length + ColorType.Default.Length;
+                    result = ColorType.HeadingType + "UITransform @ " + ColorType.Default + uiT.Rect;
+                    break;
+                case "UITooltipData":
+                    lenMod = ColorType.String.Length;
+                    result = ColorType.String + $"\"{((Amplitude.UI.Interactables.UITooltipData) objectValue).Message}\"";
+                    break;
+                case "UITooltipClassDefinition":
+                    lenMod = ColorType.String.Length;
+                    result = ColorType.String + $"@\"{((Amplitude.UI.Tooltips.UITooltipClassDefinition) objectValue).Name.ToString()}\"";
+                    break;
+                case "RectMargins":
+                    var r = ((RectMargins) objectValue);
+                    lenMod = ColorType.HeadingType.Length + ColorType.Default.Length;
+                    result = ColorType.HeadingType + "RectMargins " + ColorType.Default + $"(l: {r.Left}, r: {r.Right}, t: {r.Top}, b: {r.Bottom})";
+                    break;
+                case "UIBorderAnchor":
+                    var anchor = ((UIBorderAnchor) objectValue);
+                    lenMod = ColorType.HeadingType.Length + ColorType.Default.Length;
+                    result = ColorType.HeadingType + "UIBorderAnchor " + ColorType.Default + $"(Attach: {anchor.Attach}, Percent: {anchor.Percent}, Margin: {anchor.Margin}, Offset: {anchor.Offset})";
+                    break;
+                case "UIPivotAnchor":
+                    var pivot = ((UIPivotAnchor) objectValue);
+                    lenMod = ColorType.HeadingType.Length + ColorType.Default.Length;
+                    result = ColorType.HeadingType + "UIPivotAnchor " + ColorType.Default + $"(Attach: {pivot.Attach}, Percent: {pivot.Percent}, MinMargin: {pivot.MinMargin}, MaxMargin: {pivot.MaxMargin}, Offset: {pivot.Offset})";
+                    break;
+                case "UIAtomId":
+                    var atom = ((UIAtomId) objectValue);
+                    lenMod = ColorType.HeadingType.Length + ColorType.Default.Length;
+                    result = ColorType.HeadingType + "UIAtomId " + ColorType.Default + $"(Index: {atom.Index}, Allocator: {atom.Allocator}, IsValid: {atom.IsValid})";
+                    break;
+                case "UIStamp":
+                    var stamp = ((UIStamp) objectValue);
+                    lenMod = ColorType.HeadingType.Length + ColorType.Default.Length;
+                    result = ColorType.HeadingType + "UIStamp " + ColorType.Default + $"(RegistrationId: {stamp.RegistrationId}, KeyGuid: {stamp.KeyGuid}, IsLoaded: {stamp.IsLoaded})";
+                    break;
+                case "AffineTransform2d":
+                    var at = ((AffineTransform2d) objectValue);
+                    lenMod = ColorType.HeadingType.Length + ColorType.Default.Length;
+                    result = ColorType.HeadingType + "AffineTransform2d " + ColorType.Default + $"Translation: {at.Translation.ToString()}, Rotation: {at.Rotation.ToString()}, Scale: {at.Scale.ToString()}";
+                    break;
+                case "UIMaterialId":
+                    lenMod = ColorType.HeadingType.Length + ColorType.String.Length;
+                    result = ColorType.HeadingType + "UIMaterialId " + ColorType.String + $"@\"{((UIMaterialId)objectValue).Id.ToString()}\"";
+                    break;
+                case "UITexture":
+                    var uiTex = ((UITexture) objectValue);
+                    lenMod = ColorType.HeadingType.Length + ColorType.Default.Length + ColorType.AdditionalInfo.Length;
+                    result = ColorType.HeadingType + "UITexture" + ColorType.Default + " " + uiTex.AssetPath 
+                                + " " + ColorType.AdditionalInfo + uiTex.WidthHeight.x + "x" + uiTex.WidthHeight.y + "px";
+                    break;
+                case "Transform":
+                    var t = ((Transform) objectValue);
+                    lenMod = ColorType.HeadingType.Length + ColorType.Default.Length + ColorType.AdditionalInfo.Length;
+                    result = ColorType.HeadingType + "Transform @ " + ColorType.Default + t.position +
+                             (t.childCount > 0 ? ColorType.AdditionalInfo + " [+" + t.childCount + "]" : "");
+                    break;
+                case "GameObject":
+                    lenMod = ColorType.HeadingType.Length + ColorType.String.Length;
+                    result = ColorType.HeadingType + "GameObject " + ColorType.String + "\"" + ((GameObject) objectValue).name + "\"";
+                    break;
+                default:
+                    if (objectValue is MonoBehaviour)
+                    {
+                        lenMod = ColorType.EnumType.Length + ColorType.NotFound.Length;
+                        result = ColorType.EnumType + "<MonoBehaviour> " + ColorType.NotFound + objectType.Name;
+                    }
+                    else
+                    {
+                        result = null;
+                        return false;
+                    }
+
+                    break;
+            }
+
+            return true;
         }
-    }*/
+    }
+
 }

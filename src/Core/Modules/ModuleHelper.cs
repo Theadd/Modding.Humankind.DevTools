@@ -60,7 +60,8 @@ namespace Modding.Humankind.DevTools.Core
                 }
                 catch (Exception otherEx)
                 {
-                    Loggr.Log(otherEx);
+                    if (!DevTools.QuietMode)
+                        Loggr.Log(otherEx);
                 }
             }
             else

@@ -10,8 +10,9 @@ using UnityEngine;
 namespace Modding.Humankind.DevTools
 {
 
-    [BepInPlugin(PLUGIN_GUID, "DevTools", "1.6.0.0")]
-    [BepInIncompatibility("AOM.Humankind.Teams")]
+    // [BepInIncompatibility("AOM.Humankind.Teams")]
+    
+    [BepInPlugin(PLUGIN_GUID, "DevTools", "1.7.1.0")]
     public class DevTools : BaseUnityPlugin
     {
         const string PLUGIN_GUID = "Modding.Humankind.DevTools";
@@ -70,7 +71,7 @@ namespace Modding.Humankind.DevTools
                 _uiReady = true;
                 UIController.Initialize();
                 if (!QuietMode)
-                    Loggr.Log("HUMANKIND DEVTOOLS UI LOADED SUCCESSFULLY.", ConsoleColor.Green);
+                    Loggr.Log("DevTools.UI initialized.", ConsoleColor.Green);
             }
         }
 

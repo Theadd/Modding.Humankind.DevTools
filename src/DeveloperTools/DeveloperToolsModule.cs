@@ -26,7 +26,9 @@ namespace Modding.Humankind.DevTools.DeveloperTools
         [InGameKeyboardShortcut("Reload all modules", KeyCode.R, KeyCode.LeftControl, KeyCode.LeftAlt, KeyCode.LeftShift)]
         public static void ReloadAllModules()
         {
-            Loggr.Log("Reloading all modules...", ConsoleColor.Magenta);
+            if (!DevTools.QuietMode)
+                Loggr.Log("RELOADING ALL DEVTOOLS MODULES...", ConsoleColor.Green);
+
             HumankindDevTools.ReloadAllModules();
         }
         
@@ -42,13 +44,13 @@ namespace Modding.Humankind.DevTools.DeveloperTools
             HumankindGame.Update();
         }
         
-        [InGameKeyboardShortcut("Iterate Next Action", KeyCode.F3)]
+        [InGameKeyboardShortcut("Iterate Next Action", KeyCode.F3, KeyCode.LeftControl, KeyCode.LeftShift)]
         public static void IterateNextAction()
         {
             HumankindDevTools.IterateNextAction();
         }
         
-        [InGameKeyboardShortcut("Remove all OnIterateNext registered actions", KeyCode.F3, KeyCode.LeftControl, KeyCode.LeftShift)]
+        [InGameKeyboardShortcut("Remove all OnIterateNext registered actions", KeyCode.F3, KeyCode.LeftControl, KeyCode.LeftShift, KeyCode.LeftAlt)]
         public static void RemoveAllOnIterateNextActions()
         {
             Reset();

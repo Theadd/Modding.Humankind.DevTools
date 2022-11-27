@@ -3,24 +3,41 @@ using Amplitude.Framework.Overlay;
 using UnityEngine;
 using Amplitude.Mercury.Presentation;
 using HarmonyLib;
+using Modding.Humankind.DevTools.Core;
 
 namespace Modding.Humankind.DevTools.DeveloperTools.UI
 {
     public class UIController
     {
+        private static Amplitude.Mercury.UI.Helpers.DataUtils _dataUtils;
+        private static Amplitude.Mercury.UI.Helpers.TextUtils _textUtils;
+        private static Amplitude.Mercury.UI.Helpers.GameUtils _gameUtils;
+        private static Amplitude.Mercury.UI.Helpers.FormatUtils _formatUtils;
+        private static Amplitude.Mercury.UI.UIManager _service;
+
         public static event Action OnGUIHasLoaded;
 
         public static bool IsGUILoaded { get; protected set; } = false;
 
         public static GUISkin DefaultSkin { get; set; }
 
+        public static Amplitude.Mercury.UI.Helpers.DataUtils DataUtils => _dataUtils ?? 
+            (_dataUtils = (Amplitude.Mercury.UI.Helpers.DataUtils) R.Fields.DataUtilsField.GetValue(null));
+
+        public static Amplitude.Mercury.UI.Helpers.TextUtils TextUtils => _textUtils ??
+            (_textUtils = (Amplitude.Mercury.UI.Helpers.TextUtils) R.Fields.TextUtilsField.GetValue(null));
+
+        public static Amplitude.Mercury.UI.Helpers.GameUtils GameUtils => _gameUtils ?? 
+            (_gameUtils = (Amplitude.Mercury.UI.Helpers.GameUtils) R.Fields.GameUtilsField.GetValue(null));
+
+        public static Amplitude.Mercury.UI.Helpers.FormatUtils FormatUtils => _formatUtils ?? 
+            (_formatUtils = (Amplitude.Mercury.UI.Helpers.FormatUtils) R.Fields.FormatUtilsField.GetValue(null));
+
         public static Amplitude.Mercury.UI.UIManager Service => _service
             ? _service
             : (_service =
                 Amplitude.Framework.Services.GetService<Amplitude.Mercury.UI.IUIService>() as
                     Amplitude.Mercury.UI.UIManager);
-
-        private static Amplitude.Mercury.UI.UIManager _service;
 
         public static float TooltipDelay
         {
@@ -31,7 +48,7 @@ namespace Modding.Humankind.DevTools.DeveloperTools.UI
         public static bool IsAmplitudeUIVisible
         {
             get => Service.IsUiVisible;
-            set => Service.IsUiVisible = value;
+            set => Service.UpdateUIVisibility(value);
         }
         
         public static bool AreTooltipsVisible
@@ -49,6 +66,12 @@ namespace Modding.Humankind.DevTools.DeveloperTools.UI
             get => Amplitude.Mercury.Presentation.GodMode.Enabled;
             set => AccessTools.PropertySetter(typeof(GodMode), "Enabled")?.Invoke(null, new object[] { value }); 
         }
+
+        public static string GetLocalizedTitle(Amplitude.StaticString uiMapperName, string defaultValue = null) => 
+            DataUtils.TryGetLocalizedTitle(uiMapperName, out string title) ? title : defaultValue;
+
+        public static string GetLocalizedDescription(Amplitude.StaticString uiMapperName) => 
+            DataUtils?.GetLocalizedDescription(uiMapperName) ?? uiMapperName.ToString();
 
         public static void Initialize()
         {

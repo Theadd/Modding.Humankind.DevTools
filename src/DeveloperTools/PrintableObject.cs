@@ -8,6 +8,12 @@ namespace Modding.Humankind.DevTools.DeveloperTools
 {
     public class PrintableObject
     {
+        public bool NonPublicProperties { get; set; } = false;
+        public bool Properties { get; set; } = true;
+        public bool NonPublicFields { get; set; } = false;
+        public bool Fields { get; set; } = true;
+        public bool Methods { get; set; } = false;
+
         public object instance;
         public Type type;
 
@@ -33,7 +39,7 @@ namespace Modding.Humankind.DevTools.DeveloperTools
         public override string ToString()
         {
             if (isNull)
-                return "%DarkGray%NULL";
+                return "%DarkGray%null";
 
             if (type.IsArray)
             {
@@ -91,35 +97,46 @@ namespace Modding.Humankind.DevTools.DeveloperTools
             var sb = new StringBuilder();
             var publicPropertyMembers = type.GetProperties(BindingFlags.Public | BindingFlags.Static | BindingFlags.Instance);
             var nonPublicPropertyMembers = type.GetProperties(BindingFlags.NonPublic | BindingFlags.Static | BindingFlags.Instance);
-            var fieldMembers = type.GetFields(BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Static | BindingFlags.Instance)
-                                    .AsEnumerable().Where(field => field.Name.Length > 0 && field.Name[0] != '<').ToArray();
-            var publicMethods = type.GetMethods(BindingFlags.Public | BindingFlags.Static | BindingFlags.Instance)
-                                    .AsEnumerable().Where(m => !(m.Name.Length > 3 && m.Name[3] == '_'));
+            var fieldMembers = type
+                .GetFields(
+                    NonPublicFields ? (BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Static | BindingFlags.Instance) 
+                        : (BindingFlags.Public | BindingFlags.Static | BindingFlags.Instance))
+                .AsEnumerable()
+                .Where(field => field.Name.Length > 0 && field.Name[0] != '<')
+                .ToArray();
+            var publicMethods = type
+                .GetMethods(BindingFlags.Public | BindingFlags.Static | BindingFlags.Instance)
+                .AsEnumerable()
+                .Where(m => !(m.Name.Length > 3 && m.Name[3] == '_'));
 
             var baseTypeName = type.BaseType?.Name ?? "";
             baseTypeName = baseTypeName.Length > 0 ? " %White%:%DarkBlue% " + baseTypeName + " %White%{ " : " %White%{ ";
 
             // sb.AppendLine("%White%Type%DarkBlue% " + type.Name + " %DarkGray%(" + type.FullName + ") %White%{ ");
             sb.AppendLine("%White%Type%DarkBlue% " + type.Name + baseTypeName);
-
-            if (publicPropertyMembers.Length > 0)
+            
+            if (Properties)
             {
-                sb.AppendLine("\n%Blue%    public properties%Default%");
-                AppendPropertyMembers(publicPropertyMembers, ref sb);
-            }
-            if (nonPublicPropertyMembers.Length > 0)
-            {
-                sb.AppendLine("\n%Blue%    non-public properties%Default%");
-                AppendPropertyMembers(nonPublicPropertyMembers, ref sb);
-            }
+                if (publicPropertyMembers.Length > 0)
+                {
+                    sb.AppendLine("\n%Blue%    public properties%Default%");
+                    AppendPropertyMembers(publicPropertyMembers, ref sb);
+                }
 
-            if (fieldMembers.Length > 0)
+                if (NonPublicProperties && nonPublicPropertyMembers.Length > 0)
+                {
+                    sb.AppendLine("\n%Blue%    non-public properties%Default%");
+                    AppendPropertyMembers(nonPublicPropertyMembers, ref sb);
+                }
+            }
+            
+            if (Fields && fieldMembers.Length > 0)
             {
                 sb.AppendLine("\n%Blue%    accessible fields%Default%");
                 AppendFieldMembers(fieldMembers, ref sb);
             }
 
-            if (publicMethods.Count() > 0)
+            if (Methods && publicMethods.Count() > 0)
             {
                 sb.AppendLine("\n%Blue%    public methods%Default%");
                 AppendMethodMembers(publicMethods, ref sb);
@@ -149,7 +166,7 @@ namespace Modding.Humankind.DevTools.DeveloperTools
 
                 if (getter == null)
                 {
-                    sb.AppendLine("%Red%\tCAN'T GET PROPERTY GETTER OF: " + propInfo.Name);
+                    sb.AppendLine("%Red%\tCAN'T GET PROPERTY GETTER FOR: " + propInfo.Name);
                     continue;
                 }
                 string propValue;

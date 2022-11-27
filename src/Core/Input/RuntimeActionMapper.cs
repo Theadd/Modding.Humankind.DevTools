@@ -48,7 +48,7 @@ namespace Modding.Humankind.DevTools.Core
                 method.Invoke(null, null);
                 
                 if (!DevTools.QuietMode)
-                    Loggr.Announce("Action " + actionName + " executed.");
+                    Loggr.Log("Action " + actionName + " executed.");
             }
             else
             {
@@ -59,7 +59,7 @@ namespace Modding.Humankind.DevTools.Core
                         runtimeMethod.Invoke(null, null);
                         
                         if (!DevTools.QuietMode)
-                            Loggr.Announce("Action " + actionName + " executed.");
+                            Loggr.Log("Action " + actionName + " executed.");
                     }
                     catch (Exception) { /* Ignore exceptions in runtime actions */ }
                 }
@@ -80,6 +80,22 @@ namespace Modding.Humankind.DevTools.Core
         {
             if (actionName == "")
                 return false;
+
+            if (key.Equals(KeyboardShortcut.Empty))
+            {
+                if (runtimeMethodsMap.ContainsKey(actionName))
+                {
+                    // Removing runtime action map
+                    var prevKey = runtimeActionsMap.FirstOrDefault(x => x.Value == actionName).Key;
+                    runtimeActionsMap.Remove(prevKey);
+                    runtimeMethodsMap.Remove(actionName);
+
+                    if (!DevTools.QuietMode)
+                        Loggr.Log("Runtime action removed: " + actionName, ConsoleColor.White);
+                }
+                
+                return true;
+            }
 
             if (ActionManager._mappedActions != null && ActionManager._mappedActions.ContainsKey(key))
             {

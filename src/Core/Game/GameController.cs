@@ -69,7 +69,6 @@ namespace Modding.Humankind.DevTools.Core
                     Instance.Setup((int) R.Fields.LastRunTurnField.GetValue(Sandbox.AIController), Sandbox.AIController,
                         Sandbox.GameID, true);
 
-                    // Loggr.Debug("[@GameController.SynchronizeGameState] Invoking all OnGameHasLoaded actions.");
                     InvokeOnGameHasLoaded();
 
                     SynchronizationRate = 1.0f;
@@ -104,7 +103,6 @@ namespace Modding.Humankind.DevTools.Core
 
             if (!isFirstRun)
             {
-                // Loggr.Debug("[@GameController.Setup] Invoking all OnNewTurnStarts actions.");
                 InvokeOnNewTurnStart();
             }
         }
@@ -118,7 +116,6 @@ namespace Modding.Humankind.DevTools.Core
 
         public static void Unload()
         {
-            // Loggr.Debug("[@GameController.Unload] Invoking all OnGameHasUnloaded actions.");
             InvokeOnGameHasUnloaded();
             ModuleHelper.Reset();
 
@@ -130,7 +127,6 @@ namespace Modding.Humankind.DevTools.Core
             CurrentTurn = 0;
 
             _instance = null;
-            // Loggr.Debug("[@GameController.Unload] GameController fully unloaded.");
         }
     }
 }
