@@ -9,9 +9,8 @@ using UnityEngine;
 
 namespace Modding.Humankind.DevTools
 {
-
     // [BepInIncompatibility("AOM.Humankind.Teams")]
-    
+
     [BepInPlugin(PLUGIN_GUID, "DevTools", "1.7.1.0")]
     public class DevTools : BaseUnityPlugin
     {
@@ -42,7 +41,7 @@ namespace Modding.Humankind.DevTools
         {
             Log = Logger;
             Instance = this;
-            
+
             _harmony = new Harmony(PLUGIN_GUID);
 
             _harmony.PatchAll();
@@ -60,7 +59,8 @@ namespace Modding.Humankind.DevTools
                 Loggr.Log("STARTING HUMANKIND DEVTOOLS...", ConsoleColor.Green);
         }
 
-        void OnGUI () {
+        void OnGUI()
+        {
             // -
         }
 
