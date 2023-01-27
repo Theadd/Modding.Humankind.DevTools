@@ -27,7 +27,7 @@ namespace Modding.Humankind.DevTools.Core
                 {
                     if ((Empire) R.Fields.ControlledEmpireField.GetValue(aiPlayer) is MajorEmpire controlledEmpire)
                     {
-                        if (controlledEmpire.IsAlive && controlledEmpire.TotalEmpirePopulation == 0 &&
+                        if (controlledEmpire.IsAlive && (controlledEmpire.TotalCitiesPopulation + controlledEmpire.TotalArmiesPopulation) == 0 &&
                             controlledEmpire.CombatStrength == 0)
                             return false;
                     }
